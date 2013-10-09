@@ -5,6 +5,9 @@ import os
 SITE_ROOT = os.path.dirname(__file__)
 
 
+STRIPE_SECRET = 'sk_test_h36oicOrlA7ATkI9JJ6dUGyA'
+STRIPE_PUBLISHABLE = 'pk_test_8Xho4FfArFFuQspdH8V1KlHS'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

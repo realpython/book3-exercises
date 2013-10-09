@@ -1,91 +1,100 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Your MVP</title>
-<meta name="viewport" content="width=device-width,
-initial-scale=1.0">
-<meta name="description" content="Setting up an MVP with
-Django by RealPython.com">
-<meta name="author" content="Michael Herman">
-<!-- Le styles -->
-<link href="http://www.realpython.com/css/bootstrap.css"
-rel="stylesheet">
-<style>
-body {
-    padding-top: 20px;
-    padding-bottom: 40px;
-}
-/* Custom container */
-.container-narrow {
-    margin: 0 auto;
-    max-width: 700px;
-}
-.container-narrow > hr {
-    margin: 30px 0;
-}
-/* Main marketing message and sign up button */
-.jumbotron {
-    margin: 60px 0;
-    text-align: center;
-}
-.jumbotron h1 {
-    font-size: 72px;
-    line-height: 1;
-}
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-}
-/* Supporting marketing content */
-.marketing {
-    margin: 60px 0;
-}
-.marketing p + h4 {
-    margin-top: 28px;
-}
-</style>
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements
--->
-<!--[if lt IE 9]>
-<script src="http://html5shim.googlecode.com/svn/trunk/
-html5.js">
-</script>
-<![endif]-->
-<!-- Le fav and touch icons -->
+    <meta charset="utf-8">
+    <title>Your MVP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Setting up an MVP with Django by RealPython.com">
+    <meta name="author" content="Michael Herman">
+    <!-- Le styles -->
+    <link href="http://www.realpython.com/css/bootstrap.css" rel="stylesheet">
+    <style>
+    body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+    }
+    /* Custom container */
+    .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+    }
+    .container-narrow > hr {
+        margin: 30px 0;
+    }
+    /* Main marketing message and sign up button */
+    .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+    }
+    .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+    }
+    .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+    }
+    /* Supporting marketing content */
+    .marketing {
+        margin: 60px 0;
+    }
+    .marketing p + h4 {
+        margin-top: 28px;
+    }
+    </style>
+    <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        Stripe.publishableKey = '{{ publishable }}';
+        //]]>
+    </script>
+    <script src="{% get_static_prefix %}jquery.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}application.js" type="text/javascript"></script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+        </script>
+    <![endif]-->
 </head>
 <body>
-<div class="masthead">
-    <ul class="nav nav-pills pull-right">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="/pages/about">About</a></li>
-        <li><a href="{% url 'contact' %}">Contact</a></li>
-    </ul>
-    <h3><span class="fui-settings-16 muted">Your
-            MVP!</span></h3>
-</div>
-
-<hr>
-{% if messages %}
-<div class="alert alert-success">
-    <div class="messages">
-        {% for message in messages %}
-        {{ message }}
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
 <div class="container-narrow">
-    {% block content %}
-    {% endblock %}
-</div>
-<hr>
-<div class="footer">
-    <p>Copyright © 2013 <a
-        href="http://www.yoursite.com">Your MVP</a>. Developed by
-    <a href="http://www.mherman.org">Your Name Here</a>.
-    Powered by Django.</P></p>
-</div>
-</div>
+    <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="/pages/about">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            {% if user %}
+            <li><a href="{% url 'sign_out' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'sign_in' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+        <h3><span class="fui-settings-16 muted">Your MVP!</span></h3>
+    </div>
+
+    <hr>
+    {% if messages %}
+    <div class="alert alert-success">
+        <div class="messages">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="container-narrow">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <hr>
+    <div class="footer">
+        <p>Copyright © 2013 <a
+            href="http://www.yoursite.com">Your MVP</a>. Developed by
+        <a href="http://www.mherman.org">Your Name Here</a>.
+        Powered by Django.</P></p>
+    </div>
+  </div> <!-- /container -->
 </body>
-</head>
