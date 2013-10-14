@@ -21,13 +21,16 @@ def sign_in(request):
         if form.is_valid():
             results = User.objects.filter(email=form.cleaned_data['email'])
             if len(results) == 1:
+                form.addError("we got a user")
                 if results[0].check_password(form.cleaned_data['password']):
+                    form.addError("we got correct password") 
                     request.session['user'] = results[0].pk
                     return HttpResponseRedirect('/')
                 else:
-                  form.addError('Incorrect email address or password')
+                  form.addError('Incorrect email at ' +
+                                form.cleaned_data['email'])
             else:
-              form.addError('Incorrect email address or password')
+              form.addError('Incorrect email address or password no email')
     else:
       form = SigninForm()
       
@@ -71,10 +74,10 @@ def register(request):
                 email = form.cleaned_data['email'],
                 last_4_digits = form.cleaned_data['last_4_digits'],
                 stripe_id = customer.id,
-                password = form.cleaned_data['password']
+                #password = form.cleaned_data['password']
             )
 
-            # user.set_password(form.cleaned_data['password'])
+            user.set_password(form.cleaned_data['password'])
 
             try:
                 user.save()
