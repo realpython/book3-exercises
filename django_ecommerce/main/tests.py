@@ -4,7 +4,7 @@ from .views import index
 import unittest
 from django.shortcuts import render_to_response
 
-class MainPageTests(TestCase):
+class MainPa geTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
