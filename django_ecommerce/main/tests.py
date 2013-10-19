@@ -4,7 +4,7 @@ from .views import index
 import unittest
 from django.shortcuts import render_to_response
 
-class MainPa geTests(TestCase):
+class MainPageTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -27,25 +27,16 @@ class MainPa geTests(TestCase):
         self.assertEquals(resp.content,
                           render_to_response("index.html").content)
 
-    def test_index_handles_logged_in_user(self):
+    def  test_index_handles_logged_in_user(self):
         #create a session that appears to have a logged in user
         self.request.session = {"user" : "1"}
         
-        #create the user needed for user lookup from index page
-        from payments.models import User
-        user = User(
-                name = 'jj',
-                email = 'j@j.com',
-            )
         import mock
         with mock.patch('main.views.User') as user_mock:
             
-            #set the object function to our mock
-            user_mock.objects = mock.Mock()
-
             #tell the mock what to do when called
-            config = {'get.return_value':mock.Mock()}
-            user_mock.objects.configure_mock(**config)
+            config = {'get_by_id.return_value':mock.Mock()}
+            user_mock.configure_mock(**config)
 
 
             #run the test
