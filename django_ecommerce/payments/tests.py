@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, SimpleTestCase
 from .models import User
 
 
@@ -15,7 +15,7 @@ class UserModelTest(TestCase):
     def test_get_by_id(self):
         self.assertEquals(User.get_by_id(1), self.test_user)
 
-from .forms import SigninForm, CardForm
+from .forms import SigninForm, CardForm, UserForm
 import unittest
 from pprint import pformat
 
@@ -36,7 +36,7 @@ class FormTesterMixin():
                            (test_form.errors[expected_error_name], 
                            expected_error_msg, pformat(data)))
 
-class FormTests(unittest.TestCase, FormTesterMixin):
+class FormTests(SimpleTestCase, FormTesterMixin):
     
     def test_signin_form_data_validation_for_invalid_data(self):
         invalid_data_list = [
@@ -65,3 +65,26 @@ class FormTests(unittest.TestCase, FormTesterMixin):
                                   invalid_data['error'][0],
                                   invalid_data['error'][1],
                                   invalid_data["data"])
+
+
+    def test_user_form_passwords_match(self):
+        form = UserForm({'name' : 'jj', 'email': 'j@j.com', 'password' : '1234',
+                         'ver_password' : '1234', 'last_4_digits' : '3333',
+                         'stripe_token': '1'})
+
+        self.assertTrue(form.is_valid())
+        #this will throw an error if it doesn't clean correctly
+        self.assertIsNotNone(form.clean())
+
+    def test_user_form_passwords_dont_match_throws_error(self):
+        form = UserForm({'name' : 'jj', 'email': 'j@j.com', 'password' : '234',
+                         'ver_password' : '1234', 'last_4_digits' : '3333',
+                         'stripe_token': '1'})
+
+        self.assertFalse(form.is_valid())
+
+        from django import forms
+        self.assertRaisesMessage(forms.ValidationError, 
+                                 "Passwords do not match",
+                                 form.clean)
+
