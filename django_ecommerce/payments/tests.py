@@ -88,3 +88,93 @@ class FormTests(SimpleTestCase, FormTesterMixin):
                                  "Passwords do not match",
                                  form.clean)
 
+from .views import sign_in, sign_out, register, edit
+from django.core.urlresolvers import resolve
+from django.shortcuts import render_to_response
+
+class ViewTesterMixin(object):
+
+    @classmethod
+    def setupViewTester(cls, url, view_func, expected_html,
+                              status_code = 200,
+                              session={}):
+        from django.test import RequestFactory
+        request_factory = RequestFactory()
+        cls.request = request_factory.get(url)
+        cls.request.session = session
+        cls.status_code = status_code
+        cls.url = url
+        cls.view_func = staticmethod(view_func)
+        cls.expected_html = expected_html
+    
+    def test_resolves_to_correct_view(self):
+        test_view = resolve(self.url)
+        self.assertEquals(test_view.func, self.view_func)
+
+    def test_returns_appropriate_respose_code(self):
+        resp = self.view_func(self.request)
+        self.assertEquals(resp.status_code, self.status_code)
+
+    def test_returns_correct_html(self):
+        resp = self.view_func(self.request)
+        self.assertEquals(resp.content, self.expected_html)
+
+class SignInPageTests(TestCase, ViewTesterMixin):
+
+    @classmethod
+    def setUpClass(cls):
+        html = render_to_response('sign_in.html',
+        {
+          'form': SigninForm(),
+          'user': None
+        })
+
+        ViewTesterMixin.setupViewTester('/sign_in',
+                                              sign_in,
+                                              html.content)
+
+    
+class SignOutPageTests(TestCase, ViewTesterMixin):
+
+    @classmethod
+    def setUpClass(cls):
+        ViewTesterMixin.setupViewTester('/sign_out',
+                                        sign_out,
+                                        "", #a redirect will return no html
+                                        status_code=302,
+                                        session={"user":"dummy"},
+                                       )
+    def setUp(self):
+        #sign_out clears the session, so let's reset it everytime
+        self.request.session = {"user":"dummy"}
+
+import django_ecommerce.settings as settings
+from .views import soon
+class RegisterPageTests(TestCase, ViewTesterMixin):
+
+    @classmethod
+    def setUpClass(cls):
+        html = render_to_response('register.html',
+        {
+          'form': UserForm(),
+          'months': range(1, 12),
+          'publishable': settings.STRIPE_PUBLISHABLE,
+          'soon': soon(),
+          'user': None,
+          'years': range(2011, 2036),
+        })
+        ViewTesterMixin.setupViewTester('/register',
+                                        register,
+                                        html.content,
+                                       )
+
+class EditPageTests(TestCase, ViewTesterMixin):
+
+    @classmethod
+    def setUpClass(cls):
+        ViewTesterMixin.setupViewTester('/edit',
+                                        edit,
+                                        '', #a redirect will return no html
+                                        status_code=302,
+                                       )
+
