@@ -132,7 +132,6 @@ class SignInPageTests(TestCase, ViewTesterMixin):
         ViewTesterMixin.setupViewTester('/sign_in',
                                               sign_in,
                                               html.content)
-
     
 class SignOutPageTests(TestCase, ViewTesterMixin):
 
