@@ -1,6 +1,6 @@
 from django.test import TestCase, SimpleTestCase
 from .models import User
-
+  
 
 class UserModelTest(TestCase):
 
