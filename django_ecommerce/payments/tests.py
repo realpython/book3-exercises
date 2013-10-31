@@ -288,20 +288,30 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
 
 
-    def test_registering_user_twice_cause_error_msg(self):
-
+        self.request.session = {}
         self.request.method='POST'
         self.request.POST = {'email' : 'python@rocks.com',
                              'name' : 'pyRock',
-                             'stripe_token' : '4242424242424242',
+                             'stripe_token' : '...',
                              'last_4_digits' : '4242',
-                             'password' : 'bad_password'
+                             'password' : 'bad_password',
+                             'ver_password' : 'bad_password',
                             }
-        resp = register(self.request)
-        self.assertEquals(resp.content, "")
-        self.assertEquals(resp.status_code, 302)
-        self.assertEquals(self.request.session['user'], 1)
+        with mock.patch('stripe.Customer') as stripe_mock:
 
+            config = {'create.return_value':mock.Mock()}
+            stripe_mock.configure_mock(**config) 
+
+            resp = register(self.request)
+
+            self.assertEquals(resp.content, "")
+            self.assertEquals(resp.status_code, 302)
+            self.assertEquals(self.request.session['user'], 1)
+
+            #verify the user was actually stored in the database.
+            #if the user is not there this will throw an error
+            db_user = User.objects.get(email='python@rocks.com')
+            
 
 
 class EditPageTests(TestCase, ViewTesterMixin):
