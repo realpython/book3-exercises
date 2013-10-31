@@ -288,6 +288,21 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
 
 
+    def test_registering_user_twice_cause_error_msg(self):
+
+        self.request.method='POST'
+        self.request.POST = {'email' : 'python@rocks.com',
+                             'name' : 'pyRock',
+                             'stripe_token' : '4242424242424242',
+                             'last_4_digits' : '4242',
+                             'password' : 'bad_password'
+                            }
+        resp = register(self.request)
+        self.assertEquals(resp.content, "")
+        self.assertEquals(resp.status_code, 302)
+        self.assertEquals(self.request.session['user'], 1)
+
+
 
 class EditPageTests(TestCase, ViewTesterMixin):
 
