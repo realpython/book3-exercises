@@ -189,7 +189,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         with mock.patch('payments.forms.UserForm.is_valid') as user_mock:
     
             user_mock.return_value = False
-
             self.request.method = 'POST'
             self.request.POST = None
             resp = register(self.request)
