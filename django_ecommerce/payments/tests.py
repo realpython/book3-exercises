@@ -292,6 +292,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
 class EditPageTests(TestCase, ViewTesterMixin):
 
+    #edit page test
     @classmethod
     def setUpClass(cls):
         ViewTesterMixin.setupViewTester('/edit',
