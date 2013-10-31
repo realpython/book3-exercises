@@ -1,6 +1,6 @@
 from django.test import TestCase, SimpleTestCase
 from .models import User
-  
+import mock 
 
 class UserModelTest(TestCase):
 
@@ -166,6 +166,25 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
                                         register,
                                         html.content,
                                        )
+    def setUp(self):
+        from django.test import RequestFactory
+        request_factory = RequestFactory()
+        self.request = request_factory.get(self.url)
+
+
+    def test_invalid_form_returns_registration_page(self):
+
+        with mock.patch('payments.forms.UserForm') as user_mock:
+    
+            config = {'is_valid.return_value':False}
+            user_mock.configure_mock(**config)
+
+            self.request.method = 'POST'
+            self.request.POST = None
+            resp = register(self.request)
+            self.assertEquals(resp.content, self.expected_html)
+
+
 
 class EditPageTests(TestCase, ViewTesterMixin):
 
