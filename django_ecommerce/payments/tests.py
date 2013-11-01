@@ -212,6 +212,63 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             db_user = User.objects.get(email='python@rocks.com')
             
 
+    def test_registering_user_twice_cause_error_msg(self):
+
+        #create a user with same email so we get an integrity error
+        user = User(name = 'pyRock', email='python@rocks.com')
+        user.save()
+
+        
+        #now create the request used to test the view
+        self.request.session = {}
+        self.request.method='POST'
+        self.request.POST = {'email' : 'python@rocks.com',
+                             'name' : 'pyRock',
+                             'stripe_token' : '...',
+                             'last_4_digits' : '4242',
+                             'password' : 'bad_password',
+                             'ver_password' : 'bad_password',
+                            }
+
+        #create our expected form
+        expected_form = UserForm(self.request.POST)
+        expected_form.is_valid()
+        expected_form.addError('python@rocks.com is already a member')
+
+        #create the expected html
+        html = render_to_response('register.html',
+        {
+          'form': expected_form,
+          'months': range(1, 12),
+          'publishable': settings.STRIPE_PUBLISHABLE,
+          'soon': soon(),
+          'user': None,
+          'years': range(2011, 2036),
+        })
+
+
+
+        #mock out stripe so we don't hit their server
+        with mock.patch('stripe.Customer') as stripe_mock:
+
+            config = {'create.return_value':mock.Mock()}
+            stripe_mock.configure_mock(**config) 
+
+            #run the test
+            resp = register(self.request)
+
+        
+            #verify that we did things correctly
+            self.assertEquals(resp.content, "")
+            self.assertEquals(resp.status_code, 200)
+            self.assertEquals(self.request.session, {})
+
+            #assert there is only one record in the database.
+            users = User.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(users), 1)
+
+
+
 
 class EditPageTests(TestCase, ViewTesterMixin):
 
