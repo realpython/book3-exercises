@@ -15,6 +15,17 @@ class UserModelTest(TestCase):
     def test_get_by_id(self):
         self.assertEquals(User.get_by_id(1), self.test_user)
 
+    def test_create_user_function_stores_in_database(self):
+        user = User.create("test", "test@t.com","tt","1234","22")
+        self.assertEquals(User.objects.get(email="test@t.com"), user)
+
+    def test_create_user_allready_exists_throws_IntegrityError(self):
+        from django.db import IntegrityError
+        self.assertRaises(IntegrityError, User.create, "test user",
+                          "j@j.com","jj","1234",89)
+
+
+
 from .forms import SigninForm, CardForm, UserForm
 import unittest
 from pprint import pformat
@@ -184,8 +195,10 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             resp = register(self.request)
             self.assertEquals(resp.content, self.expected_html)
 
-      
-    def test_registering_new_user_returns_succesfully(self):
+    
+    @mock.patch('stripe.Customer.create')
+    @mock.patch.object(User,'create')
+    def test_registering_new_user_returns_succesfully(self, create_mock, stripe_mock):
 
         self.request.session = {}
         self.request.method='POST'
@@ -196,20 +209,19 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
                              'password' : 'bad_password',
                              'ver_password' : 'bad_password',
                             }
-        with mock.patch('stripe.Customer') as stripe_mock:
 
-            config = {'create.return_value':mock.Mock()}
-            stripe_mock.configure_mock(**config) 
+        #get the return values of the mocks, for our checks later
+        new_user = create_mock.return_value
+        new_cust = stripe_mock.return_value
+          
+        resp = register(self.request)
 
-            resp = register(self.request)
+        self.assertEquals(resp.content, "")
+        self.assertEquals(resp.status_code, 302)
+        self.assertEquals(self.request.session['user'], new_user.pk)
+        #verify the user was actually stored in the database.
+        create_mock.assert_called_with('pyRock','python@rocks.com','bad_password','4242',new_cust.id)
 
-            self.assertEquals(resp.content, "")
-            self.assertEquals(resp.status_code, 302)
-            self.assertEquals(self.request.session['user'], 1)
-
-            #verify the user was actually stored in the database.
-            #if the user is not there this will throw an error
-            db_user = User.objects.get(email='python@rocks.com')
             
 
     def test_registering_user_twice_cause_error_msg(self):
@@ -259,7 +271,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         
             #verify that we did things correctly
-            self.assertEquals(resp.content, "")
+            self.assertEquals(resp.content, html.content)
             self.assertEquals(resp.status_code, 200)
             self.assertEquals(self.request.session, {})
 
