@@ -198,7 +198,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(user_mock.call_count, 1)
 
     
-    @mock.patch('payments.views.Customer.create')
+    @mock.patch('stripe.Customer.create')
     @mock.patch.object(User,'create')
     def test_registering_new_user_returns_succesfully(self, create_mock, stripe_mock):
 
@@ -224,93 +224,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         #verify the user was actually stored in the database.
         create_mock.assert_called_with('pyRock','python@rocks.com','bad_password','4242',new_cust.id)
 
-    
-    def get_MockUserForm(self):
-        from django import forms
-        class MockUserForm(forms.Form):
-
-            def is_valid(self):
-                return True
-
-            @property
-            def cleaned_data(self):
-                return {'email' : 'python@rocks.com',
-                             'name' : 'pyRock',
-                             'stripe_token' : '...',
-                             'last_4_digits' : '4242',
-                             'password' : 'bad_password',
-                             'ver_password' : 'bad_password',
-                            }
-            def addError(self, erro):
-                pass
-
-        return MockUserForm()
-
-    @mock.patch('payments.views.UserForm', get_MockUserForm)
-    @mock.patch('payments.models.User.save', side_effect=IntegrityError)
-    def test_registering_user_twice_cause_error_msg(self, save_mock):
-        
-        #create the request used to test the view
-        self.request.session = {}
-        self.request.method='POST'
-        self.request.POST = {}        
-
-        #create the expected html
-        html = render_to_response('register.html',
-        {
-          'form': self.get_MockUserForm(),
-          'months': range(1, 12),
-          'publishable': settings.STRIPE_PUBLISHABLE,
-          'soon': soon(),
-          'user': None,
-          'years': range(2011, 2036),
-        })
-        
-
-
-        #mock out stripe so we don't hit their server
-        with mock.patch('payments.views.Customer.create') as stripe_mock:
-
-            stripe_mock.return_value = mock.Mock()
-
-            #run the test
-            resp = register(self.request)
-
-        
-            #verify that we did things correctly
-            self.assertEquals(resp.content, html.content)
-            self.assertEquals(resp.status_code, 200)
-            self.assertEquals(self.request.session, {})
-
-            #assert there is no records in the database.
-            users = User.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(users), 0)
-
-
-
-        self.request.session = {}
-        self.request.method='POST'
-        self.request.POST = {'email' : 'python@rocks.com',
-                             'name' : 'pyRock',
-                             'stripe_token' : '...',
-                             'last_4_digits' : '4242',
-                             'password' : 'bad_password',
-                             'ver_password' : 'bad_password',
-                            }
-        with mock.patch('stripe.Customer') as stripe_mock:
-
-            config = {'create.return_value':mock.Mock()}
-            stripe_mock.configure_mock(**config) 
-
-            resp = register(self.request)
-
-            self.assertEquals(resp.content, "")
-            self.assertEquals(resp.status_code, 302)
-            self.assertEquals(self.request.session['user'], 1)
-
-            #verify the user was actually stored in the database.
-            #if the user is not there this will throw an error
-            db_user = User.objects.get(email='python@rocks.com')
             
 
     def test_registering_user_twice_cause_error_msg(self):
@@ -360,7 +273,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         
             #verify that we did things correctly
-            self.assertEquals(resp.content, "")
+            self.assertEquals(resp.content, html.content)
             self.assertEquals(resp.status_code, 200)
             self.assertEquals(self.request.session, {})
 

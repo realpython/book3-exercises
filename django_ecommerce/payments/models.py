@@ -27,3 +27,4 @@ class User(AbstractBaseUser):
 
         new_user.save()
         return new_user 
+
