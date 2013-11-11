@@ -1,6 +1,7 @@
 from django.test import TestCase, SimpleTestCase
 from .models import User
-import mock 
+import mock
+from django.db import IntegrityError
 
 class UserModelTest(TestCase):
 
@@ -226,14 +227,10 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
             
 
-    def test_registering_user_twice_cause_error_msg(self):
-
-        #create a user with same email so we get an integrity error
-        user = User(name = 'pyRock', email='python@rocks.com')
-        user.save()
-
+    @mock.patch('payments.models.User.save', side_effect=IntegrityError)
+    def test_registering_user_twice_cause_error_msg(self, save_mock):
         
-        #now create the request used to test the view
+        #create the request used to test the view
         self.request.session = {}
         self.request.method='POST'
         self.request.POST = {'email' : 'python@rocks.com',
@@ -277,9 +274,9 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(resp.status_code, 200)
             self.assertEquals(self.request.session, {})
 
-            #assert there is only one record in the database.
+            #assert there is no records in the database.
             users = User.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(users), 1)
+            self.assertEquals(len(users), 0)
 
 
 
