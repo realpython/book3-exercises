@@ -52,19 +52,13 @@ def register(request):
         form = UserForm(request.POST)
         if form.is_valid():
             #update based on your billing method (subscription vs one time)
-            customer = stripe.Customer.create(
+            customer = Customer.create("subscription",
               email = form.cleaned_data['email'],
               description = form.cleaned_data['name'],
               card = form.cleaned_data['stripe_token'],
               plan="gold",
             )
-            # customer = stripe.Charge.create(
-            #   description = form.cleaned_data['email'],
-            #   card = form.cleaned_data['stripe_token'],
-            #   amount="5000",
-            #   currency="usd"
-            # )
-
+     
             cd = form.cleaned_data
             try:
                 user = User.create(cd['name'], cd['email'], cd['password'],
@@ -127,3 +121,14 @@ def edit(request):
         },
         context_instance=RequestContext(request)
     )
+
+class Customer(object):
+
+    @classmethod
+    def create(cls, billing_method="subscription", **kwargs):
+        if billing_method == "subscription":
+            return stripe.Customer.create(**kwargs)
+        elif billing_method == "one_time":
+            return stripe.Charge.create(**kwargs)
+
+

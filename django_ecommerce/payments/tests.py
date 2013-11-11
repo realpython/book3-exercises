@@ -199,7 +199,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(user_mock.call_count, 1)
 
     
-    @mock.patch('stripe.Customer.create')
+    @mock.patch('payments.views.Customer.create')
     @mock.patch.object(User,'create')
     def test_registering_new_user_returns_succesfully(self, create_mock, stripe_mock):
 
@@ -270,10 +270,9 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
 
         #mock out stripe so we don't hit their server
-        with mock.patch('stripe.Customer') as stripe_mock:
+        with mock.patch('payments.views.Customer.create') as stripe_mock:
 
-            config = {'create.return_value':mock.Mock()}
-            stripe_mock.configure_mock(**config) 
+            stripe_mock.return_value = mock.Mock()
 
             #run the test
             resp = register(self.request)
@@ -301,3 +300,30 @@ class EditPageTests(TestCase, ViewTesterMixin):
                                         status_code=302,
                                        )
 
+from .views import Customer
+
+class CustomerTests(TestCase):
+
+
+    def test_create_subscription(self):
+    
+        with mock.patch('stripe.Customer.create') as create_mock:
+
+            cust_data = {'description':'test user', 'email':'test@test.com',
+                         'card':'4242','plan':'gold'}
+            cust = Customer.create("subscription", **cust_data)
+
+            create_mock.assert_called_with(**cust_data)            
+                    
+    def test_create_one_time_bill(self):
+
+        with mock.patch('stripe.Charge.create') as charge_mock:
+
+            cust_data = {'description' :'email',
+                         'card' : '1234',
+                         'amount':'5000',
+                         'currency':'usd'}
+            
+            cust = Customer.create("one_time", **cust_data)
+
+            charge_mock.assert_called_with(**cust_data)
