@@ -185,15 +185,17 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
     def test_invalid_form_returns_registration_page(self):
 
-        with mock.patch('payments.forms.UserForm') as user_mock:
+        with mock.patch('payments.forms.UserForm.is_valid') as user_mock:
     
-            config = {'is_valid.return_value':False}
-            user_mock.configure_mock(**config)
+            user_mock.return_value = False
 
             self.request.method = 'POST'
             self.request.POST = None
             resp = register(self.request)
             self.assertEquals(resp.content, self.expected_html)
+
+            #make sure that we did indeed call our is_valid function
+            self.assertEquals(user_mock.call_count, 1)
 
     
     @mock.patch('stripe.Customer.create')
