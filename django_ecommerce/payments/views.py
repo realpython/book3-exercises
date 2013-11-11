@@ -58,13 +58,7 @@ def register(request):
               card = form.cleaned_data['stripe_token'],
               plan="gold",
             )
-            # customer = stripe.Charge.create(
-            #   description = form.cleaned_data['email'],
-            #   card = form.cleaned_data['stripe_token'],
-            #   amount="5000",
-            #   currency="usd"
-            # )
-
+     
             cd = form.cleaned_data
             try:
                 user = User.create(cd['name'], cd['email'], cd['password'],

@@ -198,7 +198,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(user_mock.call_count, 1)
 
     
-    @mock.patch('stripe.Customer.create')
+    @mock.patch('payments.views.Customer.create')
     @mock.patch.object(User,'create')
     def test_registering_new_user_returns_succesfully(self, create_mock, stripe_mock):
 
@@ -269,10 +269,9 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
 
         #mock out stripe so we don't hit their server
-        with mock.patch('stripe.Customer') as stripe_mock:
+        with mock.patch('payments.views.Customer.create') as stripe_mock:
 
-            config = {'create.return_value':mock.Mock()}
-            stripe_mock.configure_mock(**config) 
+            stripe_mock.return_value = mock.Mock()
 
             #run the test
             resp = register(self.request)
