@@ -24,7 +24,5 @@ class User(AbstractBaseUser):
         new_user = cls(name=name, email=email, 
                        last_4_digits=last_4_digits, stripe_id=stripe_id)
         new_user.set_password(password)
-
         new_user.save()
         return new_user 
-
