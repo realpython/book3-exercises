@@ -225,38 +225,48 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         #verify the user was actually stored in the database.
         create_mock.assert_called_with('pyRock','python@rocks.com','bad_password','4242',new_cust.id)
 
-            
+    
+    def get_MockUserForm(self):
+        from django import forms
+        class MockUserForm(forms.Form):
 
-    @mock.patch('payments.models.User.save', side_effect=IntegrityError)
-    def test_registering_user_twice_cause_error_msg(self, save_mock):
-        
-        #create the request used to test the view
-        self.request.session = {}
-        self.request.method='POST'
-        self.request.POST = {'email' : 'python@rocks.com',
+            def is_valid(self):
+                return True
+
+            @property
+            def cleaned_data(self):
+                return {'email' : 'python@rocks.com',
                              'name' : 'pyRock',
                              'stripe_token' : '...',
                              'last_4_digits' : '4242',
                              'password' : 'bad_password',
                              'ver_password' : 'bad_password',
                             }
+            def addError(self, erro):
+                pass
 
-        #create our expected form
-        expected_form = UserForm(self.request.POST)
-        expected_form.is_valid()
-        expected_form.addError('python@rocks.com is already a member')
+        return MockUserForm()
+
+    @mock.patch('payments.views.UserForm', get_MockUserForm)
+    @mock.patch('payments.models.User.save', side_effect=IntegrityError)
+    def test_registering_user_twice_cause_error_msg(self, save_mock):
+        
+        #create the request used to test the view
+        self.request.session = {}
+        self.request.method='POST'
+        self.request.POST = {}        
 
         #create the expected html
         html = render_to_response('register.html',
         {
-          'form': expected_form,
+          'form': self.get_MockUserForm(),
           'months': range(1, 12),
           'publishable': settings.STRIPE_PUBLISHABLE,
           'soon': soon(),
           'user': None,
           'years': range(2011, 2036),
         })
-
+        
 
 
         #mock out stripe so we don't hit their server
