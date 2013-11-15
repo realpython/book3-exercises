@@ -34,7 +34,7 @@ from pprint import pformat
 class FormTesterMixin(): 
 
 
-    def assertFormError(self, form_cls, expected_error_name, expected_error_msg,
+    def shouldHaveFormError(self, form_cls, expected_error_name, expected_error_msg,
                         data):
 
         from pprint import pformat
@@ -59,7 +59,7 @@ class FormTests(SimpleTestCase, FormTesterMixin):
         ]
 
         for invalid_data in invalid_data_list:
-            self.assertFormError(SigninForm,
+            self.shouldHaveFormError(SigninForm,
                                  invalid_data['error'][0],
                                  invalid_data['error'][1],
                                  invalid_data["data"])
@@ -73,7 +73,7 @@ class FormTests(SimpleTestCase, FormTesterMixin):
             ]
 
         for invalid_data in invalid_data_list:
-             self.assertFormError(CardForm,
+             self.shouldHaveFormError(CardForm,
                                   invalid_data['error'][0],
                                   invalid_data['error'][1],
                                    invalid_data["data"])
