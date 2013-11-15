@@ -22,3 +22,11 @@ class UserModelTest(TestCase):
         contacts = ContactForm.objects.all()
         self.assertTrue(contacts.ordered)
         self.assertEquals(self.firstUser, contacts[0])
+
+from .forms import ContactView
+
+class ContactViewTests(SimpleTestCase):
+
+    def test_displayed_fields(self):
+        expected_fields = ['name','email','topic','message']
+        self.assertEquals(ContactView.Meta.fields, expected_fields)
