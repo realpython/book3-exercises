@@ -1,4 +1,4 @@
-Django==1.5
+Django==1.6
 mock==1.0.1
 requests==2.0.0
 stripe==1.9.2
