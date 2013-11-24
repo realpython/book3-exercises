@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import resolve
-from .views import index
+from main.views import index
 import unittest
 from django.shortcuts import render_to_response
 
