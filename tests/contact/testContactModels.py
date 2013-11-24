@@ -1,5 +1,5 @@
 from django.test import TestCase, SimpleTestCase
-from .models import ContactForm
+from contact.models import ContactForm
 from datetime import datetime, timedelta
 
 
@@ -23,7 +23,7 @@ class UserModelTest(TestCase):
         self.assertTrue(contacts.ordered)
         self.assertEquals(self.firstUser, contacts[0])
 
-from .forms import ContactView
+from contact.forms import ContactView
 
 class ContactViewTests(SimpleTestCase):
 

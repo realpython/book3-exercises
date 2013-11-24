@@ -1,108 +1,11 @@
-from django.test import TestCase, SimpleTestCase
-from .models import User
-import mock
+from payments.views import sign_in, sign_out, register, edit
+from django.test import TestCase
+from payments.models import User
 from django.db import IntegrityError
-
-class UserModelTest(TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        cls.test_user = User(email = "j@j.com", name ='test user')
-        cls.test_user.save()
-
-    def test_user_to_string_print_email(self):
-        self.assertEquals(str(self.test_user), "j@j.com")
-       
-    def test_get_by_id(self):
-        self.assertEquals(User.get_by_id(1), self.test_user)
-
-    def test_create_user_function_stores_in_database(self):
-        user = User.create("test", "test@t.com","tt","1234","22")
-        self.assertEquals(User.objects.get(email="test@t.com"), user)
-
-    def test_create_user_allready_exists_throws_IntegrityError(self):
-        from django.db import IntegrityError
-        self.assertRaises(IntegrityError, User.create, "test user",
-                          "j@j.com","jj","1234",89)
-
-
-
-from .forms import SigninForm, CardForm, UserForm
-import unittest
-from pprint import pformat
-
-class FormTesterMixin(): 
-
-
-    def shouldHaveFormError(self, form_cls, expected_error_name, expected_error_msg,
-                        data):
-
-        from pprint import pformat
-        test_form = form_cls(data=data)
-        #if we get an error then the form should not be valid
-        self.assertFalse(test_form.is_valid())
-
-        self.assertEquals(test_form.errors[expected_error_name],
-                           expected_error_msg,
-                           msg= "Expected %s : Actual %s : using data %s" % 
-                           (test_form.errors[expected_error_name], 
-                           expected_error_msg, pformat(data)))
-
-class FormTests(SimpleTestCase, FormTesterMixin):
-    
-    def test_signin_form_data_validation_for_invalid_data(self):
-        invalid_data_list = [
-            {'data': { 'email' : 'j@j.com'},
-             'error': ('password' , [u'This field is required.'])},
-            {'data': {'password' : '1234'},
-             'error' : ('email' , [u'This field is required.'])}
-        ]
-
-        for invalid_data in invalid_data_list:
-            self.shouldHaveFormError(SigninForm,
-                                 invalid_data['error'][0],
-                                 invalid_data['error'][1],
-                                 invalid_data["data"])
-
-    def test_card_form_data_validation_for_invalid_data(self):
-        invalid_data_list = [
-            {'data': {'last_4_digits' : '123'},
-             'error' : ('last_4_digits', [u'Ensure this value has at least 4 characters (it has 3).'])},
-            {'data': {'last_4_digits' : '12345'},
-             'error' : ('last_4_digits', [u'Ensure this value has at most 4 characters (it has 5).'])}
-            ]
-
-        for invalid_data in invalid_data_list:
-             self.shouldHaveFormError(CardForm,
-                                  invalid_data['error'][0],
-                                  invalid_data['error'][1],
-                                   invalid_data["data"])
-
-
-    def test_user_form_passwords_match(self):
-        form = UserForm({'name' : 'jj', 'email': 'j@j.com', 'password' : '1234',
-                         'ver_password' : '1234', 'last_4_digits' : '3333',
-                         'stripe_token': '1'})
-
-        self.assertTrue(form.is_valid())
-        #this will throw an error if it doesn't clean correctly
-        self.assertIsNotNone(form.clean())
-
-    def test_user_form_passwords_dont_match_throws_error(self):
-        form = UserForm({'name' : 'jj', 'email': 'j@j.com', 'password' : '234',
-                         'ver_password' : '1234', 'last_4_digits' : '3333',
-                         'stripe_token': '1'})
-
-        self.assertFalse(form.is_valid())
-
-        from django import forms
-        self.assertRaisesMessage(forms.ValidationError, 
-                                 "Passwords do not match",
-                                 form.clean)
-
-from .views import sign_in, sign_out, register, edit
+import mock
 from django.core.urlresolvers import resolve
 from django.shortcuts import render_to_response
+from payments.forms import SigninForm, CardForm, UserForm
 
 class ViewTesterMixin(object):
 
@@ -160,7 +63,7 @@ class SignOutPageTests(TestCase, ViewTesterMixin):
         self.request.session = {"user":"dummy"}
 
 import django_ecommerce.settings as settings
-from .views import soon
+from payments.views import soon
 class RegisterPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
@@ -287,8 +190,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(len(users), 0)
 
 
-
-
 class EditPageTests(TestCase, ViewTesterMixin):
 
     #edit page test
@@ -300,30 +201,6 @@ class EditPageTests(TestCase, ViewTesterMixin):
                                         status_code=302,
                                        )
 
-from .views import Customer
-
-class CustomerTests(TestCase):
 
 
-    def test_create_subscription(self):
-    
-        with mock.patch('stripe.Customer.create') as create_mock:
 
-            cust_data = {'description':'test user', 'email':'test@test.com',
-                         'card':'4242','plan':'gold'}
-            cust = Customer.create("subscription", **cust_data)
-
-            create_mock.assert_called_with(**cust_data)            
-                    
-    def test_create_one_time_bill(self):
-
-        with mock.patch('stripe.Charge.create') as charge_mock:
-
-            cust_data = {'description' :'email',
-                         'card' : '1234',
-                         'amount':'5000',
-                         'currency':'usd'}
-            
-            cust = Customer.create("one_time", **cust_data)
-
-            charge_mock.assert_called_with(**cust_data)
