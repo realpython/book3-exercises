@@ -53,27 +53,23 @@ def register(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-          
-            cd = form.cleaned_data
-              
-            #with transaction.atomic():
             #update based on your billing method (subscription vs one time)
             customer = Customer.create("subscription",
               email = form.cleaned_data['email'],
               description = form.cleaned_data['name'],
               card = form.cleaned_data['stripe_token'],
               plan="gold",
-                )
-
-            with transaction.atomic():
-                user = User.create(cd['name'], cd['email'], cd['password'],
-                               cd['last_4_digits'])
-        
-                with transaction.atomic():
-                    user.stripe_id = customer.id if customer else None
-                    user.save()
+            )
+     
+            cd = form.cleaned_data
             try:
-                pass    
+                user = User.create(cd['name'], cd['email'], cd['password'],
+                                   cd['last_4_digits'])
+                
+                if customer:
+                    user.stripe_id = customer.id
+                    user.save()
+
             except IntegrityError:
                 form.addError(cd['email'] + ' is already a member')
             else:
@@ -81,8 +77,8 @@ def register(request):
                 return HttpResponseRedirect('/')
 
     else:
-        form = UserForm()
-     
+      form = UserForm()
+
     return render_to_response(
         'register.html',
         {
@@ -94,7 +90,7 @@ def register(request):
           'years': range(2011, 2036),
         },
         context_instance=RequestContext(request)
-    )
+     )
 
 def edit(request):
     uid = request.session.get('user')
