@@ -7,6 +7,8 @@ from payments.models import User
 import django_ecommerce.settings as settings
 import stripe
 import datetime
+import socket
+from django.db import transaction
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -51,18 +53,27 @@ def register(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
+          
+            cd = form.cleaned_data
+              
+            #with transaction.atomic():
             #update based on your billing method (subscription vs one time)
             customer = Customer.create("subscription",
               email = form.cleaned_data['email'],
               description = form.cleaned_data['name'],
               card = form.cleaned_data['stripe_token'],
               plan="gold",
-            )
-     
-            cd = form.cleaned_data
-            try:
+                )
+
+            with transaction.atomic():
                 user = User.create(cd['name'], cd['email'], cd['password'],
-                                   cd['last_4_digits'], customer.id)
+                               cd['last_4_digits'])
+        
+                with transaction.atomic():
+                    user.stripe_id = customer.id if customer else None
+                    user.save()
+            try:
+                pass    
             except IntegrityError:
                 form.addError(cd['email'] + ' is already a member')
             else:
@@ -70,8 +81,8 @@ def register(request):
                 return HttpResponseRedirect('/')
 
     else:
-      form = UserForm()
-
+        form = UserForm()
+     
     return render_to_response(
         'register.html',
         {
@@ -122,13 +133,15 @@ def edit(request):
         context_instance=RequestContext(request)
     )
 
-class Customer(object):
+class Customer(object): 
 
     @classmethod
     def create(cls, billing_method="subscription", **kwargs):
-        if billing_method == "subscription":
-            return stripe.Customer.create(**kwargs)
-        elif billing_method == "one_time":
-            return stripe.Charge.create(**kwargs)
-
+        try:
+            if billing_method == "subscription":
+                return stripe.Customer.create(**kwargs)
+            elif billing_method == "one_time":
+                return stripe.Charge.create(**kwargs)
+        except socket.error:
+            return None
 
