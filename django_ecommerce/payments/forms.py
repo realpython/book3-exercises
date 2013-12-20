@@ -17,8 +17,8 @@ class CardForm(PaymentForm):
 class UserForm(CardForm):
     name = forms.CharField(required = True)
     email = forms.EmailField(required = True)
-    password = forms.CharField(required = True, label=(u'Password'), widget=forms.PasswordInput(render_value=False))
-    ver_password = forms.CharField(required = True, label=(u' Verify Password'), widget=forms.PasswordInput(render_value=False))
+    password = forms.CharField(required = True, label=('Password'), widget=forms.PasswordInput(render_value=False))
+    ver_password = forms.CharField(required = True, label=(' Verify Password'), widget=forms.PasswordInput(render_value=False))
 
     def clean(self):
         cleaned_data = self.cleaned_data
