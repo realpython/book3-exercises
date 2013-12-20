@@ -1,6 +1,6 @@
 from payments.views import sign_in, sign_out, register, edit
 from django.test import TestCase
-from payments.models import User
+from payments.models import User, UnpaidUsers
 from django.db import IntegrityError
 import mock
 from django.core.urlresolvers import resolve
@@ -8,6 +8,8 @@ from django.shortcuts import render_to_response
 from payments.forms import SigninForm, CardForm, UserForm
 import socket
 import unittest
+from django.db import transaction
+from django.db import DatabaseError
 
 class ViewTesterMixin(object):
 
@@ -89,7 +91,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         self.request = request_factory.get(self.url)
 
 
-    @unittest.skip("testing")
     def test_invalid_form_returns_registration_page(self):
 
         with mock.patch('payments.forms.UserForm.is_valid') as user_mock:
@@ -116,7 +117,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
     
     @mock.patch('payments.views.Customer.create', return_value =
                 get_mock_cust())
-    #@mock.patch.object(User,'create')
     def test_registering_new_user_returns_succesfully(self, stripe_mock):
 
         self.request.session = {}
@@ -165,7 +165,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         return MockUserForm()
 
-    @unittest.skip("testing")
     @mock.patch('payments.views.UserForm', get_MockUserForm)
     @mock.patch('payments.models.User.save', side_effect=IntegrityError)
     def test_registering_user_twice_cause_error_msg(self, save_mock):
@@ -207,8 +206,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(len(users), 0)
 
     
-    #@mock.patch('payments.views.UserForm', get_MockUserForm)
-    #@mock.patch('payments.models.User.save', side_effect=IntegrityError)
     def test_registering_user_when_strip_is_down(self):
         
         #create the request used to test the view
@@ -236,9 +233,45 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(len(users), 1)
             self.assertEquals(users[0].stripe_id, '')
 
+            #check the associated table got updated.
+            unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(unpaid), 1)
+            self.assertIsNotNone(unpaid[0].last_notification)
 
 
+    @mock.patch('payments.models.UnpaidUsers.save', side_effect =
+                IntegrityError)
+    def test_registering_user_when_strip_is_down_all_or_nothing(self, save_mock):
+        
+        #create the request used to test the view
+        self.request.session = {}
+        self.request.method='POST'
+        self.request.POST = {'email' : 'python@rocks.com',
+                             'name' : 'pyRock',
+                             'stripe_token' : '...',
+                             'last_4_digits' : '4242',
+                             'password' : 'bad_password',
+                             'ver_password' : 'bad_password',
+                            }        
 
+
+        #mock out stripe so and ask it to throw a connection error
+        with mock.patch('stripe.Customer.create', side_effect =
+                        socket.error("can't connect to stripe")) as stripe_mock:
+
+            #run the test
+            resp = register(self.request)
+
+        
+            #assert there is a record in the database without stripe id.
+            users = User.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(users), 0)
+
+            #check the associated table got updated.
+            unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(unpaid), 0)
+
+    
 class EditPageTests(TestCase, ViewTesterMixin):
 
     #edit page test

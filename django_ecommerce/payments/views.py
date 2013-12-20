@@ -1,9 +1,9 @@
-from django.db import IntegrityError
+from django.db import IntegrityError, DatabaseError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from payments.forms import PaymentForm, SigninForm, CardForm, UserForm
-from payments.models import User
+from payments.models import User, UnpaidUsers
 import django_ecommerce.settings as settings
 import stripe
 import datetime
@@ -60,15 +60,19 @@ def register(request):
               card = form.cleaned_data['stripe_token'],
               plan="gold",
             )
-     
-            cd = form.cleaned_data
+
+            
+            cd = form.cleaned_data            
             try:
-                user = User.create(cd['name'], cd['email'], cd['password'],
-                                   cd['last_4_digits'])
-                
-                if customer:
-                    user.stripe_id = customer.id
-                    user.save()
+                with transaction.atomic():
+                    user = User.create(cd['name'], cd['email'], cd['password'],
+                       cd['last_4_digits'])
+   
+                    if customer:
+                        user.stripe_id = customer.id
+                        user.save()
+                    else:
+                        UnpaidUsers(email=cd['email']).save()
 
             except IntegrityError:
                 form.addError(cd['email'] + ' is already a member')
