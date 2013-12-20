@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from datetime import datetime
+from django.db import IntegrityError
+
 
 class User(AbstractBaseUser):
     name = models.CharField(max_length=255)
@@ -26,3 +29,13 @@ class User(AbstractBaseUser):
         new_user.set_password(password)
         new_user.save()
         return new_user 
+
+class UnpaidUsers(models.Model):
+    email = models.CharField(max_length=255, unique=True)
+    last_notification = models.DateTimeField(default=datetime.now())
+
+    def do_save(self, throw_error=None):
+        self.save()
+        if throw_error:
+            raise IntegrityError
+
