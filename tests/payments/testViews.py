@@ -28,15 +28,15 @@ class ViewTesterMixin(object):
     
     def test_resolves_to_correct_view(self):
         test_view = resolve(self.url)
-        self.assertEquals(test_view.func, self.view_func)
+        self.assertEqual(test_view.func, self.view_func)
 
     def test_returns_appropriate_respose_code(self):
         resp = self.view_func(self.request)
-        self.assertEquals(resp.status_code, self.status_code)
+        self.assertEqual(resp.status_code, self.status_code)
 
     def test_returns_correct_html(self):
         resp = self.view_func(self.request)
-        self.assertEquals(resp.content, self.expected_html)
+        self.assertEqual(resp.content, self.expected_html)
 
 class SignInPageTests(TestCase, ViewTesterMixin):
 
@@ -58,7 +58,7 @@ class SignOutPageTests(TestCase, ViewTesterMixin):
     def setUpClass(cls):
         ViewTesterMixin.setupViewTester('/sign_out',
                                         sign_out,
-                                        "", #a redirect will return no html
+                                        b"", #a redirect will return no html
                                         status_code=302,
                                         session={"user":"dummy"},
                                        )
@@ -99,10 +99,10 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.request.method = 'POST'
             self.request.POST = None
             resp = register(self.request)
-            self.assertEquals(resp.content, self.expected_html)
+            self.assertEqual(resp.content, self.expected_html)
 
             #make sure that we did indeed call our is_valid function
-            self.assertEquals(user_mock.call_count, 1)
+            self.assertEqual(user_mock.call_count, 1)
 
     
     def get_mock_cust():
@@ -130,15 +130,15 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         resp = register(self.request)
 
-        self.assertEquals(resp.content, "")
-        self.assertEquals(resp.status_code, 302)
+        self.assertEqual(resp.content, b"")
+        self.assertEqual(resp.status_code, 302)
 
         users = User.objects.filter(email="python@rocks.com")
-        self.assertEquals(len(users), 1)
-        self.assertEquals(users[0].stripe_id, '1234')
+        self.assertEqual(len(users), 1)
+        self.assertEqual(users[0].stripe_id, '1234')
 
 
-        #self.assertEquals(self.request.session['user'], new_user.pk)
+        #self.assertEqual(self.request.session['user'], new_user.pk)
         #verify the user was actually stored in the database.
         #create_mock.assert_called_with('pyRock','python@rocks.com','bad_password','4242')
 
@@ -196,13 +196,13 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         
             #verify that we did things correctly
-            self.assertEquals(resp.content, html.content)
-            self.assertEquals(resp.status_code, 200)
-            self.assertEquals(self.request.session, {})
+            self.assertEqual(resp.content, html.content)
+            self.assertEqual(resp.status_code, 200)
+            self.assertEqual(self.request.session, {})
 
             #assert there is no records in the database.
             users = User.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(users), 0)
+            self.assertEqual(len(users), 0)
 
     
     def test_registering_user_when_strip_is_down(self):
@@ -229,12 +229,12 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         
             #assert there is a record in the database without stripe id.
             users = User.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(users), 1)
-            self.assertEquals(users[0].stripe_id, '')
+            self.assertEqual(len(users), 1)
+            self.assertEqual(users[0].stripe_id, '')
 
             #check the associated table got updated.
             unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(unpaid), 1)
+            self.assertEqual(len(unpaid), 1)
             self.assertIsNotNone(unpaid[0].last_notification)
 
 
@@ -264,11 +264,11 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         
             #assert there is a record in the database without stripe id.
             users = User.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(users), 0)
+            self.assertEqual(len(users), 0)
 
             #check the associated table got updated.
             unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(unpaid), 0)
+            self.assertEqual(len(unpaid), 0)
 
     
 class EditPageTests(TestCase, ViewTesterMixin):
@@ -278,7 +278,7 @@ class EditPageTests(TestCase, ViewTesterMixin):
     def setUpClass(cls):
         ViewTesterMixin.setupViewTester('/edit',
                                         edit,
-                                        '', #a redirect will return no html
+                                        b'', #a redirect will return no html
                                         status_code=302,
                                        )
 
