@@ -22,9 +22,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(SITE_ROOT, 'test.db'),
-        'ATOMIC_REQUESTS': True,
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_db',
+        'USER': 'djangousr',
+	    'PASSWORD': 'djangousr',
+	    'HOST' : 'localhost',
+        'PORT' : '5432',
     }
 } 
 

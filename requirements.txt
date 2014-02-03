@@ -1,5 +1,5 @@
-Django==1.6
-mock==1.0.1
-requests==2.0.0
-stripe==1.9.2
-wsgiref==0.1.2
+Django
+mock
+requests
+stripe
+psycopg2
