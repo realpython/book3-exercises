@@ -1,0 +1,17 @@
+@font-face {
+	font-family: 'starjedi';
+	/*IE9 */
+	src: url('../fonts/Starjedi.eot'); 
+	/* Chrome, FF, Opera */
+	src: url('../fonts/Starjedi.woff') format('woff'),
+	/* android, safari, iOS */
+	url('../fonts/Starjedi.ttf') format('truetype'), 
+	/* legacy safari */
+	url('../fonts/Starjedi.svg') format('svg'); 
+	font-weight: normal;
+	font-style: normal;
+}
+
+h1 {
+  font-family: 'starjedi', sans-serif;
+}
