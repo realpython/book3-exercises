@@ -12,6 +12,9 @@
 	font-style: normal;
 }
 
-h1 {
+h1,
+.nav li,
+.navbar-brand
+{
   font-family: 'starjedi', sans-serif;
 }

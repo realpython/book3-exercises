@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mos Eisley's Cantina</title>
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
-    <link href="{% static "css/mec.css" %}" rel="stylesheet">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -17,10 +16,68 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <link href="{% static "css/mec.css" %}" rel="stylesheet">
+    <!-- custom style of carousel template from bootstrap.com -->
+    <link href="carousel.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Welcome to Mos Eisley's Cantina</h1>
+    <!-- NAVBAR ==========================================   -->
+    <div class="navbar-wrapper">
+      <div class="container">
 
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+	      <a class="navbar-brand" href="{% url 'home' %}">Mos Eisley's Cantina</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+	        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="/pages/about">About</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                {% if user %}
+                  <li><a href="{% url 'sign_out' %}">Logout</a></li>
+                {% else %}
+                  <li><a href="{% url 'sign_in' %}">Login</a></li>
+                  <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+	      </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="container">
+      <div id="messages">
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{message.tags}}">
+            <a class="close" data-dismiss="alert">×</a>
+              {{message}}
+         </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+
+      {% block content %}
+      {% endblock %}
+
+
+      <footer>
+	<p class="pull-right"><a href="">Back to top</a></p> 
+	<p>&copy; 2014 <a href="http://j1z0.com">Your Name Here</a> &middot;  Powered by Django. </p>
+      </footer>
+
+    </div><!-- /.container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{% static "js/jquery.min.js" %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
