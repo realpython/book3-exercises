@@ -75,11 +75,11 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         html = render_to_response('register.html',
         {
           'form': UserForm(),
-          'months': range(1, 12),
+          'months': list(range(1, 12)),
           'publishable': settings.STRIPE_PUBLISHABLE,
           'soon': soon(),
           'user': None,
-          'years': range(2011, 2036),
+          'years': list(range(2011, 2036)),
         })
         ViewTesterMixin.setupViewTester('/register',
                                         register,
@@ -177,11 +177,11 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         html = render_to_response('register.html',
         {
           'form': self.get_MockUserForm(),
-          'months': range(1, 12),
+          'months': list(range(1, 12)),
           'publishable': settings.STRIPE_PUBLISHABLE,
           'soon': soon(),
           'user': None,
-          'years': range(2011, 2036),
+          'years': list(range(2011, 2036)),
         })
         
 
