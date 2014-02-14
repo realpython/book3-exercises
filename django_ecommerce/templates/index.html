@@ -1,49 +1,50 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
-  {% block content %}
+{% block content %}
 
-  <div class="jumbotron">
-    <img src="http://tischlerei-weissenbacher.at/img/responsive_web_design.png">
-    <h1>Please put some text here.</h1>
-    <p class="lead">If you want, you can add some text here as well. Or not.</p>
-    <a class="btn btn-large btn-success" href="/register">Register today to get started!</a><br/><br/><br/>
-    <a href="https://twitter.com/RealPython" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @RealPython</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="https://twitter.com/intent/tweet?screen_name=RealPython" class="twitter-mention-button" data-size="large">Send us a Tweet to @RealPython</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.realpython.com" data-text="Django for the Non-Programmer #realpython -" data-size="large">Share!</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-  </div>
-
- <hr>
-
- <div class="row-fluid marketing">
-   <div class="span6">
-     <h3>(1) One</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>
-     <h3>(2) Two</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>
-     <h3>(3) Three</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>            
- </div>
-
-   <div class="span6">
-     <h3>(4) Four</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>
-     <h3>(5) Five</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>            
-     <h3>(6) Six</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut dui ac nisi vestibulum accumsan. Praesent gravida nulla vitae arcu blandit, non congue elit tempus. Suspendisse quis vestibulum diam.</p>
-     </p>
-   </div>
-   
- </div>
-
-{% endblock %}
+<!-- Carousel ================================================== -->
+    <section id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <figure class="item active">
+		<img src="{% static 'img/darth.jpg' %}" alt="Join the Dark Side">
+          <div class="container">
+            <figcaption class="carousel-caption">
+              <h1>Join the Dark Side</h1>
+              <p>Or the light side.  Doesn't matter.  If your into StarWars then this is the place for you.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            </figcaption>
+          </div>
+        </figure>
+        <figure class="item">
+		<img src="{% static 'img/star-wars-battle.jpg' %}" alt="Wage War">
+          <div class="container">
+            <figcaption class="carousel-caption">
+              <h1>Wage War</h1>
+              <p>Daily chats, Weekly Gamming sessions, Monthly real-life battle re-inactments.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">I'm ready to fight</a></p>
+            </figcaption>
+          </div>
+        </figure>
+        <figure class="item">
+		<img src="{% static 'img/star-wars-cast.jpg' %}" alt="Meet People">
+          <div class="container">
+            <figcaption class="carousel-caption">
+              <h1>Meet fellow StarWars Fans</h1>
+              <p>Join forces with fellow padwans and Jedi who lives near you.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Check the Members Map</a></p>
+            </figcaption>
+          </div>
+        </figure>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </section>
+<!-- /.carousel -->
+{% endblock content %}
