@@ -18,3 +18,7 @@ h1,
 {
   font-family: 'starjedi', sans-serif;
 }
+.navbar-brand
+{
+    height: 40px;
+}
