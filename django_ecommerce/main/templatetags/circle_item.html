@@ -1,0 +1,10 @@
+{% load staticfiles %}
+
+<div class="col-lg-4">
+    <img class="img-circle" src="{% static 'img/{{img}}' %}" width=140
+    height=140" alt="{{img}}">
+    <h2>{{ heading }}</h2>
+    <p>{{ caption }} </p>
+    <p><a class="btn btn-default" href="{% url '{{ button_link }}' %}"
+        role="button">{{button_title}}</a></p>
+</div>

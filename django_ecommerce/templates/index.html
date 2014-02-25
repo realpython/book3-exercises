@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-
+{% load marketing %}
 {% block content %}
 
 <!-- Carousel ================================================== -->
@@ -43,4 +43,17 @@
           <span class="glyphicon glyphicon-chevron-right"></span></a>
     </section>
 <!-- /.carousel -->
+
+<!-- marketing content -->
+<section class="container marketing">
+  <!-- Three columns of text below the carousel -->
+  <div class="row">
+    {% circle_header_item img_name="yoda.jpg" heading="Hone your Jedi Skills" caption="All members have access to our unique training and achievemnts latters.  Show of your StarWars skills, progress through the levels and show everyone who the top Jedi Master is!" %}
+    
+    {% circle_header_item img_name="clone_army.jpg" heading="Build your Clan" caption="Engage in meanigful conversation, or bloodthirsty battle! If it's related to StarWars you better belive we do it it. :)" %}
+    
+    {% circle_header_item img_name="leia.jpg" heading="Find Love" caption="Everybody knows StarWars fans are the best mates for StarWars fans.  Find your Princess Leia or Hans Solo and explore the starts together." button_title="Sign Up Now" %}
+
+  </div> <!-- /.row -->
+</section>
 {% endblock content %}
