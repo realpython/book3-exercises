@@ -11,7 +11,7 @@ def contact(request):
         our_form.save()
         messages.add_message(request, messages.INFO, 'Your message has been sent. Thank you.')
         return HttpResponseRedirect('/')
-    t = loader.get_template('contact.html')
+    t = loader.get_template('contact/contact.html')
     c = RequestContext(request, {'form': form,})
     return HttpResponse(t.render(c))
 
