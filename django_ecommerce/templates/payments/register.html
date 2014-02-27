@@ -26,7 +26,7 @@
         </div>
       {% endif %}
       {% for field in form.visible_fields %}
-      {% include "payments/field.html" %}
+      {% include "payments/_field.html" %}
       {% endfor %}
       <div id="change-card" class="clearfix"{% if not form.last_4_digits.value %} style="display: none"{% endif %}>
         Card
@@ -35,7 +35,7 @@
           (<a href="#">change</a>)
         </div>
       </div>      
-      {% include "payments/cardform.html" %}
+      {% include "payments/_cardform.html" %}
     </form>
   </div>
 </div>  
