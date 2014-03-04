@@ -23,17 +23,13 @@ h1,
     height: 40px;
 }
 
-#darth_caption
-{
-  top: 0%;
-  left: 10%;
-  right: 60%;
-  text-align:left;
+@media screen and (min-width: 768px){
+  #darth_caption
+  {
+    top: 0%;
+    left: 10%;
+    right: 60%;
+     text-align:left;
+  }
 }
 
-@media screen and (min-width: 992px){
-    #starwars-fans
-    {
-        color : red;
-    }
-}
