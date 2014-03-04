@@ -12,10 +12,10 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
-        <figure class="item active">
+        <figure class="item active row">
 		<img src="{% static 'img/darth.jpg' %}" alt="Join the Dark Side">
-            <figcaption class="carousel-caption">
-              <h1>Join the Dark Side</h1>
+            <figcaption id="darth_caption" class="carousel-caption" >
+              <h1 class>Join the Dark Side</h1>
               <p>Or the light side.  Doesn't matter.  If your into StarWars then this is the place for you.</p>
               <p><a class="btn btn-lg btn-primary" href="{% url 'register' %}" role="button">Sign up today</a></p>
             </figcaption>
@@ -31,7 +31,7 @@
         <figure class="item">
 		<img src="{% static 'img/star-wars-cast.jpg' %}" alt="Meet People">
             <figcaption class="carousel-caption">
-              <h1>Meet fellow StarWars Fans</h1>
+              <h1 id="starwars-fans">Meet fellow StarWars Fans</h1>
               <p>Join forces with fellow padwans and Jedi who lives near you.</p>
               <p><a class="btn btn-lg btn-primary" href="#" role="button">Check the Members Map</a></p>
             </figcaption>
