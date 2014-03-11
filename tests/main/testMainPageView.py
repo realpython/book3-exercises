@@ -1,8 +1,10 @@
 from django.test import TestCase
 from django.core.urlresolvers import resolve
-from main.views import index, market_items
+from main.views import index
 import unittest
 from django.shortcuts import render_to_response
+from main.models import Marketing_items
+
 
 class MainPageTests(TestCase): 
 
@@ -23,6 +25,7 @@ class MainPageTests(TestCase):
         self.assertEqual(resp.status_code,200)
 
     def test_returns_exact_html (self):
+        market_items = Marketing_items.objects.all()
         resp = index(self.request)
         self.assertEqual(resp.content,
                          render_to_response("main/index.html",
