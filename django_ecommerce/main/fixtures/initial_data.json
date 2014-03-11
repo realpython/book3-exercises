@@ -1,0 +1,31 @@
+[
+  {
+    "model": "main.Marketing_items",
+    "pk": 1,
+    "fields":{
+       "img":"yoda.jpg",
+       "heading":"Hone your Jedi Skills", 
+       "caption":"All members have access to our unique training and achievemnts ladders.  Show of your StarWars skills, progress through the levels and show everyone who the top Jedi Master is!"
+            }
+    },
+    {
+     "model": "main.Marketing_items",
+     "pk": 2,
+     "fields":{
+        "img":"clone_army.jpg", 
+        "heading":"Build your Clan", 
+        "caption":"Engage in meanigful conversation, or bloodthirsty battle! If it's related to StarWars you better belive we do it :)"
+            }
+    },
+    {
+     "model": "main.Marketing_items",
+     "pk": 3,
+     "fields":{
+        "img":"leia.jpg", 
+        "heading":"Find Love", 
+        "caption":"Everybody knows StarWars fans arethe best mates for StarWars fans.  Find your Princess Leia or Hans Solo and explore the starts together.", 
+        "button_title":"Sign Up Now"
+        }
+     }           
+]
+
