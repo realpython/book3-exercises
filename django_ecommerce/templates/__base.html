@@ -77,8 +77,14 @@
 	<p class="pull-left">&copy; 2014 <a href="http://j1z0.com">The Jedi Council</a></p> <p class="text-center"> &middot;  Powered by about 37 AT-AT Walkers, Python 3 and Django 1.6 &middot; </p>
       </footer>
 
-    </section><!-- /.container -->
+    </section>
     <!-- all js here so page loads faster -->
+    <script src="https://js.stripe.com/v2/" type="text/javascript"></script>
+    <script type="text/javascript">
+      //<![CDATA[
+      Stripe.publishableKey = '{{ publishable }}';
+      //]]>
+    </script>   
     <script src="{% static "js/jquery-1.11.0.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/application.js" %}"></script>
