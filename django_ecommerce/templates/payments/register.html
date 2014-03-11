@@ -1,16 +1,14 @@
 {% extends "__base.html" %}
+{% load staticfiles %}
+{% block extra_css %}
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<div class="row">
-  <div class="span6 columns">
-  </div>
-</div>
-<div class="page-header">
-  <h1>Register Today!</h1>
-</div>
-<div class="row">
-  <div class="span6 columns">
-    <form id="user_form" accept-charset="UTF-8" action="{% url 'register' %}" class="form-stacked"  method="post">
-      {% csrf_token %}
+  <section class="container">
+    <form id="user_form" accept-charset="UTF-8" action="{% url 'register' %}"
+        class="form-signin" role="form"  method="post"> {% csrf_token %}
+      <h2 class="form-signin-heading">Register Today!</h2>
       {% if form.is_bound and not form.is_valid %}
         <div class="alert alert-{{error.tags}}"> <a class="close" data-dismiss="alert">×</a>
           <div class="errors">
@@ -37,6 +35,5 @@
       </div>      
       {% include "payments/_cardform.html" %}
     </form>
-  </div>
-</div>  
+  </section>
 {% endblock %}
