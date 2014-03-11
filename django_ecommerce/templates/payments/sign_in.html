@@ -1,12 +1,12 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
 {% block extra_css %}
-
-<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-   <div class="container">
-      <form accept-charset="UTF-8" action="{% url 'sign_in' %}" class="form-signin" role="form" method="post">{% csrf_token %}
+   <section class="container">
+      <form accept-charset="UTF-8" action="{% url 'sign_in' %}" 
+	            class="form-signin" role="form" method="post">{% csrf_token %}
 	<h2 class="form-signin-heading">Sign in</h2>
         {% if form.is_bound and not form.is_valid %}
         <div class="alert-message block-message error">
@@ -25,5 +25,5 @@
         {% for field in form %}{% include "payments/_field.html" %}{% endfor %}
           <input class="btn btn-lg btn-primary btn-block" name="commit" type="submit" value="Sign in">
       </form>
-   </div>
+   </section>
 {% endblock %}
