@@ -42,7 +42,7 @@ class SignInPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
-        html = render_to_response('sign_in.html',
+        html = render_to_response('payments/sign_in.html',
         {
           'form': SigninForm(),
           'user': None
@@ -72,7 +72,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
-        html = render_to_response('register.html',
+        html = render_to_response('payments/register.html',
         {
           'form': UserForm(),
           'months': list(range(1, 12)),
@@ -174,7 +174,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         self.request.POST = {}        
 
         #create the expected html
-        html = render_to_response('register.html',
+        html = render_to_response('payments/register.html',
         {
           'form': self.get_MockUserForm(),
           'months': list(range(1, 12)),
