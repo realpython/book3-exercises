@@ -8,6 +8,13 @@ body {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+}
+
+.form-signin h2,
+.form-signin p,
+.form-signin label,
+.form-signin .btn
+{
   font-family: 'starjedi', sans-serif;
 }
 .form-signin .form-signin-heading,
