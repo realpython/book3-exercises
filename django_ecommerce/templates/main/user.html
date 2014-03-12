@@ -44,18 +44,7 @@
     </div>
     <div class="col-sm-4"> 
      <div class="row">
-      <section class="info-box" id="user_info">
-        <h1>Jedi Badge</h1>
-	  <img class="img-circle" src="{% static 'img/yoda.jpg' %}" width="140"
-	    height="140" alt="user.avatar"/>
-	<ul>
-	   <li>Rank: Padwan</li>
-	   <li>Name: {{user.name }}</li>
-	   <li>Email: {{user.email }}</li>
-	   <li><a href="#">Show Achievements</a>
-	  </ul>
-        <p>Click <a href="{% url 'edit' %}">here</a> to make changes to your credit card.</p>
-      </section>
+       {% include "main/_jedibadge.html" %}
      </div>
     </div>
   </div>
