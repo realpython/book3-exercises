@@ -27,5 +27,15 @@
         "button_title":"Sign Up Now"
         }
      }, 
-{"pk": 1, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:07:29.778", "user": 2, "status": "A long time ago, in a galaxy far, far away..."}}, {"pk": 2, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:08:18.063", "user": 1, "status": "May the Force be with you"}}, {"pk": 3, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:09:30.479", "user": 3, "status": "Luke, I am your Father."}}, {"pk": 4, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:10:19.204", "user": 3, "status": "I find your lack of faith disturbing"}}, {"pk": 5, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:11:59.934", "user": 1, "status": "Adventure. Heh. Excitement. Heh. A Jedi craves not these things."}}, {"pk": 6, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:13:07.453", "user": 2, "status": "Mos Eisley spaceport. You will never find a more wretched hive of scum and villainy."}}
-]
+
+{"pk": 1, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:07:29.778", "user": 2, "status": "A long time ago, in a galaxy far, far away..."}}, 
+
+{"pk": 2, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:08:18.063", "user": 1, "status": "May the Force be with you"}}, 
+
+{"pk": 3, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:09:30.479", "user": 3, "status": "Luke, I am your Father."}}, 
+
+{"pk": 4, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:10:19.204", "user": 3, "status": "I find your lack of faith disturbing"}}, 
+
+{"pk": 5, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:11:59.934", "user": 1, "status": "Adventure. Heh. Excitement. Heh. A Jedi craves not these things."}}, 
+
+{"pk": 6, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:13:07.453", "user": 2, "status": "Mos Eisley spaceport. You will never find a more wretched hive of scum and villainy."}}]
