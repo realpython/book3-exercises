@@ -3,9 +3,7 @@
 {% load main_gravatar %}
 <section class="info-box" id="user_info">
   <h1>Jedi Badge</h1>
-<!--    <img class="img-circle" src="{% static 'img/yoda.jpg' %}" width="140"
-        height="140" alt="user.avatar"/>-->
-        {% gravatar user.email %}
+        {% gravatar_img user.email %}
     <ul>
       <li>Rank: {{user.rank}}</li>
       <li>Name: {{user.name }}</li>

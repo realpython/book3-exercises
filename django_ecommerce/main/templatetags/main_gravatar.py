@@ -5,7 +5,7 @@ import hashlib
 register = template.Library()
 
 @register.simple_tag
-def gravatar(email, size=140):
+def gravatar_img(email, size=140):
     url = gravatar_url(email, size)
     return '''<img class="img-circle" src="%s" height="%s" width="%s"
             alt="user.avatar" />''' % (url, size, size)
