@@ -3,8 +3,7 @@ from django.core.urlresolvers import resolve
 from main.views import index
 import unittest
 from django.shortcuts import render_to_response
-from main.models import Marketing_items
-
+from main.models import MarketingItem
 
 class MainPageTests(TestCase): 
 
@@ -25,7 +24,7 @@ class MainPageTests(TestCase):
         self.assertEqual(resp.status_code,200)
 
     def test_returns_exact_html (self):
-        market_items = Marketing_items.objects.all()
+        market_items = MarketingItem.objects.all()
         resp = index(self.request)
         self.assertEqual(resp.content,
                          render_to_response("main/index.html",
@@ -49,6 +48,8 @@ class MainPageTests(TestCase):
             #ensure we return the state of the session back to normal 
             self.request.session = {}
            
-            expected_html = render_to_response('main/user.html',{'user': user_mock.get_by_id(1)})
-            self.assertEqual(resp.content, expected_html.content)
+            #we are now sending a lot of state for logged in users, rather than
+            #recreating that all here, let's just check for some text
+            #that should only be present when we are logged in.
+            self.assertContains(resp, "Report back to base")
 

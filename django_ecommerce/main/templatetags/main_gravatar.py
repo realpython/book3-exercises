@@ -13,6 +13,10 @@ def gravatar(email, size=140):
 @register.simple_tag
 def gravatar_url(email, size=140):
     default = 'http://starwars.com//img/explore/encyclopedia/characters/anakinskywalker_relationship.png'
+
+    if not isinstance(email, str):
+        return default
+
     query_params = urlencode([('s', str(size)),
                               ('d', default)])
 

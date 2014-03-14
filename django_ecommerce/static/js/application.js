@@ -38,5 +38,6 @@ $(function() {
     $("#credit_card_number").focus();
     return false;
   });
+  
 
 });
