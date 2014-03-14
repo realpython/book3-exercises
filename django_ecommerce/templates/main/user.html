@@ -4,42 +4,8 @@
   <div class="row member-page">	  
     <div class="col-sm-8">
       <div class="row">
-      <section class="info-box" id="updates">
-        <h1>Report back to base</h1>
-	<div class="input-group">
-	  <input id="status" type="text" class="form-control" placeholder="{{user.name}} whats your status?">
-	  <span class="input-group-btn">
-	    <button class="btn btn-primary" type="button">Report</button>
-	  </span>
-	</div>
-      </section>
-      <section class="info-box" id="latest_happenings">
-        <h1>Recent Status Reports</h1>
-	<div class="media">
-	  <div class="media-object pull-left">
-	  <img src="{% static 'img/darth.jpg' %}" width="32" height="32"
-	     alt="user_name"/>
-	  </div>
-	  <div class="media-body">
-	    <p>I find your lack of faith disturbing</p>
-	</div>
-	<div class="media">
-	  <div class="media-object pull-left">
-	  <img src="{% static 'img/darth.jpg' %}" width="32" height="32"
-	     alt="user_name"/>
-	  </div>
-	  <div class="media-body">
-	    <p>I find your lack of faith disturbing</p>
-	</div>
-	<div class="media">
-	  <div class="media-object pull-left">
-	  <img src="{% static 'img/darth.jpg' %}" width="32" height="32"
-	     alt="user_name"/>
-	  </div>
-	  <div class="media-body">
-	    <p>I find your lack of faith disturbing</p>
-	</div>
-      </section>
+        {% include "main/_statusupdate.html" %}
+        {% include "main/_lateststatus.html" %}
       </div>
     </div>
     <div class="col-sm-4"> 
