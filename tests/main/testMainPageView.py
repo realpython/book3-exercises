@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import resolve
-from main.views import index
+from main.views import index, report
 import unittest
 from django.shortcuts import render_to_response
 from main.models import MarketingItem
