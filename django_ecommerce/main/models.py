@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
 
-# Create your models here.
 class MarketingItem(models.Model):
     img = models.CharField(max_length=255)
     heading = models.CharField(max_length=300)
@@ -14,8 +13,9 @@ class StatusReportQuerySet(models.QuerySet):
         return self.all().order_by('-when')[:20]
 
 class StatusReport(models.Model):
-    user = models.ForeignKey('payments.User')
+
     when = models.DateTimeField(blank=True)
+    user = models.ForeignKey('payments.User')
     status = models.CharField(max_length=200)
     objects = StatusReportQuerySet.as_manager()
 
@@ -46,12 +46,3 @@ class Badge(models.Model):
 
     class Meta:
         ordering = ('name',)
-
-
-
-    
-
-
-
-
-

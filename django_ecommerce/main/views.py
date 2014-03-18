@@ -31,6 +31,7 @@ def index(request):
                                   context_instance=RequestContext(request),
         
                                   )
+
 def report(request):
     if request.method == "POST":
         status = request.POST.get("status", "")
