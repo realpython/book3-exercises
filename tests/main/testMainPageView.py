@@ -4,6 +4,7 @@ from main.views import index
 import unittest
 from django.shortcuts import render_to_response
 from main.models import MarketingItem
+from payments.models import User
 
 class MainPageTests(TestCase): 
 
@@ -35,11 +36,13 @@ class MainPageTests(TestCase):
         #create a session that appears to have a logged in user
         self.request.session = {"user" : "1"}
         
+        u = User.objects.get(id=1)
+
         import mock
         with mock.patch('main.views.User') as user_mock:
             
             #tell the mock what to do when called
-            config = {'get_by_id.return_value':mock.Mock()}
+            config = {'get_by_id.return_value':u}
             user_mock.configure_mock(**config)
 
             #run the test

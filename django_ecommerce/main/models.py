@@ -1,5 +1,5 @@
 from django.db import models
-from payments.models import User
+from datetime import datetime
 
 # Create your models here.
 class MarketingItem(models.Model):
@@ -10,10 +10,22 @@ class MarketingItem(models.Model):
     button_title = models.CharField(max_length=20,default="View details")
 
 class StatusReport(models.Model):
-    user = models.ForeignKey(User)
-    when = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey('payments.User')
+    when = models.DateTimeField(blank=True)
     status = models.CharField(max_length=200)
 
+    def save(self, *args, **kwargs):
+        if self.when is None:
+            self.when = self._getNowNoMicroseconds()
+        super(StatusReport, self).save(*args, **kwargs)
+
+    def _getNowNoMicroseconds(self):
+        '''we want to get time without microseconds so it
+        converts to javascript time correctly'''
+        t = datetime.now()
+        return datetime(t.year, t.month,t.day,t.hour,
+                        t.minute,t.second,0,t.tzinfo)
+    
 
 class Announcement(models.Model):
 
@@ -21,6 +33,15 @@ class Announcement(models.Model):
     img = models.CharField(max_length=255, null=True)
     vid = models.URLField(null=True)
     info = models.TextField()
+
+class Badge(models.Model):
+
+    img = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
+    desc = models.TextField()
+
+    class Meta:
+        ordering = ('name',)
 
 
 

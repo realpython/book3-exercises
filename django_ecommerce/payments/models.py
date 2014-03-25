@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from datetime import datetime
 from django.db import IntegrityError
+from main.models import Badge
 
 
 class User(AbstractBaseUser):
@@ -13,6 +14,7 @@ class User(AbstractBaseUser):
     stripe_id = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    badges = models.ManyToManyField(Badge)
 
     USERNAME_FIELD = 'email'
 
