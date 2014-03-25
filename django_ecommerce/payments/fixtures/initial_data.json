@@ -2,6 +2,7 @@
   "fields": {
     "last_login": "2014-03-11T08:58:20.136", 
     "rank":"Padwan",
+		"badges":[3,4,2],
     "name": "jj", 
     "password": "pbkdf2_sha256$12000$c8TnAstAXuo4$agxS589FflHZf+C14EHpzr5+EzFtS1V1tfCYJFVynYU=", 
     "email": "jeremy@realpython.com", 
@@ -13,6 +14,7 @@
 {"pk": 2, "fields": {
   "last_login": "2014-03-11T08:59:19.464",
   "rank":"Jedi Knight",
+	"badges":[],
   "name": "kk",
   "password": "pbkdf2_sha256$12000$bEnyOYJkIYWS$jqwLJ4iijmVgPHu9na/Jncli5nJnxbl47XK8kIMq2JM=",
   "email": "k@k.com",
@@ -24,6 +26,7 @@
 {"pk": 3, "fields": {
   "last_login": "2014-03-11T09:12:09.802",
   "rank":"Jedi Master",
+	"badges":[3,1,5,2],
   "name": "ll",
   "password": "pbkdf2_sha256$12000$QE2hn0nj0IWm$Ea+IoZMzv6KYV2ycpe+g7afFWi2wPSSyaVURkiOqoaw=",
   "email": "vader@softworks.com.my",
