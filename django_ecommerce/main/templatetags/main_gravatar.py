@@ -14,7 +14,8 @@ def gravatar_img(email, size=140):
 def gravatar_url(email, size=140):
     default = 'http://starwars.com//img/explore/encyclopedia/characters/anakinskywalker_relationship.png'
 
-    if not isinstance(email, str):
+    #mainly for unit testing with a mock object
+    if not(isinstance(email,str)):
         return default
 
     query_params = urlencode([('s', str(size)),

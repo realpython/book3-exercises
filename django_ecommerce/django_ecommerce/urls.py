@@ -7,7 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'main.views.index', name='home'),
-    ('^pages/', include('django.contrib.flatpages.urls')),
+    #('^pages/', include('django.contrib.flatpages.urls')),
     url(r'^contact/', 'contact.views.contact', name='contact'),
     url(r'^sign_in$', views.sign_in, name='sign_in'),
     url(r'^sign_out$', views.sign_out, name='sign_out'),

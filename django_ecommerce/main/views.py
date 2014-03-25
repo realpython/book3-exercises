@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response
 from payments.models import User
-from main.models import MarketingItem, StatusReport 
+from main.models import MarketingItem, StatusReport, Announcement
 from django.template import RequestContext
+from datetime import date, timedelta
 
 def index(request):
     uid = request.session.get('user')
@@ -13,9 +14,17 @@ def index(request):
     else:
         #membership page
         status = StatusReport.objects.all().order_by('-when')[:20]
+        
+        announce_date = date.today() - timedelta(days=30)
+
+        announce =(Announcement.objects.
+                   filter(when__gt=announce_date)
+                            .order_by('-when'))
+        
         return render_to_response('main/user.html',
                                   {'user': User.get_by_id(uid),
-                                   'reports':status},
+                                   'reports':status,
+                                   'announce': announce},
                                   context_instance=RequestContext(request),
                                  )
 def report(request):

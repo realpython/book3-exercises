@@ -15,6 +15,16 @@ class StatusReport(models.Model):
     status = models.CharField(max_length=200)
 
 
+class Announcement(models.Model):
+
+    when = models.DateTimeField(auto_now=True)
+    img = models.CharField(max_length=255, null=True)
+    vid = models.URLField(null=True)
+    info = models.TextField()
+
+
+
+    
 
 
 

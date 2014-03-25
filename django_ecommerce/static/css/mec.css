@@ -43,7 +43,8 @@ h2,
     padding-bottom: 5px;
     background-color: #eee;
 }
-#user_info
+#user_info,
+#updates
 {
     text-align: center;
     margin-left: 20px;
@@ -61,4 +62,15 @@ h2,
     margin-left: 0px;
     margin-right: 0px;
     margin-top: -20px;
+}
+.full-image
+{
+    overflow: hidden;
+}
+.full-image img {
+  position: relative;
+  display:block;
+  margin:auto;
+  min-width: 100%;
+  min-height: 100px;
 }

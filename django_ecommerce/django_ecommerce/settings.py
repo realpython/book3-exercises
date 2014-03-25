@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'contact',
     'payments',
+    'embed_video',
     #'debug_toolbar',
 )
 
