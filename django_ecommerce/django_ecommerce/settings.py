@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'contact',
     'payments',
     'embed_video',
+    'rest_framework',
     #'debug_toolbar',
 )
 

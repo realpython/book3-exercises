@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^register$', views.register, name='register'),
     url(r'^edit$', views.edit, name='edit'),
     url(r'^report$', 'main.views.report', name="report"),
+    url(r'^api/v1/', include('main.urls')),
 )
