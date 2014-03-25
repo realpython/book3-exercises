@@ -14,8 +14,8 @@ class StatusReportQuerySet(models.QuerySet):
 
 class StatusReport(models.Model):
 
-    when = models.DateTimeField(blank=True)
     user = models.ForeignKey('payments.User')
+    when = models.DateTimeField(blank=True)
     status = models.CharField(max_length=200)
     objects = StatusReportQuerySet.as_manager()
 
@@ -30,7 +30,7 @@ class StatusReport(models.Model):
         t = datetime.now()
         return datetime(t.year, t.month,t.day,t.hour,
                         t.minute,t.second,0,t.tzinfo)
-    
+
 class Announcement(models.Model):
 
     when = models.DateTimeField(auto_now=True)
