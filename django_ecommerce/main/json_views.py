@@ -1,5 +1,5 @@
-from main.serializers import StatusReportSerializer
-from main.models import StatusReport
+from main.serializers import StatusReportSerializer, BadgeSerializer
+from main.models import StatusReport, Badge
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
@@ -38,3 +38,34 @@ class StatusMember(mixins.RetrieveModelMixin,
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
+class BadgeCollection(mixins.ListModelMixin,
+                      mixins.CreateModelMixin,
+                      generics.GenericAPIView):
+
+    queryset = Badge.objects.all()
+    serializer_class = BadgeSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        return self.list(request)
+
+    def post(self, request):
+        return self.create(request)
+    
+class BadgeMember(mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                   generics.GenericAPIView):
+
+    queryset = Badge.objects.all()
+    serializer_class = BadgeSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
