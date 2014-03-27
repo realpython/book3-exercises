@@ -4,6 +4,18 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
 from main.permissions import IsOwnerOrReadOnly
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
+
+@api_view(('GET',))
+def api_root(request):
+    return Response({
+        'status_reports' : reverse('status_reports_collection',
+                                   request=request),
+        'badges' : reverse('badges_collection', request=request),
+    })
 
 class StatusCollection(mixins.ListModelMixin,
                        mixins.CreateModelMixin,
