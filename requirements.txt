@@ -2,5 +2,5 @@ Django
 mock
 requests
 stripe
-sycopg2
+psycopg2
 djangorestframework
