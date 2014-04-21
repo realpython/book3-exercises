@@ -2,6 +2,7 @@
 
 import os
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -13,12 +14,6 @@ INTERNAL_IPS = ('127.0.0.1',)
 def show_toolbar(request):
     return True
 SHOW_TOOLBAR_CALLBACK = show_toolbar
-
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
-
-MANAGERS = ADMINS
 
 DATABASES = {
     'default': {

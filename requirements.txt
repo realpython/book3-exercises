@@ -1,6 +1,7 @@
-Django
+-e git+https://github.com/django/djnago.git@1.7b1#egg=Django
 mock
 requests
 stripe
-sycopg2
+psycopg2
 djangorestframework
+django-embed-video

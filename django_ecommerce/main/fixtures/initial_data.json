@@ -46,6 +46,45 @@
 {"model": "main.Badge", "pk": 2, "fields": {"desc": "30 days of status reports", "img": "badge_trooper.jpg", "name": "Reporting to Base"}}, 
 {"model": "main.Badge", "pk": 3, "fields": {"desc": "Welcome to the rank of Padwan", "img": "badge_padwan.png", "name": "What now, master?"}}, 
 {"model": "main.Badge", "pk": 4, "fields": {"desc": "May the force be with you young padwan", "img": "badge_force.jpg", "name": "May the Force"}}, 
-{"model": "main.Badge", "pk": 5, "fields": {"desc": "Only a select few become Jedi", "img": "badge_jedi.png", "name": "Jedi Master"}}
+{"model": "main.Badge", "pk": 5, "fields": {"desc": "Only a select few become Jedi", "img": "badge_jedi.png", "name": "Jedi Master"}},
+
+
+{"pk": 1, 
+  "fields": {
+    "last_login": "2014-03-11T08:58:20.136", 
+    "rank":"Padwan",
+		"badges":[3,4,2],
+    "name": "jj", 
+    "password": "pbkdf2_sha256$12000$c8TnAstAXuo4$agxS589FflHZf+C14EHpzr5+EzFtS1V1tfCYJFVynYU=", 
+    "email": "jeremy@realpython.com", 
+    "stripe_id": "cus_3e8fBA8rIUEg5X", 
+    "last_4_digits": "4242",
+    "updated_at": "2014-03-11T08:58:20.239",
+    "created_at": "2014-03-11T08:58:20.235"},
+  "model": "payments.user"}, 
+{"pk": 2, "fields": {
+  "last_login": "2014-03-11T08:59:19.464",
+  "rank":"Jedi Knight",
+	"badges":[],
+  "name": "kk",
+  "password": "pbkdf2_sha256$12000$bEnyOYJkIYWS$jqwLJ4iijmVgPHu9na/Jncli5nJnxbl47XK8kIMq2JM=",
+  "email": "k@k.com",
+  "stripe_id": "cus_3e8gyBJlWAu8u6",
+  "last_4_digits": "4242",
+  "updated_at": "2014-03-11T08:59:19.579",
+  "created_at": "2014-03-11T08:59:19.577"},
+"model": "payments.user"}, 
+{"pk": 3, "fields": {
+  "last_login": "2014-03-11T09:12:09.802",
+  "rank":"Jedi Master",
+	"badges":[3,1,5,2],
+  "name": "ll",
+  "password": "pbkdf2_sha256$12000$QE2hn0nj0IWm$Ea+IoZMzv6KYV2ycpe+g7afFWi2wPSSyaVURkiOqoaw=",
+  "email": "vader@softworks.com.my",
+  "stripe_id": "cus_3e8tB7EaspoOiJ",
+  "last_4_digits": "4242",
+  "updated_at": "2014-03-11T09:12:10.033",
+  "created_at": "2014-03-11T09:12:10.029"},
+"model": "payments.user"}
 
 ]
