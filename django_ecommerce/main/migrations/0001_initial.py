@@ -9,9 +9,22 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Badge',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('img', models.CharField(max_length=255)),
+                ('name', models.CharField(max_length=100)),
+                ('desc', models.TextField()),
+            ],
+            options={
+                'ordering': ('name',),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='MarketingItem',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('img', models.CharField(max_length=255)),
                 ('heading', models.CharField(max_length=300)),
                 ('caption', models.TextField()),
@@ -25,26 +38,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Announcement',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('when', models.DateTimeField(auto_now=True)),
                 ('img', models.CharField(null=True, max_length=255)),
                 ('vid', models.URLField(null=True)),
                 ('info', models.TextField()),
             ],
             options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='Badge',
-            fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('img', models.CharField(max_length=255)),
-                ('name', models.CharField(max_length=100)),
-                ('desc', models.TextField()),
-            ],
-            options={
-                'ordering': ('name',),
             },
             bases=(models.Model,),
         ),
