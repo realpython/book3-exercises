@@ -14,8 +14,6 @@ def create_default_user(apps, schema_editor):
     new_user = User.create(name='vader', email="darth@mec.com",
                         password="darkside",last_4_digits="1234")
 
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
