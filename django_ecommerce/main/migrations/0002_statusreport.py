@@ -13,8 +13,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='StatusReport',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
-                ('user', models.ForeignKey(to='payments.User', to_field='id')),
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
+                ('user', models.ForeignKey(to_field='id', to='payments.User')),
                 ('when', models.DateTimeField(blank=True)),
                 ('status', models.CharField(max_length=200)),
             ],

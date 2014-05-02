@@ -1,7 +1,7 @@
 # encoding: utf8
 from django.db import models, migrations
-import datetime
 import django.utils.timezone
+import datetime
 
 
 class Migration(migrations.Migration):
@@ -14,9 +14,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UnpaidUsers',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('email', models.CharField(unique=True, max_length=255)),
-                ('last_notification', models.DateTimeField(default=datetime.datetime(2014, 4, 26, 23, 19, 6, 85457))),
+                ('last_notification', models.DateTimeField(default=datetime.datetime(2014, 5, 1, 21, 43, 50, 465957))),
             ],
             options={
             },
@@ -25,13 +25,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='User',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(default=django.utils.timezone.now, verbose_name='last login')),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('password', models.CharField(verbose_name='password', max_length=128)),
+                ('last_login', models.DateTimeField(verbose_name='last login', default=django.utils.timezone.now)),
                 ('name', models.CharField(max_length=255)),
                 ('email', models.CharField(unique=True, max_length=255)),
                 ('rank', models.CharField(default='Padwan', max_length=50)),
-                ('last_4_digits', models.CharField(max_length=4, blank=True, null=True)),
+                ('last_4_digits', models.CharField(null=True, blank=True, max_length=4)),
                 ('stripe_id', models.CharField(max_length=255)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),

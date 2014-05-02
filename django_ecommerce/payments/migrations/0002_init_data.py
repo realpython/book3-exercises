@@ -5,9 +5,12 @@ import django.utils.timezone
 from payments.models import User
 
 def create_default_user(apps, schema_editor):
-    existingUsers = apps.get_model("payments","User")
-    vader = existingUsers.objects.filter(email="darth@mec.com")
-    if vader: vader[0].delete()
+    #    existingUsers = apps.get_model("payments","User")
+    try:
+        vader = User.objects.get(email="darth@mec.com")
+        vader.delete()
+    except User.DoesNotExist:
+        pass
     new_user = User.create(name='vader', email="darth@mec.com",
                         password="darkside",last_4_digits="1234")
 
