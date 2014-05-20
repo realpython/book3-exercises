@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Poll',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
                 ('title', models.CharField(max_length=255)),
                 ('publish_date', models.DateTimeField(auto_now=True)),
             ],
@@ -22,12 +22,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PollItem',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('poll', models.ForeignKey(to_field='id', to='djangular_polls.Poll')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
+                ('poll', models.ForeignKey(to='djangular_polls.Poll', to_field='id')),
                 ('name', models.CharField(max_length=30)),
                 ('text', models.CharField(max_length=300)),
                 ('votes', models.IntegerField(default=0)),
-                ('percentage', models.Field(default=0.0)),
+                ('percentage', models.DecimalField(max_digits=5, default=0.0, decimal_places=2)),
             ],
             options={
             },
