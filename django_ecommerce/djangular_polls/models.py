@@ -6,11 +6,11 @@ class Poll(models.Model):
     #completion date -- add exercise to add countdown later
 
     def poll_items(self):
-        return self.pollitem_set.all()
+        return self.items.all()
 
 class PollItem(models.Model):
 
-    poll = models.ForeignKey(Poll)
+    poll = models.ForeignKey(Poll, related_name='items')
     name = models.CharField(max_length=30)
     text = models.CharField(max_length=300)
     votes = models.IntegerField(default=0)
