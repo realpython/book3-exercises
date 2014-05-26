@@ -1,8 +1,12 @@
 from django.conf.urls import patterns, include, url
 from payments import views
+from main.urls import urlpatterns as main_json_urls
+from djangular_polls.urls import urlpatterns as djangular_polls_json_urls
 
 from django.contrib import admin
 admin.autodiscover()
+
+main_json_urls.extend(djangular_polls_json_urls)
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -14,5 +18,6 @@ urlpatterns = patterns('',
     url(r'^register$', views.register, name='register'),
     url(r'^edit$', views.edit, name='edit'),
     url(r'^report$', 'main.views.report', name="report"),
-    url(r'^api/v1/', include('main.urls')),
+    url(r'^api/v1/', include(main_json_urls)),
+
 )

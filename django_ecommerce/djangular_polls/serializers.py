@@ -4,10 +4,10 @@ from djangular_polls.models import Poll, PollItem
 class PollItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = PollItem
-        fields = ('name','text','votes','percentage')
+        fields = ('id','poll','name','text','votes','percentage')
 
 class PollSerializer(serializers.ModelSerializer):
-    items = PollItemSerializer(many=True)
+    items = PollItemSerializer(many=True, required=False)
 
     class Meta:
         model = Poll

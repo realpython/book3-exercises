@@ -15,6 +15,9 @@ def api_root(request):
         'status_reports' : reverse('status_reports_collection',
                                    request=request),
         'badges' : reverse('badges_collection', request=request),
+        #add for polls
+        'polls' : reverse('polls_collection', request=request),
+        'poll_items' : reverse('poll_items_collection', request=request),
     })
 
 class StatusCollection(mixins.ListModelMixin,
@@ -41,7 +44,7 @@ class StatusMember(mixins.RetrieveModelMixin,
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly) 
 
 
-    def get(self, request, *args, **kwargs):
+    def get(self , request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):

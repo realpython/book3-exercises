@@ -1,4 +1,4 @@
--e git+https://github.com/django/djnago.git@1.7b1#egg=Django
+git+https://github.com/django/django.git@1.7b4#egg=Django
 mock
 requests
 stripe
