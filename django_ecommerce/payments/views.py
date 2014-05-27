@@ -45,7 +45,10 @@ def sign_in(request):
     )
 
 def sign_out(request):
-    del request.session['user']
+    try:
+        del request.session['user']
+    except KeyError:
+        pass
     return HttpResponseRedirect('/')
 
 def register(request):
