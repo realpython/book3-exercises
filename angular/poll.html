@@ -10,7 +10,7 @@
 <body ng-app="mecApp">
 <div class="container">
   <div class="span6" ng-controller='UserPollCtrl'>
-    <h5>Poll: Whos the most powerful Jedi</h5> 
+    <h5>Who's the most powerful Jedi?</h5> 
     <span ng-click='vote("votes_for_yoda")' class="glyphicon glyphicon-plus"></span>
     <strong>Yoda</strong>
     <span class="pull-right">{{ votes_for_yoda.percent | number:0 }}%</span>
@@ -27,29 +27,28 @@
         aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_qui.percent }}%;">
       </div> 
     </div>
-    <a id="vote-obi" href=#><span class="glyphicon glyphicon-plus"></span></a>
+    <span class="glyphicon glyphicon-plus" ng-click="vote('votes_for_obi')"></span>
     <strong>Obi-Wan Kenobi</strong>
-    <span class="pull-right">10%</span>
+    <span class="pull-right">{{ votes_for_obi.percent | number:0 }}%</span>
     <div class="progress">
-      <div class="progress-bar progress-bar-warning" role="progressbar" aria-value="10"
-        aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+      <div class="progress-bar progress-bar-warning" role="progressbar" aria-value="{{ vote_for_obi.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_obi.percent }}%;">
       </div> 
     </div>
-    <a id="vote-luke" href=#><span class="glyphicon glyphicon-plus"></span></a>
+    <span class="glyphicon glyphicon-plus"ng-click="vote('votes_for_luke')"></span>
     <strong>Luke Sykwalker</strong>
-    <span class="pull-right">5%</span>
+    <span class="pull-right">{{ votes_for_luke.percent | number:0 }}%</span>
     <div class="progress">
-      <div class="progress-bar progress-bar-success" role="progressbar" aria-value="5"
-        aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-value="{{ vote_for_luke.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_luke.percent }}%;">
       </div> 
     </div>
-    <a id="vote-me" href=#><span class="glyphicon glyphicon-plus"></span></a>
+    <span class="glyphicon glyphicon-plus" ng-click="vote('votes_for_me')"></span>
     <strong>Me... of course</strong>
-    <span class="pull-right">15%</span>
-    <div class="progress progress-striped active">
-      <div class="progress-bar" role="progressbar" aria-valuenow="15"
-        aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-        <span class="sr-only">15% Complete</span>
+    <span class="pull-right">{{ votes_for_me.percent | number:0 }}%</span>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-value="{{ vote_for_me.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_me.percent }}%;">
       </div> 
     </div>
     <p>

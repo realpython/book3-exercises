@@ -43,7 +43,7 @@ class StatusReportsSerializer_Tests(TestCase):
 
 
         expected_json = JSONRenderer().render(self.expected_dict)
-
+        print(content)
         self.assertEqual(expected_json, content)
     
 
