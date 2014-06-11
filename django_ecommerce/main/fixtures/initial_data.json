@@ -39,8 +39,8 @@
 {"pk": 5, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:11:59.934", "user": 1, "status": "Adventure. Heh. Excitement. Heh. A Jedi craves not these things."}}, 
 
 {"pk": 6, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:13:07.453", "user": 2, "status": "Mos Eisley spaceport. You will never find a more wretched hive of scum and villainy."}},
-{"model": "main.announcement", "fields": {"info": "<h3>April 1 : Join us for our annual Smash Jar Jar bash</h2><p>Bring the whole family to MEC for a fun filled day of smashing Jar Jar Binks!</p>", "img": "beat_jarjar.jpg", "when": "2014-03-24T11:00:00" }, "pk": 1},
-{"model": "main.announcement", "fields": {"img": null, "info": "<h3>MEC Costume competition!</h2><p>Check the video\rabove for some example outfits.  We expect all MEC padwans to be there!</p>", "when": "2014-03-23T11:00:00", "vid": "http://youtu.be/3kJtxU5Ok8Q"}, "pk": 2},
+{"model": "main.announcement", "fields": {"info": "<h3>April 1 : Join us for our annual Smash Jar Jar bash</h2><p>Bring the whole family to MEC for a fun filled day of smashing Jar Jar Binks!</p>", "img": "beat_jarjar.jpg", "when": "2094-03-24T11:00:00" }, "pk": 1},
+{"model": "main.announcement", "fields": {"img": null, "info": "<h3>MEC Costume competition!</h2><p>Check the video\rabove for some example outfits.  We expect all MEC padwans to be there!</p>", "when": "2094-03-23T11:00:00", "vid": "http://youtu.be/3kJtxU5Ok8Q"}, "pk": 2},
 
 {"model": "main.Badge", "pk": 1, "fields": {"desc": "Badge of honor exclusively for the dark side", "img": "badge_vader.jpg", "name": "I am a Sith Lord"}}, 
 {"model": "main.Badge", "pk": 2, "fields": {"desc": "30 days of status reports", "img": "badge_trooper.jpg", "name": "Reporting to Base"}}, 

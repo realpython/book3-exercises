@@ -1,0 +1,49 @@
+<section class="info-box" id="polls" ng-app="pollsApp">
+{% verbatim %}
+  <div ng-controller='UserPollCtrl'>
+    <h2>Poll: Who's the most powerful Jedi?</h2> 
+    <span ng-click='vote("votes_for_yoda")' class="glyphicon glyphicon-plus"></span>
+    <strong>Yoda</strong>
+    <span class="pull-right">{{ votes_for_yoda.percent | number:0 }}%</span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-danger" role="progressbar" aria-value="{{ votes_for_yoda.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_yoda.percent }}%;">
+      </div> 
+    </div>
+    <span class="glyphicon glyphicon-plus" ng-click="vote('votes_for_qui')" ></span>
+    <strong>Qui-Gon Jinn</strong>
+    <span class="pull-right">{{ votes_for_qui.percent | number:0 }}%</span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-info" role="progressbar" aria-value="{{ votes_for_qui.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_qui.percent }}%;">
+      </div> 
+    </div>
+    <span class="glyphicon glyphicon-plus" ng-click="vote('votes_for_obi')"></span>
+    <strong>Obi-Wan Kenobi</strong>
+    <span class="pull-right">{{ votes_for_obi.percent | number:0 }}%</span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-warning" role="progressbar" aria-value="{{ vote_for_obi.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_obi.percent }}%;">
+      </div> 
+    </div>
+    <span class="glyphicon glyphicon-plus"ng-click="vote('votes_for_luke')"></span>
+    <strong>Luke Sykwalker</strong>
+    <span class="pull-right">{{ votes_for_luke.percent | number:0 }}%</span>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-value="{{ vote_for_luke.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_luke.percent }}%;">
+      </div> 
+    </div>
+    <span class="glyphicon glyphicon-plus" ng-click="vote('votes_for_me')"></span>
+    <strong>Me... of course</strong>
+    <span class="pull-right">{{ votes_for_me.percent | number:0 }}%</span>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-value="{{ vote_for_me.percent }}"
+        aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_me.percent }}%;">
+      </div> 
+    </div>
+  </div>
+</div>
+{% endverbatim %}
+</section>
+

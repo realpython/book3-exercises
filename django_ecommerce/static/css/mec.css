@@ -49,6 +49,15 @@ h2,
     text-align: center;
     margin-left: 20px;
 }
+#polls
+{
+    margin-left: 20px;
+}
+#polls h2
+{
+    text-align: center;
+}
+
 #user_info ul
 {
     list-style-type: none;
