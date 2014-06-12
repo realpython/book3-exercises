@@ -9,10 +9,12 @@ class PollModelTest(TestCase):
         cls.jediPoll.save()
         cls.yoda = PollItem(poll=cls.jediPoll,
                         name="Yoda",
-                        text="Yoda")
+                        text="Yoda",
+                        votes=5)
         cls.vader = PollItem(poll=cls.jediPoll,
                         name="vader",
-                        text="vader")
+                        text="vader",
+                        votes=3)
         cls.luke = PollItem(poll=cls.jediPoll,
                         name="Luke",
                         text="Luke")
@@ -46,4 +48,6 @@ class PollModelTest(TestCase):
         grevious.delete()
         newPoll.delete()
 
+    def test_total_votes(self):
+        self.assertEquals(self.jediPoll.total_votes, 8)
 

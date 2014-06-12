@@ -48,6 +48,15 @@
 {"model": "main.Badge", "pk": 4, "fields": {"desc": "May the force be with you young padwan", "img": "badge_force.jpg", "name": "May the Force"}}, 
 {"model": "main.Badge", "pk": 5, "fields": {"desc": "Only a select few become Jedi", "img": "badge_jedi.png", "name": "Jedi Master"}},
 
+{"model": "djangular_polls.poll", "fields": {"publish_date": "2014-05-20T20:23:59.817", "title": "Who's the most powerful Jedi?"}, "pk": 1}, 
+{"model": "djangular_polls.poll", "fields": {"publish_date": "2014-05-20T20:32:01.966", "title": "Who would win in a fight?"}, "pk": 2}, 
+{"model": "djangular_polls.pollitem", "fields": {"votes": 0, "name": "Yoda", "text": "Yoda",  "poll": 1}, "pk": 2}, 
+{"model": "djangular_polls.pollitem", "fields": {"votes": 0, "name": "qui", "text": "Qui-Gon Jinn",  "poll": 1}, "pk": 3}, 
+{"model": "djangular_polls.pollitem", "fields": {"votes": 0, "name": "obi", "text": "Obi-Wan Kenobi",  "poll": 1}, "pk": 4}, 
+{"model": "djangular_polls.pollitem", "fields": {"votes": 0, "name": "luke", "text": "Luke Sykwalker",  "poll": 1}, "pk": 5}, 
+{"model": "djangular_polls.pollitem", "fields": {"votes": 0, "name": "me", "text": "Me... of course",  "poll": 1}, "pk": 6}, 
+{"model": "djangular_polls.pollitem", "fields": {"votes": 0, "name": "atat", "text": "AT-AT Walker",  "poll": 2}, "pk": 7}, 
+{"model": "djangular_polls.pollitem", "fields": {"votes": 0, "name": "yoda", "text": "Yoda blindfolder with one arm tied",  "poll": 2}, "pk": 8},
 
 {"pk": 1, 
   "fields": {

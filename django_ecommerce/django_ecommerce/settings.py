@@ -2,6 +2,7 @@
 
 import os
 
+APPEND_SLASH = False;
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

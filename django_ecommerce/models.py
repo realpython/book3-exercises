@@ -19,12 +19,13 @@ class PollItem(models.Model):
     name = models.CharField(max_length=30)
     text = models.CharField(max_length=300)
     votes = models.IntegerField(default=0)
+    #percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
 
     @property
     def percentage(self):
         total = self.poll.total_votes
         if total:
-            return self.votes / total * 100
+            return self.votes / self.poll.total_votes * 100
         return 0
 
 

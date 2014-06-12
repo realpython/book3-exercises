@@ -72,7 +72,7 @@
 
       <footer>
 	<p class="pull-right"><a href="">Back to top</a></p> 
-	<p class="pull-left">&copy; 2014 <a href="http://j1z0.com">The Jedi Council</a></p> <p class="text-center"> &middot;  Powered by about 37 AT-AT Walkers, Python 3 and Django 1.6 &middot; </p>
+	<p class="pull-left">&copy; 2014 <a href="http://j1z0.com">The Jedi Council</a></p> <p class="text-center"> &middot;  Powered by about 37 AT-AT Walkers, Python 3 and Django 1.7 &middot; </p>
       </footer>
 
     </section>
@@ -87,8 +87,8 @@
     <script src="{% static "js/jquery-1.11.0.min.js" %}" type="text/javascript"></script>
     <script src="{% static "js/bootstrap.min.js" %}" type="text/javascript"></script>
     <script src="{% static "js/application.js" %}" type="text/javascript"></script>
-    <script src="{% static "js/angular.min.js" %}" type="text/javascript"></script>
-    <script src="{% static "js/userPollCtrl.js" %}" type="text/javascript"></script>
+    {% block extrajs %}
+    {% endblock %}
   </body>
 </html>
 
