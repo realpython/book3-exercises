@@ -2,7 +2,7 @@ from rest_framework import permissions
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
 
-    def has_object_permissions(self, request, view, obj):
+    def has_object_permission(self, request, view, obj):
         
         #Allow all read type requests
         if request.method in ('GET', 'HEAD', 'OPTIONS'):

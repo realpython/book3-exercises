@@ -14,22 +14,30 @@ class JsonViewTests(TestCase):
     def setUpClass(cls):
         cls.factory = APIRequestFactory()
         cls.test_user = User(id=2222, email="test@user.com")
+        cls.test_user.save()
 
-    def get_request(self,method='GET', authed=True):
+    @classmethod
+    def tearDownClass(cls):
+        cls.test_user.delete()
+
+    def get_request(self,method='GET', authed=True, user="default"):
         request_method = getattr(self.factory, method.lower())
         request = request_method("")
         if authed:
-            force_authenticate(request, self.test_user)
+            if user == "default":
+                user = self.test_user
+            force_authenticate(request, user)
 
         return request
 
 
     def test_get_collection(self):
-        status = StatusReport.objects.all()
-        expected_json = StatusReportSerializer(status, many=True).data
+        statusrpt = StatusReport.objects.all()
+        expected_json = StatusReportSerializer(statusrpt, many=True).data
 
         response = StatusCollection.as_view()(self.get_request())
         self.assertEqual(expected_json,response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
  
     def test_get_collection_requires_logged_in_user(self):
         response = StatusCollection.as_view()(self.get_request(authed=False))
@@ -52,3 +60,11 @@ class JsonViewTests(TestCase):
         response = StatusMember.as_view()(self.get_request(), pk=1)
 
         self.assertEqual(expected_json, response.data)
+
+    def test_put_member_with_IsOwnerOrReadOnly_permissions(self):
+        not_the_maker = User(id=4567, email="not@the.maker")
+        response = StatusMember.as_view()(
+            self.get_request(method="PUT",user=not_the_maker), pk=1)
+        
+        self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
+
