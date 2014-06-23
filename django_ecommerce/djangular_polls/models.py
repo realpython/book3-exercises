@@ -28,4 +28,9 @@ class PollItem(models.Model):
         return 0
 
 
+    class Meta:
+        ordering = ['-text']
+
+
+
 

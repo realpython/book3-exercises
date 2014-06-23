@@ -1,6 +1,13 @@
 var pollsApp = angular.module('pollsApp',[]);
 
-pollsApp.factory('pollFactory', ['$http', function($http) {
+pollsApp.config(function($interpolateProvider){
+        $interpolateProvider.startSymbol('[[')
+        .endSymbol(']]');
+    }
+);
+
+
+pollsApp.factory('pollFactory', function($http) {
 
   var baseUrl = '/api/v1/';
   var pollUrl = baseUrl + 'polls/';
@@ -18,27 +25,26 @@ pollsApp.factory('pollFactory', ['$http', function($http) {
   }
 
   return pollFactory;
-}]);
+});
 
-pollsApp.controller('UserPollCtrl', ['$scope', 'pollFactory', 
-    function($scope, $http, pollFactory) {
+pollsApp.controller('UserPollCtrl',function($scope, $http, pollFactory) {
 
   //get the Poll
   $scope.poll = ""
   function setPoll(promise){
     $scope.poll = promise.data;
-  }
+  };
 
   function getPoll(){
     return pollFactory.getPoll(1);
-  }
+  };
 
   $scope.barcolor = function(i) {
     colors = ['progress-bar-success','progress-bar-info',
       'progress-bar-warning','progress-bar-danger','']
     idx = i % colors.length;
     return colors[idx];
-  }
+  };
 
   getPoll().then(setPoll);
 
@@ -46,6 +52,6 @@ pollsApp.controller('UserPollCtrl', ['$scope', 'pollFactory',
     pollFactory.vote_for_item(item) 
                         .then(getPoll)
                         .then(setPoll);
-  }
+  };
 
-}]);
+});
