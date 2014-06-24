@@ -1,13 +1,5 @@
-var pollsApp = angular.module('pollsApp',[]);
 
-pollsApp.config(function($interpolateProvider){
-        $interpolateProvider.startSymbol('[[')
-        .endSymbol(']]');
-    }
-);
-
-
-pollsApp.factory('pollFactory', function($http, $filter) {
+mecApp.factory('pollFactory', function($http, $filter) {
 
   var baseUrl = '/api/v1/';
   var pollUrl = baseUrl + 'polls/';
@@ -35,7 +27,7 @@ pollsApp.factory('pollFactory', function($http, $filter) {
   return pollFactory;
 });
 
-pollsApp.controller('UserPollCtrl',function($scope, $http, pollFactory) {
+mecApp.controller('UserPollCtrl',function($scope, $http, pollFactory) {
 
   //get the Poll
   $scope.poll = ""

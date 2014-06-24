@@ -27,7 +27,6 @@ class PollItem(models.Model):
             return self.votes / total * 100
         return 0
 
-
     class Meta:
         ordering = ['-text']
 
