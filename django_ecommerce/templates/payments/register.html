@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-  <section class="container">
+  <section class="container" ng-controller="RegisterCtrl">
     <form id="user_form" accept-charset="UTF-8" action="{% url 'register' %}"
-        class="form-signin" role="form"  method="post"> {% csrf_token %}
+        class="form-signin" role="form" ng-submit="register()" method="post"> {% csrf_token %}
       <h2 class="form-signin-heading">Register Today!</h2>
       {% if form.is_bound and not form.is_valid %}
         <div class="alert alert-{{error.tags}}"> <a class="close" data-dismiss="alert">×</a>
@@ -36,4 +36,8 @@
       {% include "payments/_cardform.html" %}
     </form>
   </section>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static "js/registerCtrl.js" %}" type="text/javascript"></script>
 {% endblock %}

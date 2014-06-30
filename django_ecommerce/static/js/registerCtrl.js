@@ -1,4 +1,4 @@
-
+/*
 mecApp.factory('pollFactory', function($http, $filter) {
 
   var baseUrl = '/api/v1/';
@@ -7,9 +7,6 @@ mecApp.factory('pollFactory', function($http, $filter) {
   var pollId = 0;
 
   var pollFactory = {};
-  
-  var cityList = [];
-
 
   pollFactory.getPoll = function() {
     var tempUrl = pollUrl;
@@ -29,28 +26,11 @@ mecApp.factory('pollFactory', function($http, $filter) {
 
   return pollFactory;
 });
+*/
+mecApp.controller('RegisterCtrl',function($scope) {
 
-mecApp.controller('UserPollCtrl',function($scope, $http, pollFactory) {
-
-  //get the Poll
-  $scope.poll = ""
-  function setPoll(promise){
-    $scope.poll = promise;
-  };
-
-  $scope.barcolor = function(i) {
-    colors = ['progress-bar-success','progress-bar-info',
-      'progress-bar-warning','progress-bar-danger','']
-    idx = i % colors.length;
-    return colors[idx];
-  };
-
-  pollFactory.getPoll().then(setPoll);
-
-  $scope.vote = function(item) {
-    pollFactory.vote_for_item(item) 
-                        .then(pollFactory.getPoll)
-                        .then(setPoll);
-  };
+ $scope.register = function() {
+  console.log( "before submit");
+ } 
 
 });

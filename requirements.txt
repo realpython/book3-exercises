@@ -5,3 +5,4 @@ stripe
 psycopg2
 djangorestframework
 django-embed-video
+django-angular

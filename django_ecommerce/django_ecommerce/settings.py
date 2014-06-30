@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'embed_video',
     'rest_framework',
     'djangular_polls',
+    'djangular',
     #'debug_toolbar',
 )
 
