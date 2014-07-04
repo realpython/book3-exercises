@@ -1,5 +1,5 @@
 from django.db import IntegrityError, DatabaseError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from payments.forms import PaymentForm, SigninForm, CardForm, UserForm
@@ -9,6 +9,7 @@ import stripe
 import datetime
 import socket
 from django.db import transaction
+import json
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -51,16 +52,24 @@ def sign_out(request):
 def register(request):
     user = None
     if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            #update based on your billing method (subscription vs one time)
-            customer = Customer.create("subscription",
-              email = form.cleaned_data['email'],
-              description = form.cleaned_data['name'],
-              card = form.cleaned_data['stripe_token'],
-              plan="gold",
-            )
+        #we only talk ajax posts now
+        if not request.is_ajax():
+            return HttpResponseBadRequest("I only speak AJAX now a days")
 
+        data = json.loads(request.body.decode()) 
+        form = UserForm(data)
+
+        if form.is_valid():
+            try:
+                #update based on your billing method (subscription vs one time)
+                customer = Customer.create("subscription",
+                  email = form.cleaned_data['email'],
+                  description = form.cleaned_data['name'],
+                  card = form.cleaned_data['stripe_token'],
+                  plan="gold",
+                )
+            except Exception as exp:
+                form.addError(exp)
             
             cd = form.cleaned_data            
             try:
@@ -78,7 +87,14 @@ def register(request):
                 form.addError(cd['email'] + ' is already a member')
             else:
                 request.session['user'] = user.pk
-                return HttpResponseRedirect('/')
+                resp = json.dumps({"status":"ok","url":'/'})
+                return HttpResponse(resp, content_type="application/json")
+
+            resp = json.dumps({"status":"fail","errors":form.non_field_errors()})
+            return HttpResponse(resp, content_type="application/json") 
+        else: #for not valid
+            resp = json.dumps({"status":"form-invalid","errors":form.errors})
+            return HttpResponse(resp, content_type="application/json") 
 
     else:
       form = UserForm()
@@ -137,11 +153,13 @@ class Customer(object):
 
     @classmethod
     def create(cls, billing_method="subscription", **kwargs):
+        print("calling stripe")
         try:
             if billing_method == "subscription":
                 return stripe.Customer.create(**kwargs)
             elif billing_method == "one_time":
                 return stripe.Charge.create(**kwargs)
         except socket.error:
+            print("Socket error")
             return None
 

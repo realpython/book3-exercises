@@ -6,33 +6,17 @@
 
 {% block content %}
   <section class="container" ng-controller="RegisterCtrl">
-    <form id="user_form" accept-charset="UTF-8" action="{% url 'register' %}"
-        class="form-signin" role="form" ng-submit="register()" method="post"> {% csrf_token %}
+    <form name="{{form.form_name}}" accept-charset="UTF-8" method="post" 
+        class="form-signin" role="form" ng-submit="register()" novalidate> {% csrf_token %}
       <h2 class="form-signin-heading">Register Today!</h2>
-      {% if form.is_bound and not form.is_valid %}
-        <div class="alert alert-{{error.tags}}"> <a class="close" data-dismiss="alert">×</a>
-          <div class="errors">
-            {% for field in form.visible_fields %}
-            {% for error in field.errors %}
-            <p>{{ field.label }}: {{ error }}</p>
-            {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
-          </div>
+      <div class="alert" ng-show="register_errors"> <a class="close" data-dismiss="alert">x</a>
+        <div>
+          <p class="error-text" ng-repeat="error in register_errors">[[ error ]]</p>
         </div>
-      {% endif %}
+      </div>
       {% for field in form.visible_fields %}
       {% include "payments/_field.html" %}
-      {% endfor %}
-      <div id="change-card" class="clearfix"{% if not form.last_4_digits.value %} style="display: none"{% endif %}>
-        Card
-        <div class="input">
-          Using card ending with {{ form.last_4_digits.value }}
-          (<a href="#">change</a>)
-        </div>
-      </div>      
+      {% endfor %} 
       {% include "payments/_cardform.html" %}
     </form>
   </section>

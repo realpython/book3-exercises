@@ -15,7 +15,23 @@ class CardForm(PaymentForm):
     stripe_token = forms.CharField(required = True, widget = forms.HiddenInput())
   
 class UserForm(CardForm):
-    name = forms.CharField(required = True)
+
+    form_name = 'user_form'
+    ng_scope_prefix = "userform"
+
+    def __init__(self, *args, ** kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            attrs = {"ng-model":"%s.%s"%(self.ng_scope_prefix,name)}
+            if field.required:
+                attrs.update({"required": True})
+            if field.min_length:
+                attrs.update({"ng-minlength":field.min_length})
+            field.widget.attrs.update(attrs)
+
+    
+
+    name = forms.CharField(required = True, min_length=3)
     email = forms.EmailField(required = True)
     password = forms.CharField(required = True, label=('Password'), widget=forms.PasswordInput(render_value=False))
     ver_password = forms.CharField(required = True, label=(' Verify Password'), widget=forms.PasswordInput(render_value=False))
