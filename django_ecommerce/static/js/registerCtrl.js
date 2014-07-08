@@ -13,6 +13,7 @@ mecApp.factory("StripeFactory", function($q, $rootScope) {
 
     return deferred.promise;
   }
+
   return factory;
 });
 
