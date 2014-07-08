@@ -51,53 +51,7 @@ def sign_out(request):
 
 def register(request):
     user = None
-    if request.method == 'POST':
-        #we only talk ajax posts now
-        if not request.is_ajax():
-            return HttpResponseBadRequest("I only speak AJAX now a days")
-
-        data = json.loads(request.body.decode()) 
-        form = UserForm(data)
-
-        if form.is_valid():
-            try:
-                #update based on your billing method (subscription vs one time)
-                customer = Customer.create("subscription",
-                  email = form.cleaned_data['email'],
-                  description = form.cleaned_data['name'],
-                  card = form.cleaned_data['stripe_token'],
-                  plan="gold",
-                )
-            except Exception as exp:
-                form.addError(exp)
-            
-            cd = form.cleaned_data            
-            try:
-                with transaction.atomic():
-                    user = User.create(cd['name'], cd['email'], cd['password'],
-                       cd['last_4_digits'])
-   
-                    if customer:
-                        user.stripe_id = customer.id
-                        user.save()
-                    else:
-                        UnpaidUsers(email=cd['email']).save()
-
-            except IntegrityError:
-                form.addError(cd['email'] + ' is already a member')
-            else:
-                request.session['user'] = user.pk
-                resp = json.dumps({"status":"ok","url":'/'})
-                return HttpResponse(resp, content_type="application/json")
-
-            resp = json.dumps({"status":"fail","errors":form.non_field_errors()})
-            return HttpResponse(resp, content_type="application/json") 
-        else: #for not valid
-            resp = json.dumps({"status":"form-invalid","errors":form.errors})
-            return HttpResponse(resp, content_type="application/json") 
-
-    else:
-      form = UserForm()
+    form = UserForm()
 
     return render_to_response(
         'payments/register.html',
@@ -162,4 +116,4 @@ class Customer(object):
         except socket.error:
             print("Socket error")
             return None
-
+ 

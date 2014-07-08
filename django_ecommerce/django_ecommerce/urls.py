@@ -2,11 +2,13 @@ from django.conf.urls import patterns, include, url
 from payments import views
 from main.urls import urlpatterns as main_json_urls
 from djangular_polls.urls import urlpatterns as djangular_polls_json_urls
+from payments.urls import urlpatterns as payments_json_urls
 
 from django.contrib import admin
 admin.autodiscover()
 
 main_json_urls.extend(djangular_polls_json_urls)
+main_json_urls.extend(payments_json_urls)
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
