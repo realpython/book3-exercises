@@ -1,0 +1,15 @@
+<!-- represents the status update info box -->
+<section class="info-box" id="updates">
+  <h1>Report back to base</h1>
+  <form accept-charset="UTF-8" action="{% url 'report' %}"
+	  role="form" method="post">{% csrf_token %}
+    <div class="input-group">
+      <input id="status" type="text" class="form-control" name="status" 
+              placeholder="whats your 20?">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">Report</button>
+      </span>
+    </div>
+  </form>
+</section>
+

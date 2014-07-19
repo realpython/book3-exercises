@@ -38,5 +38,19 @@ $(function() {
     $("#credit_card_number").focus();
     return false;
   });
+  
+  //show status
+  $("#show-achieve").click(function() {
+    a = $("#achievements");
+    l = $("#show-achieve");
+    if (a.hasClass("hide")) {
+       a.hide().removeClass('hide').slideDown('slow');
+       l.html("Hide Achievements");
+    } else {
+       a.addClass("hide");
+       l.html("Show Achievements");
+    }
+    return false;
+  });
 
 });
