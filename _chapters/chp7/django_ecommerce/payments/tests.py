@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django import forms
 from payments.models import User
 from payments.forms import SigninForm, UserForm
 import unittest
@@ -65,9 +64,10 @@ class FormTests(unittest.TestCase, FormTesterMixin):
                 'last_4_digits': '3333',
                 'stripe_token': '1'}
         )
-
-        # This will throw an error if it doesn't clean correctly
-        self.assertIsNotNone(form.clean())
+        # Is the data valid?
+        if form.is_valid():
+            # Is the data clean?
+            self.assertTrue(form.cleaned_data)
 
     def test_user_form_passwords_dont_match_throws_error(self):
         form = UserForm(
@@ -75,12 +75,11 @@ class FormTests(unittest.TestCase, FormTesterMixin):
                 'name': 'jj',
                 'email': 'j@j.com',
                 'password': '234',
-                'ver_password': '1234',
+                'ver_password': '1234',  # bad password
                 'last_4_digits': '3333',
                 'stripe_token': '1'
             }
         )
 
-        self.assertRaisesMessage(
-            forms.ValidationError, "Passwords do not match", form.clean
-        )
+        # Is the data valid?
+        self.assertFalse(form.is_valid())
