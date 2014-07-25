@@ -33,7 +33,7 @@ def sign_in(request):
     else:
         form = SigninForm()
 
-    print form.non_field_errors()
+    print(form.non_field_errors())
 
     return render_to_response(
         'sign_in.html',
@@ -92,11 +92,11 @@ def register(request):
         'register.html',
         {
             'form': form,
-            'months': range(1, 12),
+            'months': list(range(1, 12)),
             'publishable': settings.STRIPE_PUBLISHABLE,
             'soon': soon(),
             'user': user,
-            'years': range(2011, 2036),
+            'years': list(range(2011, 2036)),
         },
         context_instance=RequestContext(request)
     )
@@ -133,8 +133,8 @@ def edit(request):
             'form': form,
             'publishable': settings.STRIPE_PUBLISHABLE,
             'soon': soon(),
-            'months': range(1, 12),
-            'years': range(2011, 2036)
+            'months': list(range(1, 12)),
+            'years': list(range(2011, 2036))
         },
         context_instance=RequestContext(request)
     )
