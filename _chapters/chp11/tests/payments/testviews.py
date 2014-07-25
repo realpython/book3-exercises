@@ -80,11 +80,11 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             'register.html',
             {
                 'form': UserForm(),
-                'months': range(1, 12),
+                'months': list(range(1, 12)),
                 'publishable': settings.STRIPE_PUBLISHABLE,
                 'soon': soon(),
                 'user': None,
-                'years': range(2011, 2036),
+                'years': list(range(2011, 2036)),
             }
         )
         ViewTesterMixin.setupViewTester(
