@@ -1,0 +1,10 @@
+#!/Users/michaelherman/Documents/repos/realpython/book3-exercises/_chapters/chp11/py3/bin/python3.4
+# EASY-INSTALL-ENTRY-SCRIPT: 'Django==1.7c1','console_scripts','django-admin'
+__requires__ = 'Django==1.7c1'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('Django==1.7c1', 'console_scripts', 'django-admin')()
+    )
