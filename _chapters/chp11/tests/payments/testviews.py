@@ -62,7 +62,7 @@ class SignOutPageTests(TestCase, ViewTesterMixin):
         ViewTesterMixin.setupViewTester(
             '/sign_out',
             sign_out,
-            "",  # a redirect will return no html
+            b"",  # a redirect will return an empty bytestring
             status_code=302,
             session={"user": "dummy"},
         )
@@ -134,7 +134,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         resp = register(self.request)
 
-        self.assertEquals(resp.content, "")
+        self.assertEquals(resp.content, b"")
         self.assertEquals(resp.status_code, 302)
         self.assertEquals(self.request.session['user'], new_user.pk)
         #verify the user was actually stored in the database.
