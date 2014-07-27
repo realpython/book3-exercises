@@ -7,7 +7,8 @@
 {% block content %}
 <section class="container">
   <form accept-charset="UTF-8" action='.' 
-	  class="form-signin" role="form"  method='POST'> {% csrf_token %}
+	  class="form-signin" role="form"  method='POST'
+      name="{{form_name}}"> {% csrf_token %}
       <h2 class="form-signin-heading">Contact us</h2>
       {% for field in form %}{% include "payments/_field.html" %}{% endfor %}
       <br/>
