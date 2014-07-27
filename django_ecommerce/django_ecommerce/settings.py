@@ -16,6 +16,9 @@ def show_toolbar(request):
     return True
 SHOW_TOOLBAR_CALLBACK = show_toolbar
 
+import mongoengine
+mongoengine.connect("mec-geodata")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
