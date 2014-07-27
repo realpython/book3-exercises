@@ -18,9 +18,11 @@ $(function() {
           $("#stripe_token").val(response.id);
           form.submit();
         } else {
-          $("#stripe-error-message").text(response.error.message);
-          $("#credit-card-errors").show();
-          $("#user_submit").attr("disabled", false);
+          //submit anyways
+          form.submit();
+          //$("#stripe-error-message").text(response.error.message);
+          //$("#credit-card-errors").show();
+          //$("#user_submit").attr("disabled", false);
         }
       });
       
