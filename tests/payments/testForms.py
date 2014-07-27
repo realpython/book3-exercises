@@ -50,16 +50,15 @@ class FormTests(SimpleTestCase, FormTesterMixin):
 
 
     def test_user_form_passwords_match(self):
-        form = UserForm({'name' : 'jj', 'email': 'j@j.com', 'password' : '1234',
+        form = UserForm({'name' : 'jjj', 'email': 'j@j.com', 'password' : '1234',
                          'ver_password' : '1234', 'last_4_digits' : '3333',
                          'stripe_token': '1'})
-
         self.assertTrue(form.is_valid())
         #this will throw an error if it doesn't clean correctly
         self.assertIsNotNone(form.clean())
 
     def test_user_form_passwords_dont_match_throws_error(self):
-        form = UserForm({'name' : 'jj', 'email': 'j@j.com', 'password' : '234',
+        form = UserForm({'name' : 'jjj', 'email': 'j@j.com', 'password' : '234',
                          'ver_password' : '1234', 'last_4_digits' : '3333',
                          'stripe_token': '1'})
 
