@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'djangular_polls',
     'djangular',
+    'usermap',
     #'debug_toolbar',
 )
 
