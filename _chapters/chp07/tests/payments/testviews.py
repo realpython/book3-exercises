@@ -1,6 +1,6 @@
 from payments.views import sign_in, sign_out, register, soon
 from django.test import TestCase, RequestFactory
-from payments.models import User
+from payments.models import User, UnpaidUsers
 from payments.forms import SigninForm, UserForm
 from django.db import IntegrityError
 from django.core.urlresolvers import resolve
@@ -237,3 +237,41 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             users = User.objects.filter(email="python@rocks.com")
             self.assertEquals(len(users), 1)
             self.assertEquals(users[0].stripe_id, '')
+
+            # check the associated table got updated.
+            unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(unpaid), 1)
+            self.assertIsNotNone(unpaid[0].last_notification)
+
+    @mock.patch('payments.models.UnpaidUsers.save',
+                side_effect=IntegrityError)
+    def test_registering_user_when_strip_is_down_all_or_nothing(self, save_mock):
+
+        #create the request used to test the view
+        self.request.session = {}
+        self.request.method = 'POST'
+        self.request.POST = {
+            'email': 'python@rocks.com',
+            'name': 'pyRock',
+            'stripe_token': '...',
+            'last_4_digits': '4242',
+            'password': 'bad_password',
+            'ver_password': 'bad_password',
+        }
+
+        #mock out stripe and ask it to throw a connection error
+        with mock.patch(
+            'stripe.Customer.create',
+            side_effect=socket.error("can't connect to stripe")
+        ) as stripe_mock:
+
+            #run the test
+            resp = register(self.request)
+
+            #assert there is no new record in the database
+            users = User.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(users), 0)
+
+            #check the associated table has no updated data
+            unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(unpaid), 0)
