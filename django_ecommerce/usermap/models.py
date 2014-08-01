@@ -1,3 +1,10 @@
-from django.db import models
+from mongoengine import *
 
-# Create your models here.
+
+class UserLocation(Document):
+    email = EmailField(required=True,unique=True, max_length=200)
+    name = StringField(required=True,max_length=200)
+    location = PointField(required=True)
+
+
+

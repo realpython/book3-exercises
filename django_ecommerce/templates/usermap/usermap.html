@@ -1,0 +1,12 @@
+<!--usermap stuff-->
+{% extends '__base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div ng-controller="UserMapCtrl">
+  <google-map center="map.center" zoom="map.zoom"  options="map.options"></google-map>
+</div>
+{% endblock content %}
+
+{% block extrajs %}
+<script src='{% static "js/usermapCtrl.js" %}' type="text/javascript"></script>
+{% endblock %}

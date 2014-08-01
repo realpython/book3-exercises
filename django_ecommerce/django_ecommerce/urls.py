@@ -21,5 +21,6 @@ urlpatterns = patterns('',
     url(r'^edit$', views.edit, name='edit'),
     url(r'^report$', 'main.views.report', name="report"),
     url(r'^api/v1/', include(main_json_urls)),
+    url(r'^usermap/', 'usermap.views.usermap', name='usermap'),
 
 )

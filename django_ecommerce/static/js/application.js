@@ -1,4 +1,4 @@
-var mecApp = angular.module('mecApp',[]);
+var mecApp = angular.module('mecApp',['google-maps']);
 
 mecApp.config(function($interpolateProvider, $httpProvider){
   $interpolateProvider.startSymbol('[[')

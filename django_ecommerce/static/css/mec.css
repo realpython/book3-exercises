@@ -100,3 +100,6 @@ input.ng-dirty.ng-invalid { border:1px solid Red; }
 .alert { 
   border:1px solid Red;
   background-color: pink;
+}
+
+.angular-google-map-container { height: 400px; }

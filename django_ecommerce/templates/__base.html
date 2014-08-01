@@ -43,6 +43,7 @@
               <ul class="nav navbar-nav">
 	        <li class="active"><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="/pages/about">About</a></li>
+                <li><a href="{%url 'usermap' %}">user Map</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
                 {% if user %}
                   <li><a href="{% url 'sign_out' %}">Logout</a></li>
@@ -87,6 +88,9 @@
     <script src="{% static "js/angular.min.js" %}" type="text/javascript"></script>
     <script src="{% static "js/jquery-1.11.0.min.js" %}" type="text/javascript"></script>
     <script src="{% static "js/bootstrap.min.js" %}" type="text/javascript"></script>
+<script src='//maps.googleapis.com/maps/api/js?sensor=false' type="text/javascript"></script>
+<script src='{% static "js/lodash.underscore.min.js" %}' type="text/javascript"></script>
+<script src='{% static "js/angular-google-maps.min.js" %}' type="text/javascript"></script>
     <script src="{% static "js/application.js" %}" type="text/javascript"></script>
     {% block extrajs %}
     {% endblock %}
