@@ -22,46 +22,45 @@
   </head>
   <body>
 
-    <!-- NAVBAR ==========================================   -->
-    <div class="navbar-wrapper">
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <header class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'home' %}">Mos Eisley's Cantina</a>
+        </header>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="/pages/about">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            {% if user %}
+              <li><a href="{% url 'sign_out' %}">Logout</a></li>
+            {% else %}
+              <li><a href="{% url 'sign_in' %}">Login</a></li>
+              <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">Mos Eisley's Cantina</a>
-            </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-          <li class="active"><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="/pages/about">About</a></li>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-          {% if user %}
-            <li><a href="{% url 'sign_out' %}">Logout</a></li>
-                {% else %}
-            <li><a href="{% url 'sign_in' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
-          {% endif %}
-              </ul>
-            </div> <!-- end navbar links -->
-          </div> <!-- end container -->
-        </div> <!-- end navbar -->
+    <div class="container">
 
-    </div><!-- end navbar-wrapper -->
-
-
-    <h1>Hello, world!</h1>
+      {% block content %}
+      {% endblock %}
 
 
-    <footer>
-      <p class="pull-right"><a href="">Back to top</a></p>
-      <p class="pull-left">&copy; 2014 <a href="http://j1z0.com">The Jedi Council</a></p> <p class="text-center"> &middot;  Powered by about 37 AT-AT Walkers, Python 3 and Django 1.7 &middot; </p>
-    </footer>
+      <footer>
+        <p class="pull-right"><a href="">Back to top</a></p>
+        <p class="pull-left">&copy; 2014 <a href="http://j1z0.com">The Jedi Council</a></p> <p class="text-center"> &middot;  Powered by about 37 AT-AT Walkers, Python 3 and Django 1.7 &middot; </p>
+      </footer>
+
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
