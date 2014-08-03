@@ -1,0 +1,12 @@
+{% load staticfiles %}
+
+{% for m in marketing_items %}
+  <div class="col-lg-4">
+    <img class="img-circle" src="{% static 'img/'|add:m.img %}" width=140
+    height=140" alt="{{ m.img }}">
+    <h2>{{ m.heading }}</h2>
+    <p>{{ m.caption }} </p>
+    <p><a class="btn btn-default" href="{% url m.button_link %}"
+        role="button">{{ m.button_title }} &raquo;</a></p>
+  </div>
+{% endfor %}
