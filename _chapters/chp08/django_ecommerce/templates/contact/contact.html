@@ -8,10 +8,10 @@
 <section class="container">
   <form accept-charset="UTF-8" action='.'
       class="form-signin" role="form"  method='POST'> {% csrf_token %}
-      <h2 class="form-signin-heading">Contact us</h2>
+      <h1 class="form-signin-heading">Contact us</h1>
       {% for field in form %}{% include "payments/_field.html" %}{% endfor %}
       <br/>
-      <button type='submit' class='btn btn-lg btn-primary btn-block'>Submit</button>
+      <button type='submit' class='btn btn-lg btn-primary btn-lg'>Submit</button>
   </form>
 </section>
 {% endblock %}

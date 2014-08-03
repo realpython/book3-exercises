@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import resolve
-from main.views import index
+from main.views import index, market_items
 from django.shortcuts import render_to_response
 from django.test import RequestFactory
 import mock
@@ -36,9 +36,12 @@ class MainPageTests(TestCase):
 
     def test_returns_exact_html(self):
         resp = index(self.request)
-        self.assertEquals(
+        self.assertEqual(
             resp.content,
-            render_to_response("index.html").content
+            render_to_response(
+                "main/index.html",
+                {"marketing_items": market_items}
+            ).content
         )
 
     def test_index_handles_logged_in_user(self):
@@ -58,6 +61,6 @@ class MainPageTests(TestCase):
             self.request.session = {}
 
             expected_html = render_to_response(
-                'user.html', {'user': user_mock.get_by_id(1)}
+                'main/user.html', {'user': user_mock.get_by_id(1)}
             )
             self.assertEquals(resp.content, expected_html.content)

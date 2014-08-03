@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "__base.html" %}
 {% block content %}
 <div class="row">
   <div class="span6 columns">
@@ -26,7 +26,7 @@
         </div>
       {% endif %}
       {% for field in form.visible_fields %}
-      {% include "field.html" %}
+      {% include "payments/_field.html" %}
       {% endfor %}
       <div id="change-card" class="clearfix"{% if not form.last_4_digits.value %} style="display: none"{% endif %}>
         Card
@@ -34,9 +34,9 @@
           Using card ending with {{ form.last_4_digits.value }}
           (<a href="#">change</a>)
         </div>
-      </div>      
-      {% include "cardform.html" %}
+      </div>
+      {% include "payments/_cardform.html" %}
     </form>
   </div>
-</div>  
+</div>
 {% endblock %}
