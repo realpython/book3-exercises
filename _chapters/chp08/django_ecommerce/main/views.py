@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from payments.models import User
+from main.models import MarketingItem
 #from main.templatetags.main_marketing import marketing__circle_item
 
 
@@ -42,8 +43,7 @@ market_items = [
 
 def index(request):
     uid = request.session.get('user')
-    # for now just hard-code all the marketing info stuff
-    # to see how this works
+    market_items = MarketingItem.objects.all()
     if uid is None:
         return render_to_response(
             'main/index.html',
