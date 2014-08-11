@@ -3,7 +3,12 @@
 {% load staticfiles %}
 {% block content %}
 <div ng-controller="UserMapCtrl">
-  <google-map center="map.center" zoom="map.zoom"  options="map.options"></google-map>
+  <google-map center="map.center" zoom="map.zoom"  options="map.options">
+
+  <markers models="locs" coords="'location'" idKey="'id'" icon="'icon'" click="'onClicked'">
+      </markers>
+  
+  </google-map>
 </div>
 {% endblock content %}
 

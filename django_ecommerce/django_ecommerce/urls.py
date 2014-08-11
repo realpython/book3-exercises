@@ -3,12 +3,14 @@ from payments import views
 from main.urls import urlpatterns as main_json_urls
 from djangular_polls.urls import urlpatterns as djangular_polls_json_urls
 from payments.urls import urlpatterns as payments_json_urls
+from usermap.urls import urlpatterns as usermap_json_urls
 
 from django.contrib import admin
 admin.autodiscover()
 
 main_json_urls.extend(djangular_polls_json_urls)
 main_json_urls.extend(payments_json_urls)
+main_json_urls.extend(usermap_json_urls)
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -22,5 +24,4 @@ urlpatterns = patterns('',
     url(r'^report$', 'main.views.report', name="report"),
     url(r'^api/v1/', include(main_json_urls)),
     url(r'^usermap/', 'usermap.views.usermap', name='usermap'),
-
 )
