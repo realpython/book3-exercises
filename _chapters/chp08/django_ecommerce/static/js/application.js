@@ -18,18 +18,20 @@ $(function() {
           $("#stripe_token").val(response.id);
           form.submit();
         } else {
-          $("#stripe-error-message").text(response.error.message);
-          $("#credit-card-errors").show();
-          $("#user_submit").attr("disabled", false);
+          // submit anyway
+          form.submit();
+          // $("#stripe-error-message").text(response.error.message);
+          // $("#credit-card-errors").show();
+          // $("#user_submit").attr("disabled", false);
         }
       });
-      
+
       return false;
-      
-    } 
-    
+
+    }
+
     return true
-    
+
   });
 
   $("#change-card a").click(function() {

@@ -86,7 +86,9 @@ def register(request):
                         UnpaidUsers(email=cd['email']).save()
 
             except IntegrityError:
-                form.addError(cd['email'] + ' is already a member')
+                import traceback
+                form.addError(cd['email'] + ' is already a member' +
+                              traceback.format_exc())
                 user = None
             else:
                 request.session['user'] = user.pk
@@ -156,5 +158,6 @@ class Customer(object):
                 return stripe.Customer.create(**kwargs)
             elif billing_method == "one_time":
                 return stripe.Charge.create(**kwargs)
-        except socket.error:
+        except (socket.error, stripe.APIConnectionError,
+                stripe.InvalidRequestError):
             return None
