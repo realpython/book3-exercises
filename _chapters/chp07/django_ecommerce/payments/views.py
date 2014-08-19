@@ -9,6 +9,7 @@ import stripe
 import datetime
 import socket
 
+
 stripe.api_key = settings.STRIPE_SECRET
 
 
@@ -158,6 +159,6 @@ class Customer(object):
                 return stripe.Customer.create(**kwargs)
             elif billing_method == "one_time":
                 return stripe.Charge.create(**kwargs)
-        except (socket.error, stripe.error.APIConnectionError,
-                stripe.error.InvalidRequestError):
+        except (socket.error, stripe.APIConnectionError,
+                stripe.InvalidRequestError):
             return None
