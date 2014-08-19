@@ -18,7 +18,7 @@ $(function() {
           $("#stripe_token").val(response.id);
           form.submit();
         } else {
-          //submit anyways
+          // submit anyway
           form.submit();
           // $("#stripe-error-message").text(response.error.message);
           // $("#credit-card-errors").show();
@@ -38,6 +38,21 @@ $(function() {
     $("#change-card").hide();
     $("#credit-card").show();
     $("#credit_card_number").focus();
+    return false;
+  });
+
+  //show status
+  $("#show-achieve").click(function() {
+    console.log("test")
+    a = $("#achievements");
+    l = $("#show-achieve");
+    if (a.hasClass("hide")) {
+      a.hide().removeClass('hide').slideDown('slow');
+      l.html("Hide Achievements");
+    } else {
+      a.addClass("hide");
+      l.html("Show Achievements");
+    }
     return false;
   });
 
