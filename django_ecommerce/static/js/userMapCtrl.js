@@ -28,20 +28,8 @@ mecApp.controller('UserMapCtrl', function($scope, locations) {
   //get all the user locations
   $scope.locs = [];
   cache = function(locs){
-      for (var i = 0; i < locs.length; i++) {
-        val = locs[i];
-        val['id'] = i;
-        $scope.locs.push(val);
-      }
+    $scope.locs = locs;
   }
 
   locations.getAll().then(cache);
-
-  /*$scope.locs = [ {
-    geo : {type: 'Point',
-           coordinates: [-122.643380, 38.062056], 
-        },
-        _id : {$oid: 334},
-    },];
-*/
 });
