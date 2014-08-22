@@ -5,7 +5,6 @@ mecApp.factory('locations', function($http) {
   return {
     getAll: /*function() {return $http.get(locsUrl);}, */
       function() { return $http.get(locsUrl).then(function(response) {
-                      console.log(response);
                       return response.data; 
                     });
     },
@@ -19,7 +18,7 @@ mecApp.controller('UserMapCtrl', function($scope, locations) {
         latitude: 38.062056, 
         longitude: -122.643380
     },
-    zoom: 14,
+    zoom: 2,
     options: { 
       mapTypeId: google.maps.MapTypeId.HYBRID,
     }
@@ -29,6 +28,7 @@ mecApp.controller('UserMapCtrl', function($scope, locations) {
   $scope.locs = [];
   cache = function(locs){
     $scope.locs = locs;
+    console.log($scope.locs)
   }
 
   locations.getAll().then(cache);
