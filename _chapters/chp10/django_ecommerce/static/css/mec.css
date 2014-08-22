@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'starjedi';
+  /*IE9 */
+  src: url('../fonts/Starjedi.eot');
+  /* Chrome, FF, Opera */
+  src: url('../fonts/Starjedi.woff') format('woff'),
+  /* android, safari, iOS */
+  url('../fonts/Starjedi.ttf') format('truetype'),
+  /* legacy safari */
+  url('../fonts/Starjedi.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1, .nav li, .navbar-brand {
+  font-family: 'starjedi', sans-serif;
+}
+
+.navbar-brand {
+  height : 40px;
+}
+
+#darth_caption {
+  top: 0%;
+  left: 5%;
+  right: 60%;
+  text-align: left;
+}
+
+/* Member Page */
+.info-box {
+  border: 2px solid #000000;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  background-color: #eee;
+}
+#user_info {
+  text-align: center;
+  margin-left: 20px;
+}
+#user_info ul {
+  list-style-type: none;
+  text-align: left;
+}
+.member-page {
+  padding-top: 20px;
+  padding-bottom: 40px;
+  background-color: white;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: -20px;
+}
+
+.full-image {
+  overflow: hidden;
+}
+
+.full-image img {
+  position: relative;
+  display: block;
+  margin: auto;
+  min-width: 100%;
+  min-height: 100px;
+}
