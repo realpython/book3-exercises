@@ -1,7 +1,7 @@
 from django.forms import widgets
 from rest_framework import serializers
 from main.models import StatusReport
-from payments.models import User
+from payments.models import User, Badge
 
 
 class RelatedUserField(serializers.RelatedField):
@@ -18,3 +18,10 @@ class StatusReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = StatusReport
         fields = ('id', 'user', 'when', 'status')
+
+
+class BadgeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Badge
+        fields = ('id', 'img', 'name', 'desc')

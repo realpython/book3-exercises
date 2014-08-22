@@ -10,4 +10,4 @@ urlpatterns = patterns('main.json_views',
         name='badges_collection'),
     url(r'^badges/(?P<pk>[0-9]+)/$', json_views.BadgeMember.as_view()),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    )
+)
