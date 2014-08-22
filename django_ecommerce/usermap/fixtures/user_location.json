@@ -1,0 +1,2 @@
+{ "_id" : { "$oid" : "53f6ed0759b1e944ae897223" }, "email" : "jofdjljkl@jfkdl.com", "name" : "jesus", "location" : { "type" : "Point", "coordinates" : [ -104.7995164, 38.8374817 ] }, "mappoint_id" : 7 }
+{ "_id" : { "$oid" : "53f6ed2c59b1e944ae897224" }, "email" : "ll@ll.com", "name" : "super", "location" : { "type" : "Point", "coordinates" : [ -122.64338, 38.062056 ] }, "mappoint_id" : 8 }
