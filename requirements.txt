@@ -7,4 +7,3 @@ djangorestframework
 django-embed-video
 mongoengine
 pymongo
-django-rest-framework-mongoengine
