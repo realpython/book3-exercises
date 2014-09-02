@@ -47,6 +47,7 @@ mecApp.controller('RegisterCtrl',function($scope, $http, StripeFactory,
   }
 
   saveUsrLoc = function() {
+    //Point coordinates are (longitude, latitude for geographic coordinates).
     data = {'name' : $scope.userform.name,
             'email' :    $scope.userform.email,
             'location' : [$scope.geoloc.coords.longitude,
