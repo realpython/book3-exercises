@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'starjedi';
+  /*IE9 */
+  src: url('../fonts/Starjedi.eot');
+  /* Chrome, FF, Opera */
+  src: url('../fonts/Starjedi.woff') format('woff'),
+  /* android, safari, iOS */
+  url('../fonts/Starjedi.ttf') format('truetype'),
+  /* legacy safari */
+  url('../fonts/Starjedi.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+h1, .nav li, .navbar-brand {
+  font-family: 'starjedi', sans-serif;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.featurette-divider {
+  margin: 80px 0;
+}
+
+.navbar-brand {
+  height: 40px;
+}
+
+#darth_caption {
+  top: 0%;
+  left: 5%;
+  right: 60%;
+  text-align: left;
+}
