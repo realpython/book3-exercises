@@ -7,6 +7,7 @@ from rest_framework import status
 from main.serializers import StatusReportSerializer
 from rest_framework.test import APIRequestFactory, force_authenticate
 
+
 class JsonViewTests(TestCase):
 
     @classmethod
@@ -43,7 +44,7 @@ class JsonViewTests(TestCase):
     def test_get_member(self):
         stat = StatusReport(user=self.test_user, status="testing")
         stat.save()
-        
+
         status = StatusReport.objects.get(pk=stat.id)
         expected_json = StatusReportSerializer(status).data
 
