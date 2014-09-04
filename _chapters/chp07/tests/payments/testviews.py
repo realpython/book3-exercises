@@ -26,15 +26,15 @@ class ViewTesterMixin(object):
 
     def test_resolves_to_correct_view(self):
         test_view = resolve(self.url)
-        self.assertEquals(test_view.func, self.view_func)
+        self.assertEqual(test_view.func, self.view_func)
 
     def test_returns_appropriate_respose_code(self):
         resp = self.view_func(self.request)
-        self.assertEquals(resp.status_code, self.status_code)
+        self.assertEqual(resp.status_code, self.status_code)
 
     def test_returns_correct_html(self):
         resp = self.view_func(self.request)
-        self.assertEquals(resp.content, self.expected_html)
+        self.assertEqual(resp.content, self.expected_html)
 
 
 class SignInPageTests(TestCase, ViewTesterMixin):
@@ -107,10 +107,10 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.request.method = 'POST'
             self.request.POST = None
             resp = register(self.request)
-            self.assertEquals(resp.content, self.expected_html)
+            self.assertEqual(resp.content, self.expected_html)
 
             # make sure that we did indeed call our is_valid function
-            self.assertEquals(user_mock.call_count, 1)
+            self.assertEqual(user_mock.call_count, 1)
 
     def get_mock_cust():
 
@@ -238,10 +238,10 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEquals(len(users), 1)
             self.assertEquals(users[0].stripe_id, '')
 
-            # check the associated table got updated.
-            unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
-            self.assertEquals(len(unpaid), 1)
-            self.assertIsNotNone(unpaid[0].last_notification)
+        # check the associated table got updated.
+        unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
+        self.assertEquals(len(unpaid), 1)
+        self.assertIsNotNone(unpaid[0].last_notification)
 
     @mock.patch('payments.models.UnpaidUsers.save',
                 side_effect=IntegrityError)

@@ -1,5 +1,4 @@
-Django==1.7c1
-django-embed-video==0.11
+Django==1.7
 mock==1.0.1
 psycopg2==2.5.3
 requests==2.3.0

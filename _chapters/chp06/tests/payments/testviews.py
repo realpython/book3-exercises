@@ -25,15 +25,15 @@ class ViewTesterMixin(object):
 
     def test_resolves_to_correct_view(self):
         test_view = resolve(self.url)
-        self.assertEquals(test_view.func, self.view_func)
+        self.assertEqual(test_view.func, self.view_func)
 
     def test_returns_appropriate_respose_code(self):
         resp = self.view_func(self.request)
-        self.assertEquals(resp.status_code, self.status_code)
+        self.assertEqual(resp.status_code, self.status_code)
 
     def test_returns_correct_html(self):
         resp = self.view_func(self.request)
-        self.assertEquals(resp.content, self.expected_html)
+        self.assertEqual(resp.content, self.expected_html)
 
 
 class SignInPageTests(TestCase, ViewTesterMixin):
@@ -106,10 +106,10 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.request.method = 'POST'
             self.request.POST = None
             resp = register(self.request)
-            self.assertEquals(resp.content, self.expected_html)
+            self.assertEqual(resp.content, self.expected_html)
 
             # make sure that we did indeed call our is_valid function
-            self.assertEquals(user_mock.call_count, 1)
+            self.assertEqual(user_mock.call_count, 1)
 
     @mock.patch('payments.views.Customer.create')
     @mock.patch.object(User, 'create')
@@ -134,9 +134,9 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         resp = register(self.request)
 
-        self.assertEquals(resp.content, b"")
-        self.assertEquals(resp.status_code, 302)
-        self.assertEquals(self.request.session['user'], new_user.pk)
+        self.assertEqual(resp.content, b"")
+        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(self.request.session['user'], new_user.pk)
         #verify the user was actually stored in the database.
         create_mock.assert_called_with(
             'pyRock', 'python@rocks.com', 'bad_password', '4242', new_cust.id

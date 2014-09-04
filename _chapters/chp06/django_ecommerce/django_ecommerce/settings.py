@@ -8,6 +8,7 @@ PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 SITE_ROOT = os.path.dirname(PROJECT_ROOT)
 STRIPE_SECRET = 'sk_test_4QBquf6d5EzsnJC1fTI2GBGm'
 STRIPE_PUBLISHABLE = 'pk_test_4QBqqGvCk9gaNn3pl1cwxcAS'
+
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 ADMINS = (
@@ -21,7 +22,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'django_db',
         'USER': 'djangousr',
-        'PASSWORD': 'test',
+        'PASSWORD': 'your_password_here',
         'HOST': 'localhost',
         'PORT': '5432',
     }

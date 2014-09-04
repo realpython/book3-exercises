@@ -1,4 +1,4 @@
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -8,7 +8,6 @@ import django_ecommerce.settings as settings
 import stripe
 import datetime
 import socket
-
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -48,7 +47,10 @@ def sign_in(request):
 
 
 def sign_out(request):
-    del request.session['user']
+    try:
+        del request.session['user']
+    except KeyError:
+        pass
     return HttpResponseRedirect('/')
 
 
@@ -73,8 +75,6 @@ def register(request):
             # )
 
             cd = form.cleaned_data
-            from django.db import transaction
-
             try:
                 with transaction.atomic():
                     user = User.create(cd['name'], cd['email'], cd['password'],
