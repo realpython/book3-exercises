@@ -7,8 +7,6 @@ from collections import OrderedDict
 from rest_framework.parsers import JSONParser
 from rest_framework.compat import BytesIO
 from main.json_views import StatusCollection, StatusMember
-from rest_framework import status
-from rest_framework.test import APIRequestFactory, force_authenticate
 
 
 class StatusReportSerializer_Tests(TestCase):
