@@ -14,8 +14,8 @@ def gravatar_img(email, size=140):
 
 @register.simple_tag
 def gravatar_url(email, size=140):
-    default = ('http://upload.wikimedia.org/wikipedia/en/9/9b/'
-               'Yoda_Empire_Strikes_Back.png')
+    default = ('http://starwars.com//img/explore/encyclopedia/characters/'
+               'anakinskywalker_relationship.png')
 
     #mainly for unit testing with a mock object
     if not(isinstance(email, str)):

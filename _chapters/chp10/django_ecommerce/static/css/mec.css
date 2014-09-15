@@ -12,25 +12,12 @@
   font-style: normal;
 }
 
-body {
-  padding-bottom: 40px;
-  background-color: #eee;
-}
-
 h1, .nav li, .navbar-brand {
   font-family: 'starjedi', sans-serif;
 }
 
-.center-text {
-  text-align: center;
-}
-
-.featurette-divider {
-  margin: 80px 0;
-}
-
 .navbar-brand {
-  height: 40px;
+  height : 40px;
 }
 
 #darth_caption {
