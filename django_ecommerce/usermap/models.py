@@ -7,4 +7,3 @@ class UserLocation(Document):
     location = PointField(required=True)
     mappoint_id = SequenceField(required=True)
 
-
