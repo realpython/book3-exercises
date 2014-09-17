@@ -1,11 +1,10 @@
 from django.test import TestCase
-from main.models import StatusReport
-from rest_framework.test import APIRequestFactory, force_authenticate
-from payments.models import User
 from main.json_views import StatusCollection, StatusMember
-from rest_framework import status
+from main.models import StatusReport
 from main.serializers import StatusReportSerializer
 from rest_framework.test import APIRequestFactory, force_authenticate
+from rest_framework import status
+from payments.models import User
 
 
 class JsonViewTests(TestCase):
@@ -13,7 +12,7 @@ class JsonViewTests(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.factory = APIRequestFactory()
-        cls.test_user = User(email="test@test.com")
+        cls.test_user = User(id=2222, email="test@user.com")
         cls.test_user.save()
 
     @classmethod
@@ -33,11 +32,12 @@ class JsonViewTests(TestCase):
         expected_json = StatusReportSerializer(status, many=True).data
 
         response = StatusCollection.as_view()(self.get_request())
-
         self.assertEqual(expected_json, response.data)
 
     def test_get_collection_requires_logged_in_user(self):
-        response = StatusCollection.as_view()(self.get_request(authed=False))
+
+        anon_request = self.get_request(method='GET', authed=False)
+        response = StatusCollection.as_view()(anon_request)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -62,3 +62,5 @@ class JsonViewTests(TestCase):
             self.get_request(method='DELETE'), pk=stat.pk)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        stat.delete()

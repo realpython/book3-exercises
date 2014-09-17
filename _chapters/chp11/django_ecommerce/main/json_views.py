@@ -1,16 +1,16 @@
 from rest_framework import mixins, generics
-from main.serializers import StatusReportSerializer, BadgeSerializer
-from main.models import StatusReport, Badge
 from rest_framework import permissions
-from main.permissions import IsOwnerOrReadOnly
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from main.serializers import StatusReportSerializer, BadgeSerializer
+from main.models import StatusReport, Badge
+from main.permissions import IsOwnerOrReadOnly
 
 
-class StatusCollection(
-        mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView
-):
+class StatusCollection(mixins.ListModelMixin,
+                       mixins.CreateModelMixin,
+                       generics.GenericAPIView):
 
     queryset = StatusReport.objects.all()
     serializer_class = StatusReportSerializer
@@ -23,9 +23,10 @@ class StatusCollection(
         return self.create(request)
 
 
-class StatusMember(
-        mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
-        mixins.DestroyModelMixin, generics.GenericAPIView):
+class StatusMember(mixins.RetrieveModelMixin,
+                   mixins.UpdateModelMixin,
+                   mixins.DestroyModelMixin,
+                   generics.GenericAPIView):
 
     queryset = StatusReport.objects.all()
     serializer_class = StatusReportSerializer

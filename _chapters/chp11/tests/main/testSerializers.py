@@ -6,9 +6,7 @@ from rest_framework.renderers import JSONRenderer
 from collections import OrderedDict
 from rest_framework.parsers import JSONParser
 from rest_framework.compat import BytesIO
-from main.json_views import StatusCollection, StatusMember
-from rest_framework import status
-from rest_framework.test import APIRequestFactory, force_authenticate
+import datetime
 
 
 class StatusReportSerializer_Tests(TestCase):
@@ -52,10 +50,10 @@ class StatusReportSerializer_Tests(TestCase):
         serializer = StatusReportSerializer(data=data)
         self.assertTrue(serializer.is_valid())
         self.assertEqual(self.new_status.status, serializer.object.status)
-        import datetime
         self.assertAlmostEqual(
             self.new_status.when,
             serializer.object.when,
             delta=datetime.timedelta(seconds=1)
         )
+
         self.assertEqual(self.new_status.user, serializer.object.user)

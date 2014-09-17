@@ -1,4 +1,3 @@
-from django.forms import widgets
 from rest_framework import serializers
 from main.models import StatusReport
 from payments.models import User, Badge
