@@ -1,5 +1,0 @@
-Django==1.7c3
-mock==1.0.1
-psycopg2==2.5.4
-requests==2.3.0
-stripe==1.9.2

@@ -57,5 +57,3 @@ class StatusReportSerializer_Tests(TestCase):
             delta=datetime.timedelta(seconds=1)
         )
         self.assertEqual(self.new_status.user, serializer.object.user)
-
-

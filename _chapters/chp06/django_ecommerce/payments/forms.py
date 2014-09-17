@@ -34,7 +34,7 @@ class UserForm(CardForm):
     )
     ver_password = forms.CharField(
         required=True,
-        label=('Verify Password'),
+        label=(' Verify Password'),
         widget=forms.PasswordInput(render_value=False)
     )
 

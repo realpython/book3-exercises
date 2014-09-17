@@ -14,7 +14,7 @@ class FormTesterMixin():
         #if we get an error then the form should not be valid
         self.assertFalse(test_form.is_valid())
 
-        self.assertEquals(
+        self.assertEqual(
             test_form.errors[expected_error_name],
             expected_error_msg,
             msg="Expected {} : Actual {} : using data {}".format(
