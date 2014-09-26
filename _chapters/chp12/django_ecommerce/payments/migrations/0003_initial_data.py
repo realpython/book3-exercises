@@ -20,7 +20,7 @@ def create_default_user(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('payments', '0002_auto_20140921_0018'),
+        ('payments', '0001_initial'),
     ]
 
     operations = [
