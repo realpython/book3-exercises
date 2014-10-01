@@ -14,6 +14,7 @@ class User(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
     rank = models.CharField(max_length=50, default="Padwan")
     badges = models.ManyToManyField(Badge)
+    bigCoID = models.CharField(max_length=50, unique=True)
 
     USERNAME_FIELD = 'email'
 
