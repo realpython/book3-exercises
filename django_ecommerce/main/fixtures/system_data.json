@@ -1,10 +1,6 @@
 [
   {
-<<<<<<< HEAD
-    "model": "main.Marketing_items",
-=======
     "model": "main.MarketingItem",
->>>>>>> abe8bb86f1cf84d3b030cc1e77193d2909d60e28
     "pk": 1,
     "fields":{
        "img":"yoda.jpg",
@@ -13,11 +9,7 @@
             }
     },
     {
-<<<<<<< HEAD
-     "model": "main.Marketing_items",
-=======
      "model": "main.MarketingItem",
->>>>>>> abe8bb86f1cf84d3b030cc1e77193d2909d60e28
      "pk": 2,
      "fields":{
         "img":"clone_army.jpg", 
@@ -26,11 +18,7 @@
             }
     },
     {
-<<<<<<< HEAD
-     "model": "main.Marketing_items",
-=======
      "model": "main.MarketingItem",
->>>>>>> abe8bb86f1cf84d3b030cc1e77193d2909d60e28
      "pk": 3,
      "fields":{
         "img":"leia.jpg", 
@@ -38,11 +26,6 @@
         "caption":"Everybody knows StarWars fans arethe best mates for StarWars fans.  Find your Princess Leia or Hans Solo and explore the starts together.", 
         "button_title":"Sign Up Now"
         }
-<<<<<<< HEAD
-     }           
-]
-
-=======
      }, 
 
 {"pk": 1, "model": "main.StatusReport", "fields": {"when": "2014-03-13T11:07:29.778", "user": 2, "status": "A long time ago, in a galaxy far, far away..."}}, 
@@ -66,4 +49,3 @@
 {"model": "main.Badge", "pk": 5, "fields": {"desc": "Only a select few become Jedi", "img": "badge_jedi.png", "name": "Jedi Master"}}
 
 ]
->>>>>>> abe8bb86f1cf84d3b030cc1e77193d2909d60e28
