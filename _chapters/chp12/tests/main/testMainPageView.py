@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import resolve
 from main.views import index, market_items
+from main.models import MarketingItem
 from payments.models import User
 from django.shortcuts import render_to_response
 from django.test import RequestFactory
@@ -18,6 +19,7 @@ class MainPageTests(TestCase):
         request_factory = RequestFactory()
         cls.request = request_factory.get('/')
         cls.request.session = {}
+        [MarketingItem(**m.__dict__).save() for m in market_items]
 
     ##########################
     ##### Testing routes #####
