@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='bigCoID',
-            field=models.CharField(max_length=50, default=datetime.datetime(2014, 10, 1, 5, 46, 4, 329384), unique=True),
+            field=models.CharField(max_length=50,
+                                   default=datetime.datetime.now(), unique=True),
             preserve_default=False,
         ),
         migrations.AlterField(
