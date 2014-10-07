@@ -15,13 +15,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='bigCoID',
-            field=models.CharField(max_length=50,
-                                   default=datetime.datetime.now(), unique=True),
+            field=models.CharField(max_length=50, default='foo'),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='unpaidusers',
             name='last_notification',
-            field=models.DateTimeField(default=datetime.datetime(2014, 10, 1, 5, 44, 20, 437687)),
+            field=models.DateTimeField(default=datetime.datetime(2014, 10, 7, 8, 58, 46, 223243)),
         ),
     ]
