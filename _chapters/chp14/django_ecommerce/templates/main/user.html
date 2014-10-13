@@ -15,7 +15,12 @@
      <div class="row">
        {% include "main/_jedibadge.html" %}
        {% include "main/_statusupdate.html" %}
+       {% include "djangular_polls/_polls.html" %}
      </div>
     </div>
   </div>
+{% endblock %}
+{% block extrajs %}
+  <script src="{% static "js/angular.min.js" %}" type="text/javascript"></script>
+  <script src="{% static "js/userPollCtrl.js" %}" type="text/javascript"></script>
 {% endblock %}
