@@ -1,19 +1,11 @@
 from django.shortcuts import render_to_response
 from payments.models import User
-<<<<<<< HEAD
-from main.models import Marketing_items
-
-def index(request):
-    uid = request.session.get('user')
-    market_items = Marketing_items.objects.all()
-=======
 from main.models import MarketingItem, StatusReport, Announcement
 from django.template import RequestContext
 from datetime import date, timedelta
 
 def index(request):
     uid = request.session.get('user')
->>>>>>> abe8bb86f1cf84d3b030cc1e77193d2909d60e28
     if uid is None:
         #main landing page
         market_items = MarketingItem.objects.all()
