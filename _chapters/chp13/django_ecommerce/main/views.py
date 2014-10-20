@@ -4,6 +4,7 @@ from main.models import MarketingItem, StatusReport, Announcement
 from datetime import date, timedelta
 
 
+
 def index(request):
     uid = request.session.get('user')
     if uid is None:

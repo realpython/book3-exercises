@@ -2,6 +2,7 @@ from django.db import models
 from main.models import Badge
 from django.contrib.auth.models import AbstractBaseUser
 from datetime import datetime
+from django.db import connection, models
 
 
 class User(AbstractBaseUser):
@@ -21,6 +22,7 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
+
     @classmethod
     def get_by_id(cls, uid):
         return User.objects.get(pk=uid)
@@ -31,6 +33,11 @@ class User(AbstractBaseUser):
                        last_4_digits=last_4_digits, stripe_id=stripe_id)
         new_user.set_password(password)
 
+        #set bigCoID
+        new_user.bigCoId = ("%s%s%s" % (new_user.name[:2], 
+                            new_user.rank[:1],
+                            datetime.now().strftime("%Y%m%d%H%M%S%f"),
+                            ))
         new_user.save()
         return new_user
 
