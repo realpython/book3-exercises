@@ -9,10 +9,10 @@ def migrate_bigcoid(apps, schema_editor):
     User = apps.get_model('payments', 'User')
 
     for u in User.objects.all():
-        bid = ("%s%s%s%s" % (u.name[:2], 
+        bid = ("%s%s%s" % (u.name[:2], 
                             u.rank[:1],
-                            u.created_at.strftime("%m%d%Y"),
-                            u.id))
+                            u.created_at.strftime("%Y%m%d%H%M%S%f"),
+                          ))
         u.bigCoID = bid
         u.save()
 

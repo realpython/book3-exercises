@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import resolve
-from main.views import index, market_items
+from main.views import index
 from main.models import MarketingItem
 from payments.models import User
 from django.shortcuts import render_to_response
