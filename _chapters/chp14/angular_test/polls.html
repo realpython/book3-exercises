@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" ng-app="mecApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Poll: Who's the most powerful Jedi?</title>
+  <!-- styles -->
+  <link href="http://netdna.bootstrapcdn.com/bootswatch/3.1.1/yeti/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+  <body>
+    <div class="container" ng-controller="UserPollCtrl">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Poll: Who's the most powerful Jedi?</h1>
+          <br>
+          <span ng-click='vote("votes_for_yoda")' class="glyphicon glyphicon-plus"></span>
+          <strong>Yoda (votes: {{ votes_for_yoda.votes }})</strong>
+          <span class="pull-right">{{ votes_for_yoda.percent | number:0 }}%</span>
+          <div class="progress">
+            <div class="progress-bar progress-bar-danger" role="progressbar" aria-value="{{ votes_for_yoda.percent }}"
+              aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_yoda.percent }}%;">
+            </div>
+          </div>
+          <span ng-click="vote('votes_for_qui')" class="glyphicon glyphicon-plus"></span>
+          <strong>Qui-Gon Jinn (votes: {{ votes_for_qui.votes }})</strong>
+          <span class="pull-right">{{ votes_for_qui.percent | number:0 }}%</span>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-value="{{ votes_for_qui.percent }}"
+              aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_qui.percent }}%;">
+            </div>
+          </div>
+          <span ng-click="vote('votes_for_obi')" class="glyphicon glyphicon-plus"></span>
+          <strong>Obi-Wan Kenobi (votes: {{ votes_for_obi.votes }})</strong>
+          <span class="pull-right">{{ votes_for_obi.percent | number:0 }}%</span>
+          <div class="progress">
+            <div class="progress-bar progress-bar-warning" role="progressbar" aria-value="{{ votes_for_obi.percent }}"
+              aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_obi.percent }}%;">
+            </div>
+          </div>
+          <span ng-click="vote('votes_for_luke')" class="glyphicon glyphicon-plus"></span>
+          <strong>Luke Sykwalker (votes: {{ votes_for_luke.votes }})</strong>
+          <span class="pull-right">{{ votes_for_luke.percent | number:0 }}%</span>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-value="{{ votes_for_luke.percent }}"
+              aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_luke.percent }}%;">
+            </div>
+          </div>
+          <span ng-click="vote('votes_for_me')" class="glyphicon glyphicon-plus"></span>
+          <strong>Me... of course (votes: {{ votes_for_me.votes }})</strong>
+          <span class="pull-right">{{ votes_for_me.percent | number:0 }}%</span>
+          <div class="progress progress-striped active">
+            <div class="progress-bar" role="progressbar" aria-value="{{ votes_for_me.percent }}"
+              aria-valuemin="0" aria-valuemax="100" style="width: {{ votes_for_me.percent }}%;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- scripts -->
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var mecApp = angular.module('mecApp',[]);
+
+      mecApp.controller('UserPollCtrl', function($scope) {
+        $scope.total_votes = 0;
+        $scope.vote_data = {}
+
+        $scope.vote = function(voteModel) {
+          if (!$scope.vote_data.hasOwnProperty(voteModel)) {
+            $scope.vote_data[voteModel]  = {"votes":  0, "percent": 0};
+            $scope[voteModel]=$scope.vote_data[voteModel];
+          }
+          $scope.vote_data[voteModel]["votes"] = $scope.vote_data[voteModel]["votes"] + 1;
+          $scope.total_votes = $scope.total_votes + 1;
+          for (var key in $scope.vote_data) {
+            item = $scope.vote_data[key];
+            item["percent"] = item["votes"] / $scope.total_votes * 100;
+          }
+        };
+
+      });
+    </script>
+  </body>
+</html>

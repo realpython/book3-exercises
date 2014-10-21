@@ -1,7 +1,11 @@
 from django.conf.urls import patterns, include, url
-from payments import views
 from django.contrib import admin
+from payments import views
+from main.urls import urlpatterns as main_json_urls
+from djangular_polls.urls import urlpatterns as djangular_polls_json_urls
+
 admin.autodiscover()
+main_json_urls.extend(djangular_polls_json_urls)
 
 urlpatterns = patterns(
     '',
