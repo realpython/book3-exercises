@@ -6,10 +6,17 @@ pollsApp.config(function($interpolateProvider){
 });
 
 pollsApp.controller('UserPollCtrl', function($scope, $http) {
+
   $scope.total_votes = 0;
   $scope.vote_data = {}
 
-  $scope.total_votes = 0;
+  $scope.barcolor = function(i) {
+    colors = ['progress-bar-success', 'progress-bar-info',
+        'progress-bar-warning', 'progress-bar-danger', '']
+    idx = i % colors.length;
+    return colors[idx];
+  }
+
 
   $scope.vote = function(item) {
     item.votes = item.votes + 1;
