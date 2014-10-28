@@ -40,7 +40,7 @@ class Announcement(models.Model):
 
 class Badge(models.Model):
 
-    img = models.CharField(max_length=255)
+    img = models.ImageField(upload_to="images/")
     name = models.CharField(max_length=100)
     desc = models.TextField()
 
