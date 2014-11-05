@@ -1,8 +1,7 @@
-from django.db import models
 from main.models import Badge
 from django.contrib.auth.models import AbstractBaseUser
 from datetime import datetime
-from django.db import connection, models
+from django.db import models
 
 
 class User(AbstractBaseUser):
@@ -15,13 +14,12 @@ class User(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
     rank = models.CharField(max_length=50, default="Padwan")
     badges = models.ManyToManyField(Badge)
-    bigCoID = models.CharField(max_length=50,unique=True)
+    bigCoID = models.CharField(max_length=50, unique=True)
 
     USERNAME_FIELD = 'email'
 
     def __str__(self):
         return self.email
-
 
     @classmethod
     def get_by_id(cls, uid):
@@ -34,10 +32,9 @@ class User(AbstractBaseUser):
         new_user.set_password(password)
 
         #set bigCoID
-        new_user.bigCoId = ("%s%s%s" % (new_user.name[:2], 
+        new_user.bigCoId = ("%s%s%s" % (new_user.name[:2],
                             new_user.rank[:1],
-                            datetime.now().strftime("%Y%m%d%H%M%S%f"),
-                            ))
+                            datetime.now().strftime("%Y%m%d%H%M%S%f"),))
         new_user.save()
         return new_user
 
