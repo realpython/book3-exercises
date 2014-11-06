@@ -4,7 +4,6 @@ from django.db.models import Sum
 class Poll(models.Model):
     title = models.CharField(max_length=255)
     publish_date = models.DateTimeField(auto_now=True)
-    #completion date -- add exercise to add countdown later
 
     @property
     def total_votes(self):

@@ -44,5 +44,14 @@ class Badge(models.Model):
     name = models.CharField(max_length=100)
     desc = models.TextField()
 
+    def thumbnail(self):
+        if self.img:
+            return u'<img src="%s" width="100" height="100" />' % (self.img.url)
+        else:
+            return "no image"
+
+    thumbnail.allow_tags = True
+
+
     class Meta:
         ordering = ('name',)

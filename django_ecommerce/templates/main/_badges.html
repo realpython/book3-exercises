@@ -4,9 +4,9 @@
   {% for bdg in badges %}
     <div class="col-lg-4">
        <h2>{{ bdg.name }}</h2>
-       <img class="img-circle" src="{% static 'img/'|add:bdg.img %}"
+       <img class="img-circle" src="{{media_url}}{{ bdg.img.url }}"
        width="100" height="100" alt=" {{ bdg.name }}"
-       title="{{ bdg.name }} - {{ bdg.desc }}">
+       title="{{ bdg.name }} - {{ bdg.desc }}"> 
        <p>{{ bdg.desc }}</p>
     </div>
   {% endfor %}
