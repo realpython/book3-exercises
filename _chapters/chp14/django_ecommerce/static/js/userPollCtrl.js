@@ -5,8 +5,7 @@ pollsApp.config(function($interpolateProvider){
   .endSymbol(']]');
 });
 
-pollsApp.controller('UserPollCtrl', ['$scope', 'pollFactory',
-    function($scope, $http, pollFactory) {
+pollsApp.controller('UserPollCtrl',function($scope, pollFactory) {
 
   //get the Poll
   $scope.poll = ""
@@ -33,7 +32,7 @@ pollsApp.controller('UserPollCtrl', ['$scope', 'pollFactory',
                         .then(setPoll);
   }
 
-}]);
+});
 
 pollsApp.factory('pollFactory', function($http) {
 
