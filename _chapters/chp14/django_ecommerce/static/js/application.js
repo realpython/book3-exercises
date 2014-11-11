@@ -1,3 +1,11 @@
+var mecApp = angular.module('mecApp', []);
+
+mecApp.config(function($interpolateProvider) {
+  $interpolateProvider.startSymbol('[[')
+  .endSymbol(']]');
+});
+
+
 $(function() {
 
   $("#user_form").submit(function() {
