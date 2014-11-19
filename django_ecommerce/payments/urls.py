@@ -3,6 +3,6 @@ from payments import json_views
 
 urlpatterns = patterns('payments.json_views',
     url(r'^users$', 'post_user'),
-    #url(r'^users$', json_views.UserCollection.as_view(),
-    #    name='users_collection'),
+    url(r'^users/password/(?P<pk>[0-9]+)$', json_views.ChangePassword.as_view(),
+        name='change_password'),
 )

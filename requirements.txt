@@ -9,3 +9,4 @@ psycopg2==2.5.4
 pymongo==2.7.2
 requests==2.4.3
 stripe==1.19.0
+django-admin-bootstrapped
