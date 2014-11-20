@@ -24,33 +24,30 @@ adminApp.factory("AdminUserFactory", function($http) {
 
 adminApp.controller('AdminCtrl', function($scope, $http, AdminUserFactory) {
 
-  $scope.msg = "";
   $scope.afterReset = false;
-  $scope.alertClass = "alert-danger";
-  $scope.showDD = false;
   $scope.isopen = false;
 
   $scope.resetpass = function(userId) {
     $scope.afterReset = false;
     data = {'user': userId,
             'pass' : $scope.pass,
-            'pass2': $scope.pass2,
-           }
+            'pass2': $scope.pass2,}
     AdminUserFactory.resetPassword(data)
       .then(showAlert,showAlert);
    
   }
 
   var showAlert = function(data) {
-    console.log(data);
+    $scope.afterReset = true;
+    var msg = "";
+    $scope.alertClass = "alert-danger";
 
     if (data.status == 200) {
       $scope.alertClass = "alert-success";
       $scope.pass = "";
       $scope.pass2 = "";
     }
-    $scope.afterReset = true;
-    var msg = "";
+    
     if (typeof data.data == 'string') {
       msg = data.data;
     } else {
@@ -58,6 +55,7 @@ adminApp.controller('AdminCtrl', function($scope, $http, AdminUserFactory) {
         msg += data.data[x].toString() + " ";
       }
     }
+
     $scope.msg = msg;
     $scope.isopen = false;
   }
