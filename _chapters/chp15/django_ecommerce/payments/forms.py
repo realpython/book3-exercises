@@ -39,6 +39,7 @@ class UserForm(CardForm):
         widget=forms.PasswordInput(render_value=False)
     )
 
+    form_name = 'user_form'
     ng_scope_prefix = "userform"
 
     def __init__(self, *args, ** kwargs):

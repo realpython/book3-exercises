@@ -40,5 +40,5 @@
 <br/>
 </div>
 <div class="actions">
-<input class="btn primary" id="user_submit" name="commit" type="submit" value="Register">
+<input class="btn btn-lg btn-primary" id="user_submit" name="commit" type="submit" value="Register" ng-disabled="{{form.form_name}}.$pristine || {{form.form_name}}.$invalid">
 </div>

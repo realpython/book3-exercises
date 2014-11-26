@@ -9,7 +9,7 @@
 </div>
 <div class="row">
   <div class="span6 columns">
-    <form id="user_form" accept-charset="UTF-8" action="{% url 'register' %}" class="form-stacked"  method="post">
+    <form id="{{form.form_name}}" name="{{form.form_name}}" accept-charset="UTF-8" action="{% url 'register' %}" class="form-signin" role="form" method="post" novalidate>
       {% csrf_token %}
       {% if form.is_bound and not form.is_valid %}
         <div class="alert alert-{{error.tags}}"> <a class="close" data-dismiss="alert">×</a>
