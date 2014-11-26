@@ -9,34 +9,36 @@
 </div>
 <div class="row">
   <div class="span6 columns">
-    <form id="{{form.form_name}}" name="{{form.form_name}}" accept-charset="UTF-8" action="{% url 'register' %}" class="form-signin" role="form" method="post" novalidate>
-      {% csrf_token %}
-      {% if form.is_bound and not form.is_valid %}
-        <div class="alert alert-{{error.tags}}"> <a class="close" data-dismiss="alert">×</a>
-          <div class="errors">
-            {% for field in form.visible_fields %}
-            {% for error in field.errors %}
-            <p>{{ field.label }}: {{ error }}</p>
-            {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
+    <section class="container" ng-controller="registerCtrl">
+      <form name="{{form.form_name}}" accept-charset="UTF-8" novalidate class="form-signin" role="form" ng-submit="register()">
+        {% csrf_token %}
+        {% if form.is_bound and not form.is_valid %}
+          <div class="alert alert-{{error.tags}}"> <a class="close" data-dismiss="alert">×</a>
+            <div class="errors">
+              {% for field in form.visible_fields %}
+              {% for error in field.errors %}
+              <p>{{ field.label }}: {{ error }}</p>
+              {% endfor %}
+              {% endfor %}
+              {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+        {% for field in form.visible_fields %}
+        {% include "payments/_field.html" %}
+        {% endfor %}
+        <div id="change-card" class="clearfix"{% if not form.last_4_digits.value %} style="display: none"{% endif %}>
+          Card
+          <div class="input">
+            Using card ending with {{ form.last_4_digits.value }}
+            (<a href="#">change</a>)
           </div>
         </div>
-      {% endif %}
-      {% for field in form.visible_fields %}
-      {% include "payments/_field.html" %}
-      {% endfor %}
-      <div id="change-card" class="clearfix"{% if not form.last_4_digits.value %} style="display: none"{% endif %}>
-        Card
-        <div class="input">
-          Using card ending with {{ form.last_4_digits.value }}
-          (<a href="#">change</a>)
-        </div>
-      </div>
-      {% include "payments/_cardform.html" %}
-    </form>
+        {% include "payments/_cardform.html" %}
+      </form>
+    </section>
   </div>
 </div>
 {% endblock %}
