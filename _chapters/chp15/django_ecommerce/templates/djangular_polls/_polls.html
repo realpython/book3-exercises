@@ -1,0 +1,16 @@
+<section class="info-box" id="polls">
+  <div ng-controller='UserPollCtrl'>
+    <h1>Poll: [[ poll.title ]]</h1>
+    <div ng-repeat="item in poll.items">
+      <span ng-click='vote(item)' class="glyphicon glyphicon-plus"></span>
+      <strong>[[ item.text ]]</strong>
+      <span class="pull-right">[[ item.percentage | number:0 ]]%</span>
+    <div class="progress">
+      <div class="progress-bar [[ barcolor($index) ]]" role="progressbar"
+        aria-value="[[ item.percentage ]]"
+        aria-valuemin="0" aria-valuemax="100" style="width: [[ item.percentage ]]%;">
+      </div>
+    </div>
+    </div>
+</div>
+</section>
