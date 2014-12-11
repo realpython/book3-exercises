@@ -1,5 +1,6 @@
 from django.contrib import admin
 from payments.models import User
+from main.models import Badge
 
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.sites.models import Site
@@ -9,6 +10,13 @@ admin.site.unregister(DjangoUser)
 admin.site.unregister(Group)
 admin.site.unregister(Site)
 
+class BadgeInlineAdmin(admin.TabularInline):
+    model = User.badges.through
+    readonly_fields = ('name',)
+
+    def name(self, a):
+        return a.badge.name
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
 
@@ -16,9 +24,7 @@ class UserAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     fieldsets = (
         ('User Info', {'fields': ('name', 'email', 'rank',)}),
-        #('Reset Password', { 'fields' : ('password', )}),
         ('Billing', {'fields' : ('stripe_id',)}),
         ('Badges', {'fields' : ('badges',)}),
     )
-
-
+    filter_horizontal = ('badges',)

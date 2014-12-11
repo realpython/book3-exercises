@@ -3,7 +3,6 @@ from djangular_polls.models import Poll, PollItem
 from django.utils.html import format_html
 
 
-#admin.site.register((Poll, PollItem))
 class PollItemInline(admin.TabularInline):
     model = PollItem
 

@@ -2,8 +2,43 @@ from django.contrib import admin
 from main.models import MarketingItem, StatusReport, Announcement, Badge
 #avoid XSS vulnerabilities
 from django.utils.html import format_html
+from embed_video.admin import AdminVideoMixin
+from django.template.loader import render_to_string
+from django.forms import Textarea
+from django.db import models
 
-admin.site.register((MarketingItem, StatusReport, Announcement, ))
+@admin.register(StatusReport)
+class StatusReportAdmin(admin.ModelAdmin):
+
+    list_display = ('status', 'user', 'when')
+
+    formfield_overrides = { 
+        models.CharField: {'widget': Textarea(attrs={'rows':4, 'cols':70})},
+    }
+
+@admin.register(MarketingItem)
+class MarketingItemAdmin(admin.ModelAdmin):
+
+    list_display = ('heading','live_view')
+
+    def live_view(self, mi):
+        return render_to_string("main/templatetags/circle_item.html",
+                                {'marketing_items':(mi,)})
+
+    live_view.short_description = "Rendered Template"
+    live_view.allow_tags = True
+
+
+@admin.register(Announcement)
+class AnnouncementAdmin(AdminVideoMixin, admin.ModelAdmin):
+
+    list_display =('when', 'thumbnail', 'vid', 'info_html')
+
+    def info_html(self, announcement):
+        return format_html(announcement.info)
+
+    info_html.short_description = "Info"
+    info_html.allow_tags = True
 
 
 @admin.register(Badge)

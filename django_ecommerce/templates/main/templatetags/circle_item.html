@@ -2,7 +2,7 @@
 
 {% for m in marketing_items %}
   <div class="col-lg-4">
-    <img class="img-circle" src="{% static 'img/'|add:m.img %}" width=140
+    <img class="img-circle" src="{{m.img.url}}" width=140
     height=140" alt="{{ m.img }}">
     <h2>{{ m.heading }}</h2>
     <p>{{ m.caption }} </p>
