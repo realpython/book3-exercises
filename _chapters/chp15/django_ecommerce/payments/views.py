@@ -67,27 +67,24 @@ def register(request):
         form = UserForm(data)
 
         if form.is_valid():
-            cd = form.cleaned_data
-            from django.db import transaction
             try:
-                with transaction.atomic():
-                    user = User.create(cd['name'], cd['email'], cd['password'],
-                                       cd['last_4_digits'], stripe_id="")
-
-                    if customer:
-                        user.stripe_id = customer.id
-                        user.save()
-                    else:
-                        UnpaidUsers(email=cd['email']).save()
+                customer = Customer.create(
+                    "subscription",
+                    email=form.cleaned_data['email'],
+                    description=form.cleaned_data['name'],
+                    card=form.cleaned_data['stripe_token'],
+                    plan="gold",
+                )
             except IntegrityError:
-                form.addError(cd['email'] + ' is already a member')
+                form.addError(
+                    form.cleaned_data['email'] + ' is already a member')
             else:
                 request.session['user'] = user.pk
                 resp = json.dumps({"status": "ok", "url": '/'})
                 return HttpResponse(resp, content_type="application/json")
 
-            resp = json.dumps(
-                {"status": "fail", "errors": form.non_field_errors()})
+            resp = json.dumps({
+                "status": "fail", "errors": form.non_field_errors()})
             return HttpResponse(resp, content_type="application/json")
         else:  # form not valid
             resp = json.dumps({"status": "form-invalid", "errors": form.errors})
