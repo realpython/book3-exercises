@@ -1,3 +1,5 @@
+var mecApp = angular.module('mecApp', []);
+
 mecApp.config(function($interpolateProvider, $httpProvider) {
   $interpolateProvider.startSymbol('[[')
   .endSymbol(']]');
