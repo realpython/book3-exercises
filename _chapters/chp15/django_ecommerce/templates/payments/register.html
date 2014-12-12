@@ -9,7 +9,7 @@
 </div>
 <div class="row">
   <div class="span6 columns">
-    <section class="container" ng-controller="registerCtrl">
+    <section class="container" ng-controller="RegisterCtrl">
       <form name="{{form.form_name}}" accept-charset="UTF-8" novalidate class="form-signin" role="form" ng-submit="register()">
         {% csrf_token %}
         <div class="alert" ng-show="register_errors"> <a class="close" data-dismiss="alert">x</a>
