@@ -1,4 +1,4 @@
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, \
     HttpResponse
 from django.shortcuts import render_to_response
@@ -65,7 +65,7 @@ def register(request):
 
         data = json.loads(request.body.decode())
         form = UserForm(data)
-
+        
         if form.is_valid():
             try:
                 customer = Customer.create(
@@ -75,16 +75,28 @@ def register(request):
                     card=form.cleaned_data['stripe_token'],
                     plan="gold",
                 )
+            except Exception as exp:
+                form.addError(exp)
+
+            cd = form.cleaned_data
+            try:
+                with transaction.atomic():
+                    user = User.create(cd['name'], cd['email'], cd['password'],
+                                       cd['last_4_digits'], stripe_id="")
+
+                    if customer:
+                        user.stripe_id = customer.id
+                        user.save()
+                    else:
+                        UnpaidUsers(email=cd['email']).save()
+
             except IntegrityError:
-                form.addError(
-                    form.cleaned_data['email'] + ' is already a member')
+                resp = json.dumps({"status": "fail", "errors":
+                                   cd['email'] + ' is already a member'})
             else:
                 request.session['user'] = user.pk
                 resp = json.dumps({"status": "ok", "url": '/'})
-                return HttpResponse(resp, content_type="application/json")
 
-            resp = json.dumps({
-                "status": "fail", "errors": form.non_field_errors()})
             return HttpResponse(resp, content_type="application/json")
         else:  # form not valid
             resp = json.dumps({"status": "form-invalid", "errors": form.errors})
