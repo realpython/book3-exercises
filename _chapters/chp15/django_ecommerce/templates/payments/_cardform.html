@@ -12,16 +12,28 @@
 <div class="clearfix">
   <label for="credit_card_number">Credit card number</label>
   <div class="input">
-    <input class="field" id="credit_card_number" type="text"
-    ng-model="card.number" required>
+    <input class="field" id="credit_card_number" name="cc_num" type="text"
+    ng-model="card.number" ng-minlength="16" required>
+  </div>
+  <div class="custom-error"
+    ng-show="user_form.cc_num.$dirty  && user_form.cc_num.$invalid" style="display: none;">
+    Credit card number is invalid:<span ng-show="user_form.cc_num.$error.required">value is required</span>
+    <span ng-show="user_form.cc_num.$error.minlength">min length of sixteen</span>
   </div>
 </div>
+
 <div class="clearfix">
-  <label for="cvc">Security code (CVC)</label>
+  <label for="cvv">Security code (CVC)</label>
   <div class="input">
-    <input class="small" id="cvc" type="text" ng-model="card.cvc" required min=3>
+    <input class="small" id="cvc" type="text" name="cvc" ng-model="card.cvc" required
+    ng-minlength="3">
+  </div>
+  <div class="custom-error" ng-show="user_form.cvc.$dirty  && user_form.cvc.$invalid" style="display: none;">
+    CVC is invalid:<span ng-show="user_form.cvc.$error.required">value is required</span>
+    <span ng-show="user_form.cvc.$error.minlength">min length of three</span>
   </div>
 </div>
+
 <div class="clearfix">
   <label for="expiry_date">Expiration date</label>
   <div class="input">

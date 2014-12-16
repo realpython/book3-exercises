@@ -20,7 +20,7 @@ mecApp.factory("StripeFactory", function($q, $rootScope) {
 mecApp.factory("UserFactory", function($http) {
   var factory = {}
   factory.register = function(user_data) {
-    return $http.post("/register", user_data).then(function(response)
+    return $http.post("/api/v1/users", user_data).then(function(response)
       {
         return response.data;
       });
