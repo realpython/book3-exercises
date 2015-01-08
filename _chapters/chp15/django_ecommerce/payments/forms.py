@@ -13,6 +13,9 @@ class SigninForm(PaymentForm):
         required=True, widget=forms.PasswordInput(render_value=False)
     )
 
+    form_name = 'signin_form'
+    ng_scope_prefix = 'signinform'
+
 
 class CardForm(PaymentForm):
     last_4_digits = forms.CharField(
