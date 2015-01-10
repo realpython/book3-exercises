@@ -5,7 +5,9 @@
 {% block content %}
 
 <div ng-controller="UserMapCtrl">
-  <google-map center="map.center" zoom="map.zoom"  options="map.options"></google-map>
+  <google-map center="map.center" zoom="map.zoom"  options="map.options">
+    <markers models="locs" coords="'location'" idKey="'mappoint_id'"></markers>
+  </google-map>
 </div>
 
 {% endblock content %}
