@@ -88,3 +88,6 @@ input.ng-dirty.ng-invalid {
   color: #FF0000;
   font-family: sans-serif;
 }
+
+.angular-google-map-container { height: 400px; }
+
