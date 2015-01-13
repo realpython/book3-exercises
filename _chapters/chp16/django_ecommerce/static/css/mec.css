@@ -89,5 +89,7 @@ input.ng-dirty.ng-invalid {
   font-family: sans-serif;
 }
 
-.angular-google-map-container { height: 400px; }
+.angular-google-map-container {
+  height: 400px;
+}
 
