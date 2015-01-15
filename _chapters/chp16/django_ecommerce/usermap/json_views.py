@@ -11,7 +11,7 @@ def user_locations_list(request):
         locations = json.loads(UserLocation.objects().to_json())
         return Response(locations)
     if request.method == 'POST':
-        locations - UserLocation().from_json(json.dumps(request.DATA))
+        locations = UserLocation().from_json(json.dumps(request.DATA))
         locations.save()
         return Response(
             json.loads(locations.to_json()),

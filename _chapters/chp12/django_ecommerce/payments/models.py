@@ -34,7 +34,7 @@ class User(AbstractBaseUser):
         new_user.set_password(password)
 
         #set bigCoID
-        new_user.bigCoId = ("%s%s%s" % (new_user.name[:2], 
+        new_user.bigCoID = ("%s%s%s" % (new_user.name[:2], 
                             new_user.rank[:1],
                             datetime.now().strftime("%Y%m%d%H%M%S%f"),
                             ))

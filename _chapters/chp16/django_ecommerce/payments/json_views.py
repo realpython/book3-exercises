@@ -11,6 +11,7 @@ from rest_framework.decorators import api_view
 def post_user(request):
     form = UserForm(request.DATA)
 
+    print("in post user")
     if form.is_valid():
         try:
             #update based on your billing method (subscription vs one time)
@@ -36,8 +37,9 @@ def post_user(request):
                     user.save()
                 else:
                     UnpaidUsers(email=cd['email']).save()
-
-        except IntegrityError:
+        except IntegrityError as e:
+            print("----------Integristy error")
+            print(e)
             form.addError(cd['email'] + ' is already a member')
         else:
             request.session['user'] = user.pk
