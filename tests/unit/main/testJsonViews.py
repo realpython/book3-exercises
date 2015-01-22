@@ -16,9 +16,13 @@ class JsonViewTests(TestCase):
         cls.test_user = User(id=2222, email="test@user.com")
         cls.test_user.save()
 
+        cls.status = StatusReport(user=cls.test_user, status="test status report")
+        cls.status.save()
+
     @classmethod
     def tearDownClass(cls):
         cls.test_user.delete()
+        cls.status.delete()
 
     def get_request(self,method='GET', authed=True, user="default"):
         request_method = getattr(self.factory, method.lower())

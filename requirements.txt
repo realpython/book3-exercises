@@ -10,3 +10,4 @@ pymongo==2.7.2
 requests==2.4.3
 stripe==1.19.0
 django-admin-bootstrapped
+selenium==2.44.0
