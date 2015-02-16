@@ -11,4 +11,4 @@ requests==2.4.3
 stripe==1.19.0
 django-admin-bootstrapped
 selenium==2.44.0
--e git+git@github.com:pashinin/fabric.git@p33#egg=Fabric
+-e git+https://github.com/pashinin/fabric.git@p33#egg=Fabric
