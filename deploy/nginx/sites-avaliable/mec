@@ -12,7 +12,10 @@ server {
     keepalive_timeout 5;
 
     # path for static files
-    root /opt/mec_env/static;
+    location /static {
+        autoindex on;
+        alias / opt/mec_env/static;
+    }
 
     location / {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
