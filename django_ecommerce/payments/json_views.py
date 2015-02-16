@@ -13,6 +13,7 @@ from django.http import Http404
 @api_view(['POST'])
 def post_user(request):
     form = UserForm(request.DATA)
+    print("our for is valid ", form.is_valid());
 
     if form.is_valid():
         try:
@@ -24,6 +25,7 @@ def post_user(request):
               plan="gold",
             )
         except Exception as exp:
+            print("exception creating customer");
             form.addError(exp)
         
         cd = form.cleaned_data            

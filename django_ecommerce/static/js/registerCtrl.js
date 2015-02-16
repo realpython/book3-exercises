@@ -20,6 +20,7 @@ mecApp.factory("StripeFactory", function($q, $rootScope) {
 mecApp.factory("UserFactory", function($http) {
   var factory = {}
   factory.register = function(user_data) {
+    alert(angular.toJson(user_data));
     return $http.post("/api/v1/users", user_data).then(function(response)
       {
         return response.data;
@@ -52,7 +53,9 @@ mecApp.controller('RegisterCtrl',function($scope, $http, StripeFactory,
             'email' :    $scope.userform.email,
             'location' : [$scope.geoloc.coords.longitude,
                           $scope.geoloc.coords.latitude]};
-    UserFactory.saveUserLoc(data);
+    alert(angular.toJson(data))
+    res = UserFactory.saveUserLoc(data);
+    alert(angular.toJson($scope.userform));
     return $scope.userform;
   }
 
@@ -69,6 +72,8 @@ mecApp.controller('RegisterCtrl',function($scope, $http, StripeFactory,
   }
 
   logRegisterErrors = function(errors) {
+    alert("got errors");
+    alert(angular.toJson(errors));
     $scope.register_errors = errors;
   }
 
