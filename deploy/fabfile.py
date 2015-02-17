@@ -21,3 +21,12 @@ def update_config():
         run("/etc/init.d/supervisor restart")
         run("/etc/init.d/nginx restart")
 
+def integrate():
+    with lcd("../django_ecommerce/"):
+        local("pwd")
+        local("./manage.py test ../tests/unit")
+        local("git add -p && git commit")
+        local("git pull")
+        local("./manage.py test ../tests")
+        local("git push")
+
