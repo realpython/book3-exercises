@@ -14,7 +14,7 @@ server {
     # path for static files
     location /static {
         autoindex on;
-        alias / opt/mec_env/static;
+        alias /opt/mec_env/static;
     }
 
     location / {
