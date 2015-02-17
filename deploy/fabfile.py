@@ -16,8 +16,8 @@ def update_app():
     with cd("/opt/mec_env/mec_app/django_ecommerce"):
         with prefix("source /opt/mec_env/bin/activate"):
             run("pip install -r ../requirements.txt")
-            run("./manage.py migrate")
-            run("./manage.py collectstatic")
+            run("./manage.py migrate --noinput")
+            run("./manage.py collectstatic --noinput")
 
 def update_config():
     with cd("/opt/mec_env/mec_app/deploy"):
