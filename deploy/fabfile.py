@@ -4,7 +4,13 @@ env.hosts = ['128.199.202.178']
 env.user = 'root'
 
 
-def get_latest():
+def ci():
+    integrate()
+    update_app()
+    update_config()
+
+
+def update_app():
     with cd("/opt/mec_env/mec_app"):
         run("git pull")
     with cd("/opt/mec_env/mec_app/django_ecommerce"):
@@ -25,6 +31,7 @@ def integrate():
     with lcd("../django_ecommerce/"):
         local("pwd")
         local("./manage.py test ../tests/unit")
+
         with settings(warn_only=True):
             local("git add -p && git commit")
 
