@@ -16,8 +16,8 @@ class UserModelTest(TestCase):
             timestamp=datetime.today() + timedelta(days=2)
         )
         cls.firstUser.save()
-        #cls.test_user=User(email="j@j.com", name ='test user')
-        #cls.test_user.save()
+        # cls.test_user=User(email="j@j.com", name ='test user')
+        # cls.test_user.save()
 
     def test_contactform_str_returns_email(self):
         self.assertEquals("first@first.com", str(self.firstUser))
