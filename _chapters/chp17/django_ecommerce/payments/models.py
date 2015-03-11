@@ -7,7 +7,7 @@ from django.db import models
 class User(AbstractBaseUser):
     name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
-    #password field defined in base class
+    # password field defined in base class
     last_4_digits = models.CharField(max_length=4, blank=True, null=True)
     stripe_id = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -21,6 +21,7 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
+
     @classmethod
     def get_by_id(cls, uid):
         return User.objects.get(pk=uid)
@@ -31,10 +32,11 @@ class User(AbstractBaseUser):
                        last_4_digits=last_4_digits, stripe_id=stripe_id)
         new_user.set_password(password)
 
-        #set bigCoID
-        new_user.bigCoID = "%s%s%s" % (new_user.name[:2],
-                            new_user.rank[:1],
-                            datetime.now().strftime("%Y%m%d%H%M%S%f"),)
+        # set bigCoID
+        new_user.bigCoID = "%s%s%s" % (
+            new_user.name[:2],
+            new_user.rank[:1],
+            datetime.now().strftime("%Y%m%d%H%M%S%f"),)
         new_user.save()
         return new_user
 

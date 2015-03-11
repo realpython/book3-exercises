@@ -8,7 +8,7 @@
       {% if a.vid %}
         {% video a.vid "medium" %}
       {% else %}
-        <img src="{% static 'img/'|add:a.img %}"/>
+        <img src="{{MEDIA_URL}}{{a.img}}"/>
       {% endif %}
     </div>
     <div > {{ a.info | safe }}</div>
