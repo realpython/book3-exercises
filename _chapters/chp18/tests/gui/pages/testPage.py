@@ -5,7 +5,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from payments.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django_ecommerce.guitest_settings import SERVER_ADDR
 
 
 class LoginTests(StaticLiveServerTestCase):
@@ -67,7 +66,7 @@ class RegistrationTests(StaticLiveServerTestCase):
         super(RegistrationTests, cls).tearDownClass()
 
     def setUp(self):
-        self.reg = RegisterPage(self.browser, "http://" + SERVER_ADDR)
+        self.reg = RegisterPage(self.browser, self.live_server_url)
 
     def test_registration(self):
         self.reg.go_to()
