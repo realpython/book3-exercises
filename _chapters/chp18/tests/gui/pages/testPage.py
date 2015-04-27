@@ -4,10 +4,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from payments.models import User
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django_ecommerce.guitest_settings import SERVER_ADDR
+# from django.contrib.staticfiles.testing import LiveServerTestCase
+from django.test import TestCase
 
 
-class LoginTests(StaticLiveServerTestCase):
+class LoginTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -23,7 +25,7 @@ class LoginTests(StaticLiveServerTestCase):
     def setUp(self):
         self.valid_test_user = User.create(
             "tester", "test@valid.com", "test", 1234)
-        self.sign_in_page = SignInPage(self.browser, self.live_server_url)
+        self.sign_in_page = SignInPage(self.browser, "http://"+SERVER_ADDR)
 
     def tearDown(self):
         self.valid_test_user.delete()
@@ -47,7 +49,7 @@ class LoginTests(StaticLiveServerTestCase):
                           "Email: Enter a valid email address.")
 
 
-class RegistrationTests(StaticLiveServerTestCase):
+class RegistrationTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -66,7 +68,7 @@ class RegistrationTests(StaticLiveServerTestCase):
         super(RegistrationTests, cls).tearDownClass()
 
     def setUp(self):
-        self.reg = RegisterPage(self.browser, self.live_server_url)
+        self.reg = RegisterPage(self.browser, "http://"+SERVER_ADDR)
 
     def test_registration(self):
         self.reg.go_to()
