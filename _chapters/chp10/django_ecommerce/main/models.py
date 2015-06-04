@@ -12,7 +12,7 @@ class MarketingItem(models.Model):
 
 class StatusReport(models.Model):
     user = models.ForeignKey('payments.User')
-    when = models.DateTimeField(auto_now=True)
+    when = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=200)
 
 
