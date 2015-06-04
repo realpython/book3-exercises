@@ -14,6 +14,7 @@ class MainPageTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super(MainPageTests,cls).setUpClass()
         request_factory = RequestFactory()
         cls.request = request_factory.get('/')
         cls.request.session = {}
