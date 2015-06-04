@@ -7,6 +7,7 @@ class UserModelTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.test_user = User(email="j@j.com", name='test user')
         cls.test_user.save()
 
