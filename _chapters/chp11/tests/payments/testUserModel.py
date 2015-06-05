@@ -6,8 +6,7 @@ from django.db import IntegrityError
 class UserModelTest(TestCase):
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         cls.test_user = User(email="j@j.com", name='test user')
         cls.test_user.save()
 

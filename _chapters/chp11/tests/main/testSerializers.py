@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 from main.models import StatusReport
 from payments.models import User
 from main.serializers import StatusReportSerializer
@@ -11,8 +11,7 @@ from django.utils.six import BytesIO
 class StatusReportSerializer_Tests(TestCase):
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         cls.u = User(name="test", email="test@test.com")
         cls.u.save()
 
@@ -29,12 +28,6 @@ class StatusReportSerializer_Tests(TestCase):
             ('when', when),
             ('status', 'hello world'),
         ])
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.u.delete()
-        cls.new_status.delete()
-        super().tearDownClass()
 
     def test_model_to_dictionary(self):
         serializer = StatusReportSerializer(self.new_status)
