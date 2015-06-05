@@ -11,8 +11,7 @@ from django.utils.six import BytesIO
 class StatusReportSerializer_Tests(TestCase):
 
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         cls.u = User(name="test", email="test@test.com")
         cls.u.save()
 
