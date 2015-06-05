@@ -12,6 +12,7 @@ class StatusReportSerializer_Tests(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.u = User(name="test", email="test@test.com")
         cls.u.save()
 
@@ -28,11 +29,6 @@ class StatusReportSerializer_Tests(TestCase):
             ('when', when),
             ('status', 'hello world'),
         ])
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.u.delete()
-        cls.new_status.delete()
 
     def test_model_to_dictionary(self):
         serializer = StatusReportSerializer(self.new_status)
