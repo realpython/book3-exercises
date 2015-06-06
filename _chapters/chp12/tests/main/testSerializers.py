@@ -8,7 +8,6 @@ from collections import OrderedDict
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
 
-@unittest.skip("not now")
 class StatusReportSerializer_Tests(TestCase):
 
     @classmethod
