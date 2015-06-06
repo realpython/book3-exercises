@@ -27,15 +27,8 @@ class MarketingItem(models.Model, ThumbnailMixin):
 
 class StatusReport(models.Model):
     user = models.ForeignKey('payments.User')
-    when = models.DateTimeField(blank=True)
+    when = models.DateTimeField(auto_now_add=True, blank=True)
     status = models.CharField(max_length=200)
-
-    def save(self, *args, **kwargs):
-        from datetime import datetime
-        if self.when is None:
-            self.when = datetime.now()
-        super(StatusReport, self).save(*args, **kwargs)
-
 
 class Announcement(models.Model):
 

@@ -18,7 +18,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('email', models.CharField(max_length=255, unique=True)),
-                ('last_notification', models.DateTimeField(default=datetime.datetime(2014, 9, 21, 0, 5, 24, 244154))),
+                ('last_notification',
+                 models.DateTimeField(default=django.utils.timezone.now())),
             ],
             options={
             },
