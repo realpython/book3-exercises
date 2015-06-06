@@ -13,11 +13,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='unpaidusers',
-            name='last_notification',
-            field=models.DateTimeField(default=datetime.datetime(2014, 10, 7, 9, 4, 17, 68581)),
-        ),
-        migrations.AlterField(
             model_name='user',
             name='bigCoID',
             field=models.CharField(unique=True, max_length=50),

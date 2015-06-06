@@ -3,6 +3,7 @@ from main.models import Badge
 from django.contrib.auth.models import AbstractBaseUser
 from datetime import datetime
 from django.db import connection, models
+from django.utils import timezone
 
 
 class User(AbstractBaseUser):
@@ -44,4 +45,4 @@ class User(AbstractBaseUser):
 
 class UnpaidUsers(models.Model):
     email = models.CharField(max_length=255, unique=True)
-    last_notification = models.DateTimeField(default=datetime.now())
+    last_notification = models.DateTimeField(default=timezone.now())

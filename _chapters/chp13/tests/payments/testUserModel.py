@@ -7,13 +7,9 @@ import datetime
 class UserModelTest(TestCase):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.test_user = User.create(email="j@j.com", name='test user',
                                     password="pass", last_4_digits="1234")
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.test_user.delete()
 
     def test_user_to_string_print_email(self):
         self.assertEquals(str(self.test_user), "j@j.com")

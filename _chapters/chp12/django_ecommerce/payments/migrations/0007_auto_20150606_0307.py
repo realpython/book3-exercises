@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import datetime
-
+from django.utils import timezone
 
 class Migration(migrations.Migration):
 
@@ -15,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='unpaidusers',
             name='last_notification',
-            field=models.DateTimeField(default=datetime.datetime(2015, 6, 6, 3, 7, 27, 186175)),
+            field=models.DateTimeField(default=timezone.now()),
         ),
         migrations.AlterField(
             model_name='user',
