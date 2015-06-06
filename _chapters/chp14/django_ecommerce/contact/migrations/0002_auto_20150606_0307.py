@@ -2,19 +2,18 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import datetime
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('payments', '0005_bigcoId_migration'),
+        ('contact', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='bigCoID',
-            field=models.CharField(unique=True, max_length=50),
+            model_name='contactform',
+            name='timestamp',
+            field=models.DateTimeField(auto_now_add=True),
         ),
     ]
