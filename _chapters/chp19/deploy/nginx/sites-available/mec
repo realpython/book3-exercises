@@ -1,0 +1,30 @@
+upstream app_server_djangoapp {
+    server localhost:8001 fail_timeout=0;
+}
+
+server {
+    listen 80;
+    server_name 128.199.202.178;
+
+    access_log  /var/log/nginx/mec-access.log;
+    error_log  /var/log/nginx/mec-error.log info;
+
+    keepalive_timeout 5;
+
+    # path for static files
+    location /static {
+        autoindex on;
+        alias / opt/mec_env/static;
+    }
+
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+
+        if (!-f $request_filename) {
+            proxy_pass http://app_server_djangoapp;
+            break;
+        }
+    }
+}

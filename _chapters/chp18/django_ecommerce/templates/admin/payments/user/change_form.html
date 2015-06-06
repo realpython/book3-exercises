@@ -1,0 +1,41 @@
+{% extends "admin/change_form.html" %}
+{% load staticfiles %}
+{% load i18n admin_urls %}
+
+{% block form_top %}
+  <div class="alert" ng-class="alertClass"
+  ng-show="afterReset">[[ msg ]]</div>
+{% endblock %}
+
+{% block navbar %}
+  <div ng-app="adminApp" ng-controller="AdminCtrl">
+  {{ block.super }}
+{% endblock %}
+
+{% block object-tools-items %}
+  <li class="dropdown" id="menuReset" is-open="isopen">
+    <a class="dropdown-toggle" href
+      id="navLogin">Reset Password</a>
+    <div class="dropdown-menu" style="padding:17px;">
+      <form class="form" id="resetpwd" name="resetpwd" method="post"
+        ng-submit="resetpass('{{original.id}}')" >
+        {% csrf_token %}
+        <input name="pass" id="pass" type="password"
+          placeholder="New Password" ng-model="pass" required>
+        <input name="pass2" id="pass2" type="password"
+          placeholder="Repeat Password" ng-model="pass2" required><br>
+        <button type="submit" id="btnLogin" class="btn">
+          Reset Password</button>
+      </form>
+    </div>
+  </li>
+{{ block.super }}
+{% endblock %}
+
+{% block footer %}
+  </div> <!-- closes the ng-app div -->
+  {{ block.super }}
+  <script src="{% static "js/angular.min.js" %}" type="text/javascript"></script>
+  <script  src="{% static 'js/ui-bootstrap-tpls-0.11.0.min.js' %}" type='text/javascript'></script>
+  <script src="{% static "js/admin.js" %}" type="text/javascript"></script>
+{% endblock %}

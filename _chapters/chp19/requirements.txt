@@ -1,0 +1,18 @@
+Django==1.7
+-e git+https://github.com/pashinin/fabric.git@324c6f01ff3147d5e7a13a3498a0d4122f33dbe8#egg=Fabric-origin/HEAD
+Pillow==2.7.0
+django-admin-bootstrapped==2.3.4
+django-embed-video==0.11
+django-rest-framework-mongoengine==1.5.4
+djangorestframework==2.4.2
+ecdsa==0.13
+mock==1.0.1
+mongoengine==0.8.7
+paramiko==1.15.2
+psycopg2==2.5.3
+pycrypto==2.6.1
+pymongo==2.7.2
+requests==2.3.0
+selenium==2.45.0
+six==1.9.0
+stripe==1.9.2
