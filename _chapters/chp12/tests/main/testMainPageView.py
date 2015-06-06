@@ -8,7 +8,6 @@ from django.test import RequestFactory
 import mock
 from main.migrations.data_load_marketing_items_0003 import init_marketing_data
 
-
 class MainPageTests(TestCase):
 
     ###############
@@ -17,6 +16,7 @@ class MainPageTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         request_factory = RequestFactory()
         cls.request = request_factory.get('/')
         cls.request.session = {}

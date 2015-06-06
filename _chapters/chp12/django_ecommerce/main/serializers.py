@@ -7,12 +7,14 @@ class RelatedUserField(serializers.RelatedField):
 
     read_only = False
 
-    def from_native(self, data):
+    def to_representation(self, value):
+        return value.email
+
+    def to_internal_value(self, data):
         return User.objects.get(email=data)
 
-
 class StatusReportSerializer(serializers.ModelSerializer):
-    user = RelatedUserField(many=False)
+    user = RelatedUserField(queryset=User.objects.all())
 
     class Meta:
         model = StatusReport
