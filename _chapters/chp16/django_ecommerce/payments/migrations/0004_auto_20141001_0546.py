@@ -18,9 +18,4 @@ class Migration(migrations.Migration):
             field=models.CharField(max_length=50, default='foo'),
             preserve_default=False,
         ),
-        migrations.AlterField(
-            model_name='unpaidusers',
-            name='last_notification',
-            field=models.DateTimeField(default=datetime.datetime(2014, 10, 7, 8, 58, 46, 223243)),
-        ),
     ]
