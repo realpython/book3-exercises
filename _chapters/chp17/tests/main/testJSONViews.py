@@ -11,13 +11,13 @@ class JsonViewTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.factory = APIRequestFactory()
-        cls.test_user = User(id=2222, email="test@user.com")
-        cls.test_user.save()
 
     @classmethod
-    def tearDownClass(cls):
-        cls.test_user.delete()
+    def setUpTestData(cls):
+        cls.test_user = User(id=2222, email="test@user.com")
+        cls.test_user.save()
 
     def get_request(self, method='GET', authed=True):
         request_method = getattr(self.factory, method.lower())

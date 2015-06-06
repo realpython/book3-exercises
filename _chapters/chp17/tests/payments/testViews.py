@@ -42,6 +42,7 @@ class SignInPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         html = render_to_response(
             'payments/sign_in.html',
             {
@@ -61,6 +62,7 @@ class SignOutPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         ViewTesterMixin.setupViewTester(
             '/sign_out',
             sign_out,
@@ -78,6 +80,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
+        super().setUpClass() 
         html = render_to_response(
             'payments/register.html',
             {
