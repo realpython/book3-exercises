@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
    <div class="container">
-      <form accept-charset="UTF-8" action="{% url 'sign_in' %}" name="{{form_name}}"  class="form-signin" role="form" method="post">
+      <form accept-charset="UTF-8" action="{% url 'sign_in' %}" class="form-signin" role="form" method="post">
       {% csrf_token %}
       <h1 class="form-signin-heading">Sign in</h1>
       {% if form.is_bound and not form.is_valid %}

@@ -1,6 +1,5 @@
-from django.db import IntegrityError, transaction
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, \
-    HttpResponse
+from django.db import IntegrityError
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from payments.forms import SigninForm, CardForm, UserForm
@@ -9,7 +8,6 @@ import django_ecommerce.settings as settings
 import stripe
 import datetime
 import socket
-import json
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -59,26 +57,26 @@ def sign_out(request):
 def register(request):
     user = None
     if request.method == 'POST':
-        # We only talk AJAX posts now
-        if not request.is_ajax():
-            return HttpResponseBadRequest("I only speak AJAX nowadays")
-
-        data = json.loads(request.body.decode())
-        form = UserForm(data)
-        
+        form = UserForm(request.POST)
         if form.is_valid():
-            try:
-                customer = Customer.create(
-                    "subscription",
-                    email=form.cleaned_data['email'],
-                    description=form.cleaned_data['name'],
-                    card=form.cleaned_data['stripe_token'],
-                    plan="gold",
-                )
-            except Exception as exp:
-                form.addError(exp)
+
+            #update based on your billing method (subscription vs one time)
+            customer = Customer.create(
+                email=form.cleaned_data['email'],
+                description=form.cleaned_data['name'],
+                card=form.cleaned_data['stripe_token'],
+                plan="gold",
+            )
+            # customer = stripe.Charge.create(
+            #     description=form.cleaned_data['email'],
+            #     card=form.cleaned_data['stripe_token'],
+            #     amount="5000",
+            #     currency="usd"
+            # )
 
             cd = form.cleaned_data
+            from django.db import transaction
+
             try:
                 with transaction.atomic():
                     user = User.create(cd['name'], cd['email'], cd['password'],
@@ -91,16 +89,13 @@ def register(request):
                         UnpaidUsers(email=cd['email']).save()
 
             except IntegrityError:
-                resp = json.dumps({"status": "fail", "errors":
-                                   cd['email'] + ' is already a member'})
+                import traceback
+                form.addError(cd['email'] + ' is already a member' +
+                              traceback.format_exc())
+                user = None
             else:
                 request.session['user'] = user.pk
-                resp = json.dumps({"status": "ok", "url": '/'})
-
-            return HttpResponse(resp, content_type="application/json")
-        else:  # form not valid
-            resp = json.dumps({"status": "form-invalid", "errors": form.errors})
-            return HttpResponse(resp, content_type="application/json")
+                return HttpResponseRedirect('/')
 
     else:
         form = UserForm()

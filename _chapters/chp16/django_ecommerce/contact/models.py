@@ -1,6 +1,4 @@
 from django.db import models
-import datetime
-
 
 class ContactForm(models.Model):
     name = models.CharField(max_length=150)

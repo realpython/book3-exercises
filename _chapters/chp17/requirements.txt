@@ -1,12 +1,7 @@
 Django==1.7
-Pillow==2.7.0
-django-admin-bootstrapped==2.3.4
 django-embed-video==0.11
-django-rest-framework-mongoengine==1.5.4
 djangorestframework==2.4.2
 mock==1.0.1
-mongoengine==0.8.7
 psycopg2==2.5.3
-pymongo==2.7.2
 requests==2.3.0
 stripe==1.9.2

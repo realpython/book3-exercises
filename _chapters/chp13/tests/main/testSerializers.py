@@ -1,12 +1,12 @@
 from django.test import TestCase, TransactionTestCase
 from main.models import StatusReport
 from payments.models import User
-import unittest
 from main.serializers import StatusReportSerializer
 from rest_framework.renderers import JSONRenderer
 from collections import OrderedDict
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
+
 
 class StatusReportSerializer_Tests(TestCase):
 

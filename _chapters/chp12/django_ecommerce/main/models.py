@@ -15,6 +15,7 @@ class StatusReport(models.Model):
     when = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=200)
 
+
 class Announcement(models.Model):
     when = models.DateTimeField(auto_now=True)
     img = models.CharField(max_length=255, null=True)

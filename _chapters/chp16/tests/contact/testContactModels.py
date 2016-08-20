@@ -7,7 +7,8 @@ from datetime import datetime, timedelta
 class UserModelTest(TestCase):
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpClass(cls):
+        super().setUpClass()
         ContactForm(email="test@dummy.com", name="test").save()
         ContactForm(email="j@j.com", name="jj").save()
         cls.firstUser = ContactForm(

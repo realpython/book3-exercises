@@ -1,5 +1,0 @@
-Django==1.9.9
-mock==1.0.1
-requests==2.3.0
-stripe==1.9.2
-wheel==0.24.0

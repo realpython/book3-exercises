@@ -70,7 +70,7 @@ class FormTests(TestCase, FormTesterMixin):
         )
 
         # Is the data valid?
-        self.assertFalse(form.is_valid(), form.errors)
+        self.assertFalse(form.is_valid())
 
     def test_card_form_data_validation_for_invalid_data(self):
         invalid_data_list = [

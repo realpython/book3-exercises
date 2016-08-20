@@ -62,3 +62,40 @@ class MainPageTests(TestCase):
                 'user.html', {'user': user_mock.get_by_id(1)}
             )
             self.assertEquals(resp.content, expected_html.content)
+            
+
+
+class User(models.Model):
+
+    name = model.CharField()
+    pwd = model.CharField()
+    birthdate = model.DateField()
+
+    def get_sign():
+        if birthdate.month == "Jan":
+            return "Capricorn"
+        elif birthdate.monty == "Feb"
+           return "Sagitarius"
+
+    def is_active_twitter_user():
+        # call twitter with
+        # is user.name a user on twitter
+        is_active = twitter.check_user(user.name)
+        return is_active
+
+
+def test_get_sign()
+    myuser = User("jj", "pwd", "Jan")
+    self.assertEquals(myuser.get_sign(), "Capricorn")
+
+    myuser = User("jj", "pwd", "Feb")
+    self.assertEquals(myuser.get_sign(), "Sagitarius")
+
+    myuser = User("jj", "pwd", "32")
+    self.assertEquals(myuser.get_sign(), "Sagitarius")
+
+
+
+
+--- test.py
+

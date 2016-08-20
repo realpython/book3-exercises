@@ -13,9 +13,6 @@ class SigninForm(PaymentForm):
         required=True, widget=forms.PasswordInput(render_value=False)
     )
 
-    form_name = 'signin_form'
-    ng_scope_prefix = 'signinform'
-
 
 class CardForm(PaymentForm):
     last_4_digits = forms.CharField(
@@ -28,8 +25,7 @@ class CardForm(PaymentForm):
 
 
 class UserForm(CardForm):
-
-    name = forms.CharField(required=True, min_length=3)
+    name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     password = forms.CharField(
         required=True,
@@ -41,20 +37,6 @@ class UserForm(CardForm):
         label=('Verify Password'),
         widget=forms.PasswordInput(render_value=False)
     )
-
-    form_name = 'user_form'
-    ng_scope_prefix = "userform"
-
-    def __init__(self, *args, ** kwargs):
-        super(UserForm, self).__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            attrs = {"ng-model": "%s.%s" % (self.ng_scope_prefix, name)}
-
-            if field.required:
-                attrs.update({"required": True})
-            if field.min_length:
-                attrs.update({"ng-minlength": field.min_length})
-            field.widget.attrs.update(attrs)
 
     def clean(self):
         cleaned_data = self.cleaned_data

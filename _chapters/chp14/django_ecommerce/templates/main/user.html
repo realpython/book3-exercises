@@ -1,9 +1,7 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
 {% block content %}
-<div ng-controller="LoggedInCtrl">
-<div id="achievements" class="row member-page"
-  ng-class="{hide: show_badges==false}">
+<div id="achievements" class="row member-page hide">
   {% include "main/_badges.html" %}
 </div>
   <div class="row member-page">
@@ -17,11 +15,7 @@
      <div class="row">
        {% include "main/_jedibadge.html" %}
        {% include "main/_statusupdate.html" %}
-       {% include "djangular_polls/_polls.html" %}
      </div>
     </div>
   </div>
-</div>
-{% endblock %}
-{% block extrajs %}
 {% endblock %}
