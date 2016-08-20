@@ -1,20 +1,18 @@
 from django.test import TestCase
 from payments.forms import SigninForm, CardForm, UserForm
-
+import unittest
 
 class FormTesterMixin():
 
-    def should_have_form_error(
-        self, form_cls, expected_error_name,
-        expected_error_msg, data
-    ):
+    def assertFormError(self, form_cls, expected_error_name,
+                        expected_error_msg, data):
 
         from pprint import pformat
         test_form = form_cls(data=data)
         #if we get an error then the form should not be valid
         self.assertFalse(test_form.is_valid())
 
-        self.assertEqual(
+        self.assertEquals(
             test_form.errors[expected_error_name],
             expected_error_msg,
             msg="Expected {} : Actual {} : using data {}".format(
@@ -24,23 +22,21 @@ class FormTesterMixin():
         )
 
 
-class FormTests(TestCase, FormTesterMixin):
+class FormTests(unittest.TestCase, FormTesterMixin):
 
     def test_signin_form_data_validation_for_invalid_data(self):
         invalid_data_list = [
             {'data': {'email': 'j@j.com'},
-             'error': ('password', ['This field is required.'])},
+             'error': ('password', [u'This field is required.'])},
             {'data': {'password': '1234'},
-             'error': ('email', ['This field is required.'])}
+             'error': ('email', [u'This field is required.'])}
         ]
 
         for invalid_data in invalid_data_list:
-            self.should_have_form_error(
-                SigninForm,
-                invalid_data['error'][0],
-                invalid_data['error'][1],
-                invalid_data["data"]
-            )
+            self.assertFormError(SigninForm,
+                                 invalid_data['error'][0],
+                                 invalid_data['error'][1],
+                                 invalid_data["data"])
 
     def test_user_form_passwords_match(self):
         form = UserForm(
@@ -78,22 +74,24 @@ class FormTests(TestCase, FormTesterMixin):
                 'data': {'last_4_digits': '123'},
                 'error': (
                     'last_4_digits',
-                    ['Ensure this value has at least 4 characters (it has 3).']
+                    [u'Ensure this value has at least 4 characters (it has 3).']
                 )
             },
             {
                 'data': {'last_4_digits': '12345'},
                 'error': (
                     'last_4_digits',
-                    ['Ensure this value has at most 4 characters (it has 5).']
+                    [u'Ensure this value has at most 4 characters (it has 5).']
                 )
             }
         ]
 
         for invalid_data in invalid_data_list:
-            self.should_have_form_error(
+            self.assertFormError(
                 CardForm,
                 invalid_data['error'][0],
                 invalid_data['error'][1],
                 invalid_data["data"]
             )
+
+
