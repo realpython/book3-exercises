@@ -1,18 +1,20 @@
 from payments.views import sign_in, sign_out, register, soon
 from django.test import TestCase, RequestFactory
+from django.shortcuts import render
+from django.db import IntegrityError
+import django_ecommerce.settings as settings
+from payments.views import soon, register, Customer
 from payments.models import User
 from payments.forms import SigninForm, UserForm
-from django.db import IntegrityError
-from django.core.urlresolvers import resolve
-from django.shortcuts import render_to_response
-import django_ecommerce.settings as settings
+import unittest
 import mock
-
+from django.core.urlresolvers import resolve
 
 class ViewTesterMixin(object):
 
     @classmethod
-    def setupViewTester(cls, url, view_func, expected_html,
+    def setupViewTester(cls, url, view_func, expected_html_path,
+                        expected_html_context,
                         status_code=200,
                         session={}):
         request_factory = RequestFactory()
@@ -21,38 +23,47 @@ class ViewTesterMixin(object):
         cls.status_code = status_code
         cls.url = url
         cls.view_func = staticmethod(view_func)
+
+        expected_html = ""
+        if expected_html_path and expected_html_context:
+            response = render(
+                cls.request,
+                expected_html_path,
+                expected_html_context,
+            )
+            expected_html = response.content
         cls.expected_html = expected_html
+
 
     def test_resolves_to_correct_view(self):
         test_view = resolve(self.url)
-        self.assertEqual(test_view.func, self.view_func)
+        self.assertEquals(test_view.func, self.view_func)
 
     def test_returns_appropriate_respose_code(self):
         resp = self.view_func(self.request)
-        self.assertEqual(resp.status_code, self.status_code)
+        self.assertEquals(resp.status_code, self.status_code)
 
     def test_returns_correct_html(self):
         resp = self.view_func(self.request)
-        self.assertEqual(resp.content, self.expected_html)
+        self.assertEquals(resp.content, self.expected_html)
 
 
 class SignInPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
-        html = render_to_response(
-            'sign_in.html',
-            {
-                'form': SigninForm(),
-                'user': None
-            }
-        )
+        super(SignInPageTests, cls).setUpClass()
+        page = 'sign_in.html'
+        context = {
+                            'form': SigninForm(),
+                            'user': None
+                        }
 
         ViewTesterMixin.setupViewTester(
             '/sign_in',
             sign_in,
-            html.content
+            page,
+            context,
         )
 
 
@@ -60,11 +71,11 @@ class SignOutPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(SignOutPageTests, cls).setUpClass()
         ViewTesterMixin.setupViewTester(
             '/sign_out',
             sign_out,
-            b"",  # a redirect will return an empty bytestring
+            None, None,  # a redirect will return no html
             status_code=302,
             session={"user": "dummy"},
         )
@@ -78,28 +89,35 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
-        
-        html = render_to_response(
-            'register.html',
-            {
-                'form': UserForm(),
-                'months': list(range(1, 12)),
+        super(RegisterPageTests, cls).setUpClass()
+        page = 'register.html'
+        the_form = UserForm()
+        context =    {
+                'form':the_form,
+                'months': range(1, 12),
                 'publishable': settings.STRIPE_PUBLISHABLE,
                 'soon': soon(),
                 'user': None,
-                'years': list(range(2011, 2036)),
+                'years': range(2011, 2036),
             }
-        )
         ViewTesterMixin.setupViewTester(
             '/register',
             register,
-            html.content,
+            page,
+            context,
+            session={"user": "dummy"},
         )
 
     def setUp(self):
-        request_factory = RequestFactory()
-        self.request = request_factory.get(self.url)
+        pass
+
+
+    def test_returns_correct_html(self):
+        # overwrite the one in ViewTesterMixin
+        resp = self.view_func(self.request)
+        self.assertTrue("<h1>Register Today!</h1>" in resp.content)
+
+
 
     def test_invalid_form_returns_registration_page(self):
 
@@ -110,10 +128,10 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.request.method = 'POST'
             self.request.POST = None
             resp = register(self.request)
-            self.assertEqual(resp.content, self.expected_html)
+            self.assertEquals(resp.content, self.expected_html)
 
             # make sure that we did indeed call our is_valid function
-            self.assertEqual(user_mock.call_count, 1)
+            self.assertEquals(user_mock.call_count, 1)
 
     @mock.patch('payments.views.Customer.create')
     @mock.patch.object(User, 'create')
@@ -138,9 +156,9 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
         resp = register(self.request)
 
-        self.assertEqual(resp.content, b"")
-        self.assertEqual(resp.status_code, 302)
-        self.assertEqual(self.request.session['user'], new_user.pk)
+        self.assertEquals(resp.content, "")
+        self.assertEquals(resp.status_code, 302)
+        self.assertEquals(self.request.session['user'], new_user.pk)
         #verify the user was actually stored in the database.
         create_mock.assert_called_with(
             'pyRock', 'python@rocks.com', 'bad_password', '4242', new_cust.id
@@ -208,7 +226,8 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         self.request.POST = {}
 
         #create the expected html
-        html = render_to_response(
+        html = render(
+            self.request,
             'register.html',
             {
                 'form': self.get_MockUserForm(),
@@ -217,7 +236,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
                 'soon': soon(),
                 'user': None,
                 'years': list(range(2011, 2036)),
-            }
+            },
         )
 
         #mock out stripe so we don't hit their server

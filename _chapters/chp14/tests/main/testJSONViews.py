@@ -5,7 +5,7 @@ from main.serializers import StatusReportSerializer
 from rest_framework.test import APIRequestFactory, force_authenticate
 from rest_framework import status
 from payments.models import User
-
+from datetime import datetime
 
 class JsonViewTests(TestCase):
 
@@ -16,8 +16,10 @@ class JsonViewTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.test_user = User(id=2222, email="test@user.com")
+        cls.test_user = User(id=2222,
+                             email="test@user.com",last_login=datetime.now())
         cls.test_user.save()
+
 
     def get_request(self, method='GET', authed=True):
         request_method = getattr(self.factory, method.lower())
