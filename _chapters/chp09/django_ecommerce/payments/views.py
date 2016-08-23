@@ -1,4 +1,4 @@
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -37,7 +37,7 @@ def sign_in(request):
     print(form.non_field_errors())
 
     return render_to_response(
-        'payments/sign_in.html',
+        'sign_in.html',
         {
             'form': form,
             'user': user
@@ -75,8 +75,6 @@ def register(request):
             # )
 
             cd = form.cleaned_data
-            from django.db import transaction
-
             try:
                 with transaction.atomic():
                     user = User.create(cd['name'], cd['email'], cd['password'],
@@ -101,7 +99,7 @@ def register(request):
         form = UserForm()
 
     return render_to_response(
-        'payments/register.html',
+        'register.html',
         {
             'form': form,
             'months': list(range(1, 12)),
@@ -140,7 +138,7 @@ def edit(request):
         form = CardForm()
 
     return render_to_response(
-        'payments/edit.html',
+        'edit.html',
         {
             'form': form,
             'publishable': settings.STRIPE_PUBLISHABLE,

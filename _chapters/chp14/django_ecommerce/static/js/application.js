@@ -1,11 +1,3 @@
-var mecApp = angular.module('mecApp', []);
-
-mecApp.config(function($interpolateProvider) {
-  $interpolateProvider.startSymbol('[[')
-  .endSymbol(']]');
-});
-
-
 $(function() {
 
   $("#user_form").submit(function() {
@@ -49,19 +41,19 @@ $(function() {
     return false;
   });
 
-  // //show status
-  // $("#show-achieve").click(function() {
-  //   console.log("test")
-  //   a = $("#achievements");
-  //   l = $("#show-achieve");
-  //   if (a.hasClass("hide")) {
-  //     a.hide().removeClass('hide').slideDown('slow');
-  //     l.html("Hide Achievements");
-  //   } else {
-  //     a.addClass("hide");
-  //     l.html("Show Achievements");
-  //   }
-  //   return false;
-  // });
+  //show status
+  $("#show-achieve").click(function() {
+    console.log("test")
+    a = $("#achievements");
+    l = $("#show-achieve");
+    if (a.hasClass("hide")) {
+      a.hide().removeClass('hide').slideDown('slow');
+      l.html("Hide Achievements");
+    } else {
+      a.addClass("hide");
+      l.html("Show Achievements");
+    }
+    return false;
+  });
 
 });

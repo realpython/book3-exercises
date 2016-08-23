@@ -1,7 +1,6 @@
 # Django settings for django_ecommerce project.
 
 import os
-import mongoengine
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -16,10 +15,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-# DATABASES
-
-mongoengine.connect("mec-geodata")
 
 DATABASES = {
     'default': {
@@ -131,8 +126,7 @@ INSTALLED_APPS = (
     'payments',
     'embed_video',
     'rest_framework',
-    'djangular_polls',
-    'usermap'
+    'djangular_polls'
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
