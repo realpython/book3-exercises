@@ -2,6 +2,7 @@ from payments.views import Customer
 from django.test import TestCase
 import mock
 
+
 class CustomerTests(TestCase):
 
     def test_create_subscription(self):

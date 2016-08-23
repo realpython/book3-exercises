@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from payments.forms import SigninForm, CardForm, UserForm
 from payments.models import User
 import django_ecommerce.settings as settings
@@ -34,13 +35,13 @@ def sign_in(request):
 
     print(form.non_field_errors())
 
-    return render(
-        request,
+    return render_to_response(
         'sign_in.html',
         {
             'form': form,
             'user': user
         },
+        context_instance=RequestContext(request)
     )
 
 
@@ -91,8 +92,7 @@ def register(request):
     else:
         form = UserForm()
 
-    return render(
-        request,
+    return render_to_response(
         'register.html',
         {
             'form': form,
@@ -102,6 +102,7 @@ def register(request):
             'user': user,
             'years': list(range(2011, 2036)),
         },
+        context_instance=RequestContext(request)
     )
 
 
@@ -130,8 +131,7 @@ def edit(request):
     else:
         form = CardForm()
 
-    return render(
-        request,
+    return render_to_response(
         'edit.html',
         {
             'form': form,
@@ -140,6 +140,7 @@ def edit(request):
             'months': list(range(1, 12)),
             'years': list(range(2011, 2036))
         },
+        context_instance=RequestContext(request)
     )
 
 

@@ -1,11 +1,13 @@
 from django.test import TestCase
 from payments.forms import SigninForm, CardForm, UserForm
-import unittest
+
 
 class FormTesterMixin():
 
-    def assertFormError(self, form_cls, expected_error_name,
-                        expected_error_msg, data):
+    def should_have_form_error(
+        self, form_cls, expected_error_name,
+        expected_error_msg, data
+    ):
 
         from pprint import pformat
         test_form = form_cls(data=data)
@@ -22,7 +24,7 @@ class FormTesterMixin():
         )
 
 
-class FormTests(unittest.TestCase, FormTesterMixin):
+class FormTests(TestCase, FormTesterMixin):
 
     def test_signin_form_data_validation_for_invalid_data(self):
         invalid_data_list = [
@@ -33,10 +35,12 @@ class FormTests(unittest.TestCase, FormTesterMixin):
         ]
 
         for invalid_data in invalid_data_list:
-            self.assertFormError(SigninForm,
-                                 invalid_data['error'][0],
-                                 invalid_data['error'][1],
-                                 invalid_data["data"])
+            self.should_have_form_error(
+                SigninForm,
+                invalid_data['error'][0],
+                invalid_data['error'][1],
+                invalid_data["data"]
+            )
 
     def test_user_form_passwords_match(self):
         form = UserForm(
@@ -87,11 +91,9 @@ class FormTests(unittest.TestCase, FormTesterMixin):
         ]
 
         for invalid_data in invalid_data_list:
-            self.assertFormError(
+            self.should_have_form_error(
                 CardForm,
                 invalid_data['error'][0],
                 invalid_data['error'][1],
                 invalid_data["data"]
             )
-
-
