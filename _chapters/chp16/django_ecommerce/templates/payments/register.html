@@ -9,27 +9,34 @@
 </div>
 <div class="row">
   <div class="span6 columns">
-    <section class="container" ng-controller="RegisterCtrl">
-      <form name="{{form.form_name}}" accept-charset="UTF-8" novalidate class="form-signin" role="form" ng-submit="register()">
-        {% csrf_token %}
-        <div class="alert" ng-show="register_errors"> <a class="close" data-dismiss="alert">x</a>
+    <form id="user_form" accept-charset="UTF-8" action="{% url 'register' %}" class="form-stacked"  method="post">
+      {% csrf_token %}
+      {% if form.is_bound and not form.is_valid %}
+        <div class="alert alert-{{error.tags}}"> <a class="close" data-dismiss="alert">×</a>
           <div class="errors">
-            <p ng-repeat="error in register_errors">[[ error ]]</p>
+            {% for field in form.visible_fields %}
+            {% for error in field.errors %}
+            <p>{{ field.label }}: {{ error }}</p>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
           </div>
         </div>
-        {% for field in form.visible_fields %}
-        {% include "payments/_field.html" %}
-        {% endfor %}
-        <div id="change-card" class="clearfix"{% if not form.last_4_digits.value %} style="display: none"{% endif %}>
-          Card
-          <div class="input">
-            Using card ending with {{ form.last_4_digits.value }}
-            (<a href="#">change</a>)
-          </div>
+      {% endif %}
+      {% for field in form.visible_fields %}
+      {% include "payments/_field.html" %}
+      {% endfor %}
+      <div id="change-card" class="clearfix"{% if not form.last_4_digits.value %} style="display: none"{% endif %}>
+        Card
+        <div class="input">
+          Using card ending with {{ form.last_4_digits.value }}
+          (<a href="#">change</a>)
         </div>
-        {% include "payments/_cardform.html" %}
-      </form>
-    </section>
+      </div>
+      {% include "payments/_cardform.html" %}
+    </form>
   </div>
 </div>
 {% endblock %}
