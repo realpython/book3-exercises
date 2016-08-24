@@ -2,11 +2,11 @@ from django.test import TestCase
 from payments.models import User
 from django.db import IntegrityError
 
-
 class UserModelTest(TestCase):
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpClass(cls):
+        super(UserModelTest, cls).setUpClass()
         cls.test_user = User(email="j@j.com", name='test user')
         cls.test_user.save()
 
@@ -21,6 +21,7 @@ class UserModelTest(TestCase):
         self.assertEqual(User.objects.get(email="test@t.com"), user)
 
     def test_create_user_allready_exists_throws_IntegrityError(self):
+        from django.db import IntegrityError
         self.assertRaises(
             IntegrityError,
             User.create,
