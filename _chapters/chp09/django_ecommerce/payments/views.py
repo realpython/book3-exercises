@@ -1,4 +1,4 @@
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from payments.forms import SigninForm, CardForm, UserForm
@@ -7,6 +7,7 @@ import django_ecommerce.settings as settings
 import stripe
 import datetime
 import socket
+
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -75,19 +76,22 @@ def register(request):
 
             cd = form.cleaned_data
             try:
-                user = User.create(
-                    cd['name'],
-                    cd['email'],
-                    cd['password'],
-                    cd['last_4_digits'],
-                    stripe_id=''
-                )
+                with transaction.atomic():
+                    transaction.on_commit(
+                        lambda: send_thankyou(cd['email']))
+                    user = User.create(
+                        cd['name'],
+                        cd['email'],
+                        cd['password'],
+                        cd['last_4_digits'],
+                        stripe_id=''
+                    )
 
-                if customer:
-                    user.stripe_id = customer.id
-                    user.save()
-                else:
-                    UnpaidUsers(email=cd['email']).save()
+                    if customer:
+                        user.stripe_id = customer.id
+                        user.save()
+                    else:
+                        UnpaidUsers(email=cd['email']).save()
 
             except IntegrityError:
                 import traceback
@@ -114,6 +118,9 @@ def register(request):
         },
     )
 
+def send_thankyou(email):
+    assert User.objects.get(email=email)
+    print("thank you", email)
 
 def edit(request):
     uid = request.session.get('user')
@@ -162,5 +169,6 @@ class Customer(object):
                 return stripe.Customer.create(**kwargs)
             elif billing_method == "one_time":
                 return stripe.Charge.create(**kwargs)
-        except socket.error:
+        except (socket.error, stripe.APIConnectionError,
+                stripe.InvalidRequestError):
             return None
