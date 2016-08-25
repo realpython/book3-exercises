@@ -1,10 +1,10 @@
-from payments.views import sign_in, sign_out, register, soon
 from django.test import TestCase, RequestFactory
 from django.shortcuts import render
 from django.db import IntegrityError
 import django_ecommerce.settings as settings
+from payments.views import sign_in, sign_out
 from payments.views import soon, register, Customer
-from payments.models import User
+from payments.models import User, UnpaidUsers
 from payments.forms import SigninForm, UserForm
 import unittest
 import mock
@@ -129,19 +129,24 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             'ver_password': 'bad_password',
         }
 
-        #mock out Stripe and ask it to throw a connection error
+        # mock out Stripe and ask it to throw a connection error
         with mock.patch(
             'stripe.Customer.create',
             side_effect=socket.error("Can't connect to Stripe")
         ) as stripe_mock:
 
-            #run the test
+            # run the test
             register(req)
 
-            #assert there is a record in the database without Stripe id.
+            # assert there is a record in the database without Stripe id.
             users = User.objects.filter(email="python@rocks.com")
             self.assertEquals(len(users), 1)
             self.assertEquals(users[0].stripe_id, '')
+
+            # check the associated table got updated.
+            unpaid = UnpaidUsers.objects.filter(email="python@rocks.com")
+            self.assertEquals(len(unpaid),1)
+            self.assertIsNotNone(unpaid[0].last_notification)
 
     def test_invalid_form_returns_registration_page(self):
         with mock.patch('payments.forms.UserForm.is_valid') as user_mock:

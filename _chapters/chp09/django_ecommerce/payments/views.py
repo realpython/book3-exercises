@@ -2,7 +2,7 @@ from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from payments.forms import SigninForm, CardForm, UserForm
-from payments.models import User
+from payments.models import User, UnpaidUsers
 import django_ecommerce.settings as settings
 import stripe
 import datetime
@@ -86,9 +86,13 @@ def register(request):
                 if customer:
                     user.stripe_id = customer.id
                     user.save()
+                else:
+                    UnpaidUsers(email=cd['email']).save()
 
             except IntegrityError:
-                form.addError(cd['email'] + ' is already a member')
+                import traceback
+                form.addError(cd['email'] + ' is already a member' +
+                              traceback.format_exc())
                 user = None
             else:
                 request.session['user'] = user.pk
