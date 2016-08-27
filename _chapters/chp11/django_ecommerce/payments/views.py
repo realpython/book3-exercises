@@ -1,13 +1,13 @@
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from payments.forms import SigninForm, CardForm, UserForm
 from payments.models import User, UnpaidUsers
 import django_ecommerce.settings as settings
 import stripe
 import datetime
 import socket
+
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -36,13 +36,13 @@ def sign_in(request):
 
     print(form.non_field_errors())
 
-    return render_to_response(
-        'payments/sign_in.html',
+    return render(
+        request,
+        'sign_in.html',
         {
             'form': form,
             'user': user
         },
-        context_instance=RequestContext(request)
     )
 
 
@@ -75,12 +75,17 @@ def register(request):
             # )
 
             cd = form.cleaned_data
-            from django.db import transaction
-
             try:
                 with transaction.atomic():
-                    user = User.create(cd['name'], cd['email'], cd['password'],
-                                       cd['last_4_digits'], stripe_id="")
+                    transaction.on_commit(
+                        lambda: send_thankyou(cd['email']))
+                    user = User.create(
+                        cd['name'],
+                        cd['email'],
+                        cd['password'],
+                        cd['last_4_digits'],
+                        stripe_id=''
+                    )
 
                     if customer:
                         user.stripe_id = customer.id
@@ -100,8 +105,9 @@ def register(request):
     else:
         form = UserForm()
 
-    return render_to_response(
-        'payments/register.html',
+    return render(
+        request,
+        'register.html',
         {
             'form': form,
             'months': list(range(1, 12)),
@@ -110,9 +116,11 @@ def register(request):
             'user': user,
             'years': list(range(2011, 2036)),
         },
-        context_instance=RequestContext(request)
     )
 
+def send_thankyou(email):
+    assert User.objects.get(email=email)
+    print("thank you", email)
 
 def edit(request):
     uid = request.session.get('user')
@@ -139,8 +147,9 @@ def edit(request):
     else:
         form = CardForm()
 
-    return render_to_response(
-        'payments/edit.html',
+    return render(
+        request,
+        'edit.html',
         {
             'form': form,
             'publishable': settings.STRIPE_PUBLISHABLE,
@@ -148,7 +157,6 @@ def edit(request):
             'months': list(range(1, 12)),
             'years': list(range(2011, 2036))
         },
-        context_instance=RequestContext(request)
     )
 
 
