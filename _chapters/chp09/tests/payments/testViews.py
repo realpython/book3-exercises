@@ -12,6 +12,15 @@ from django.core.urlresolvers import resolve
 import socket
 import copy
 
+
+def get_mock_cust():
+    class mock_cust():
+        @property
+        def id(self):
+            return 1234
+    return mock_cust()
+
+
 class ViewTesterMixin(object):
 
     @classmethod
@@ -165,16 +174,6 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
             self.assertEqual(user_mock.call_count, 1)
 
 
-    def get_mock_cust():
-
-        class mock_cust():
-
-            @property
-            def id(self):
-                return 1234
-
-        return mock_cust()
-
 
     @mock.patch('payments.views.Customer.create', return_value=get_mock_cust())
     def test_registering_new_user_returns_succesfully(self, stripe_mock):
@@ -304,7 +303,9 @@ class RegisterPageOnTransactionCommitTests(TransactionTestCase):
         request_factory = RequestFactory()
         self.req = request_factory.get('/register')
 
-    def test_registering_user_triggers_thankyou(self):
+
+    @mock.patch('payments.views.Customer.create', return_value=get_mock_cust())
+    def test_registering_user_triggers_thankyou(self, stripe_mock):
 
         #create the request used to test the view
         self.req.session = {}
@@ -318,11 +319,7 @@ class RegisterPageOnTransactionCommitTests(TransactionTestCase):
             'ver_password': 'bad_password',
         }
 
-        #mock out stripe and ask it to throw a connection error
-        with mock.patch(
-            'stripe.Customer.create',
-            side_effect=socket.error("can't connect to stripe")
-        ) as stripe_mock:
-
+        with mock.patch('payments.views.send_thankyou') as thankyou_mock:
             #run the test
             resp = register(self.req)
+            thankyou_mock.assert_called_once_with('python@rocks.com')
