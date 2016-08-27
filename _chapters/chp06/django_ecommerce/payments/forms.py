@@ -25,16 +25,17 @@ class CardForm(PaymentForm):
 
 
 class UserForm(CardForm):
+
     name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     password = forms.CharField(
         required=True,
-        label=('Password'),
+        label=(u'Password'),
         widget=forms.PasswordInput(render_value=False)
     )
     ver_password = forms.CharField(
         required=True,
-        label=(' Verify Password'),
+        label=(u' Verify Password'),
         widget=forms.PasswordInput(render_value=False)
     )
 

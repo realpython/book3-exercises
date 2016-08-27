@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.core.urlresolvers import resolve
 from main.views import index
 from django.shortcuts import render_to_response
+from payments.models import User
 from django.test import RequestFactory
 import mock
 
@@ -14,7 +15,7 @@ class MainPageTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(MainPageTests, cls).setUpClass()
         request_factory = RequestFactory()
         cls.request = request_factory.get('/')
         cls.request.session = {}

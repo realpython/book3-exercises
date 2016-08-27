@@ -8,7 +8,6 @@ from django.test import RequestFactory
 import mock
 from main.migrations.data_load_marketing_items_0003 import init_marketing_data
 
-
 class MainPageTests(TestCase):
 
     ###############
