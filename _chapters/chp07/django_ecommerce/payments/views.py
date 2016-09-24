@@ -1,13 +1,11 @@
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from payments.forms import SigninForm, CardForm, UserForm
-from payments.models import User, UnpaidUsers
+from payments.models import User
 import django_ecommerce.settings as settings
 import stripe
 import datetime
-import socket
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -36,13 +34,13 @@ def sign_in(request):
 
     print(form.non_field_errors())
 
-    return render_to_response(
+    return render(
+        request,
         'sign_in.html',
         {
             'form': form,
             'user': user
         },
-        context_instance=RequestContext(request)
     )
 
 
@@ -76,20 +74,15 @@ def register(request):
 
             cd = form.cleaned_data
             try:
-                with transaction.atomic():
-                    user = User.create(cd['name'], cd['email'], cd['password'],
-                                       cd['last_4_digits'], stripe_id="")
-
-                    if customer:
-                        user.stripe_id = customer.id
-                        user.save()
-                    else:
-                        UnpaidUsers(email=cd['email']).save()
-
+                user = User.create(
+                    cd['name'],
+                    cd['email'],
+                    cd['password'],
+                    cd['last_4_digits'],
+                    customer.id
+                )
             except IntegrityError:
-                import traceback
-                form.addError(cd['email'] + ' is already a member' +
-                              traceback.format_exc())
+                form.addError(cd['email'] + ' is already a member')
                 user = None
             else:
                 request.session['user'] = user.pk
@@ -98,7 +91,8 @@ def register(request):
     else:
         form = UserForm()
 
-    return render_to_response(
+    return render(
+        request,
         'register.html',
         {
             'form': form,
@@ -108,7 +102,6 @@ def register(request):
             'user': user,
             'years': list(range(2011, 2036)),
         },
-        context_instance=RequestContext(request)
     )
 
 
@@ -137,7 +130,8 @@ def edit(request):
     else:
         form = CardForm()
 
-    return render_to_response(
+    return render(
+        request,
         'edit.html',
         {
             'form': form,
@@ -146,7 +140,6 @@ def edit(request):
             'months': list(range(1, 12)),
             'years': list(range(2011, 2036))
         },
-        context_instance=RequestContext(request)
     )
 
 
@@ -154,11 +147,7 @@ class Customer(object):
 
     @classmethod
     def create(cls, billing_method="subscription", **kwargs):
-        try:
-            if billing_method == "subscription":
-                return stripe.Customer.create(**kwargs)
-            elif billing_method == "one_time":
-                return stripe.Charge.create(**kwargs)
-        except (socket.error, stripe.APIConnectionError,
-                stripe.InvalidRequestError):
-            return None
+        if billing_method == "subscription":
+            return stripe.Customer.create(**kwargs)
+        elif billing_method == "one_time":
+            return stripe.Charge.create(**kwargs)

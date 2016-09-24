@@ -10,23 +10,26 @@ $(function() {
         cvc:      $("#cvv").val()
       };
 
-    Stripe.createToken(card, function(status, response) {
-      if (status === 200) {
-        console.log(status, response);
-        $("#credit-card-errors").hide();
-        $("#last_4_digits").val(response.card.last4);
-        $("#stripe_token").val(response.id);
-      }
-      //always submit form even with errors
-      form.submit();
-    });
-
+      Stripe.createToken(card, function(status, response) {
+        if (status === 200) {
+          console.log(status, response);
+          $("#credit-card-errors").hide();
+          $("#last_4_digits").val(response.card.last4);
+          $("#stripe_token").val(response.id);
+          form.submit();
+        } else {
+          $("#stripe-error-message").text(response.error.message);
+          $("#credit-card-errors").show();
+          $("#user_submit").attr("disabled", false);
+        }
+      });
+      
       return false;
-
-    }
-
+      
+    } 
+    
     return true
-
+    
   });
 
   $("#change-card a").click(function() {

@@ -66,3 +66,4 @@ class StatusReportSerializer_Tests(TestCase):
         self.assertEqual(self.new_status.status, status.status)
         self.assertIsNotNone(status.when)
         self.assertEqual(self.new_status.user, status.user)
+
