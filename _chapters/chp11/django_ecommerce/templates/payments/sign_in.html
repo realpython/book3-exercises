@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "__base.html" %}
 {% block content %}
   <div class="row">
     <div class="span6 columns">
@@ -24,7 +24,7 @@
           </div>
         </div>
         {% endif %}
-        {% for field in form %}{% include "field.html" %}{% endfor %}
+        {% for field in form %}{% include "payments/_field.html" %}{% endfor %}
         <div class="actions">
           <input class="btn primary" name="commit" type="submit" value="Sign in">
         </div>

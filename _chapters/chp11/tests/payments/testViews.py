@@ -64,7 +64,7 @@ class SignInPageTests(TestCase, ViewTesterMixin):
     @classmethod
     def setUpClass(cls):
         super(SignInPageTests, cls).setUpClass()
-        page = 'sign_in.html'
+        page = 'payments/sign_in.html'
         context = {
                             'form': SigninForm(),
                             'user': None
@@ -101,7 +101,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
     @classmethod
     def setUpClass(cls):
         super(RegisterPageTests, cls).setUpClass()
-        page = 'register.html'
+        page = 'payments/register.html'
         the_form = UserForm()
         context =    {
                 'form':the_form,
@@ -235,7 +235,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
         #create the expected html
         html = render(
             self.req,
-            'register.html',
+            'payments/register.html',
             {
                 'form': self.get_MockUserForm(),
                 'months': list(range(1, 12)),

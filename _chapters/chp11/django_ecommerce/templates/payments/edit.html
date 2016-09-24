@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "__base.html" %}
 {% block content %}
   <div class="row">
     <div class="span6 columns">
@@ -11,7 +11,7 @@
     <div class="span6 columns">
       <form id="user_form" accept-charset="UTF-8" action="{% url 'edit' %}" class="form-stacked"  method="post">
       {% csrf_token %}
-      {% include "cardform.html" %}
+      {% include "payments/_cardform.html" %}
       </form>
     </div>
   </div>  
