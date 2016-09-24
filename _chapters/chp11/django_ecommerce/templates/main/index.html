@@ -16,11 +16,16 @@
       <div class="carousel-inner">
         <figure class="item active">
           <img src="{% static 'img/darth.jpg' %}" alt="Join the Dark Side" style="max-height: 540px;">
-          <figcaption class="carousel-caption">
+          <figcaption id="darth_caption" class="carousel-caption visible-lg-block">
             <h1>Join the Dark Side</h1>
             <p>Or the light side. Doesn't matter. If your into Star Wars then this is the place for you.</p>
             <p><a class="btn btn-lg btn-primary" href="{% url 'register' %}" role="button">Sign up today</a></p>
           </figcaption>
+	  <figcaption class="carousel-caption hidden-lg">
+	    <h1>Join the Dark Side</h1>
+            <p>Or the light side. Doesn't matter. If your into Star Wars then this is the place for you.</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'register' %}" role="button">Sign up today</a></p>
+	  </figcaption>
         </figure>
         <figure class="item">
           <img src="{% static 'img/star-wars-battle.jpg' %}" alt="Wage War" style="max-height: 540px;">
@@ -48,11 +53,7 @@
 <section class="container marketing">
   <!-- Three columns of text below the carousel -->
   <div class="row center-text">
-    {% marketing__circle_item img_name='yoda.jpg' heading='Hone your Jedi Skills' caption='All members have access to our unique training and achievements ladders. Progress through the levels and show everyone who the top Jedi Master is!' %}
-
-    {% marketing__circle_item img_name='clone_army.jpg' heading='Build your Clan' caption="Engage in meaningful conversation, or bloodthirsty battle! If it's related to Star Wars, in any way, you better believe we do it. :)" %}
-
-    {% marketing__circle_item img_name="leia.jpg" heading="Find Love" caption="Everybody knows Star Wars fans are the best mates for Star Wars fans. Find your Princess Leia or Han Solo and explore the stars together." button_title="Sign Up Now" %}
+    {% marketing__circle_item %} 
   </div>
 </section>
 {% endblock %}

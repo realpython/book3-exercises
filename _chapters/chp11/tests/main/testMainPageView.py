@@ -5,9 +5,11 @@ from django.shortcuts import render_to_response
 from payments.models import User
 from django.test import RequestFactory
 import mock
+from main.views import index, market_items
 
 
 class MainPageTests(TestCase):
+    fixtures = ['initial_data.json', ]
 
     ###############
     #### Setup ####
@@ -40,7 +42,10 @@ class MainPageTests(TestCase):
         resp = index(self.request)
         self.assertEqual(
             resp.content,
-            render_to_response("main/index.html").content
+            render_to_response(
+                "main/index.html",
+                {"marketing_items": market_items}
+            ).content
         )
 
     def test_index_handles_logged_in_user(self):

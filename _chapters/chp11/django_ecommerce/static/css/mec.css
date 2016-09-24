@@ -36,3 +36,10 @@ h1, .nav li, .navbar-brand {
 .navbar-brand {
   height: 40px;
 }
+
+#darth_caption {
+  top: 0%;
+  left: 5%;
+  right: 60%;
+  text-align: left;
+}

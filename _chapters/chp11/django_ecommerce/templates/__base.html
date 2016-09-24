@@ -12,6 +12,9 @@
 		<!-- custom styles -->
 		<link href= '{% static "css/mec.css" %}' rel="stylesheet">
 
+		{% block extra_css %}
+		{% endblock %}
+
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -36,11 +39,11 @@
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="{% url 'home' %}">Home</a></li>
-						<li><a href="/pages/about">About</a></li>
-						<li><a href="{% url 'contact' %}">Contact</a></li>
-						{% if user %}
+						{% if user.is_authenticated %}
 						<li><a href="{% url 'sign_out' %}">Logout</a></li>
 						{% else %}
+						<li><a href="/pages/about">About</a></li>
+						<li><a href="{% url 'contact' %}">Contact</a></li>
 						<li><a href="{% url 'sign_in' %}">Login</a></li>
 						<li><a href="{% url 'register' %}">Register</a></li>
 						{% endif %}
