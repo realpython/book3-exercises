@@ -3,13 +3,15 @@ from payments import views
 from django.contrib import admin
 from main.views import index as main_index
 from contact.views import contact
+from about.views import about
 
 admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', main_index, name='home'),
-    url(r'^pages/', include('django.contrib.flatpages.urls')),
+    #url(r'^pages/', include('django.contrib.flatpages.urls')),
+    url(r'^about', about, name='about'),
     url(r'^contact/', contact, name='contact'),
 
     # user registration/authentication
