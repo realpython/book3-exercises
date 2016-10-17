@@ -1,7 +1,6 @@
-{% load static %}   
-<!DOCTYPE html>
-<html lang="en">
-	<head>
+{% load static %}
+
+<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,7 +41,7 @@
 						{% if user.is_authenticated %}
 						<li><a href="{% url 'sign_out' %}">Logout</a></li>
 						{% else %}
-						<li><a href="/pages/about">About</a></li>
+						<li><a href="{% url 'about' %}">About</a></li>
 						<li><a href="{% url 'contact' %}">Contact</a></li>
 						<li><a href="{% url 'sign_in' %}">Login</a></li>
 						<li><a href="{% url 'register' %}">Register</a></li>
@@ -51,32 +50,3 @@
 				</div>
 			</div>
 		</nav>
-
-		<div class="container">
-
-			{% block content %}
-			{% endblock %}
-
-
-			<hr class="featurette-divider">
-
-			<footer>
-				<p class="pull-right"><a href="/#">Back to top</a></p>
-				<p class="pull-left">&copy; 2014 <a href="http://realpython.com">The Jedi Council</a></p> <p class="text-center"> &middot;  Powered by about 37 AT-AT Walkers, Python 3 and Django 1.9 &middot; </p>
-			</footer>
-
-		</div>
-		<script src="https://js.stripe.com/v2/" type="text/javascript"></script>
-		<script type="text/javascript">
-//<![CDATA[
-Stripe.publishableKey = '{{ publishable }}';
-//]]>
-		</script>
-
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src='{% static "js/jquery-1.12.4.min.js" %}'></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src='{% static "js/bootstrap.min.js" %}'></script>
-		<script src='{% static "js/application.js" %}'></script>
-	</body>
-</html>

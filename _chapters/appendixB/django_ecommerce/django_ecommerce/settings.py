@@ -91,7 +91,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -147,6 +146,15 @@ LOGGING = {
 }
 
 TEMPLATES = [
+    {
+        'BACKEND' : 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [
+            os.path.join(SITE_ROOT, 'templates','jinja2'),
+        ],
+        'OPTIONS' : {
+            'environment' : 'about.jinja2.environment',
+        },
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(SITE_ROOT, 'templates'),],
