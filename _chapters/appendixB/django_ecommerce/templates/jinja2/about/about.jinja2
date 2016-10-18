@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-	{{ site_header() }}
+	{{ render_dtl('__head.html') }}
+  <body>
+	  {{ render_dtl('__nav.html') }}
 		<div class="container">
 
 
@@ -11,7 +13,7 @@
 
 		<hr class="featurette-divider">
 
-	{{ site_footer() }}
+    {{ render_dtl('__footer') }}
 
 	</body>
 </html>

@@ -21,32 +21,3 @@
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body>
-		<!-- NAVBAR ==========================================   -->
-
-		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-			<div class="container">
-				<header class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="{% url 'home' %}">Mos Eisley's Cantina</a>
-				</header>
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'home' %}">Home</a></li>
-						{% if user.is_authenticated %}
-						<li><a href="{% url 'sign_out' %}">Logout</a></li>
-						{% else %}
-						<li><a href="{% url 'about' %}">About</a></li>
-						<li><a href="{% url 'contact' %}">Contact</a></li>
-						<li><a href="{% url 'sign_in' %}">Login</a></li>
-						<li><a href="{% url 'register' %}">Register</a></li>
-						{% endif %}
-					</ul>
-				</div>
-			</div>
-		</nav>
