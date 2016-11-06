@@ -1,0 +1,6 @@
+Django==1.7
+django-embed-video==0.11
+mock==1.0.1
+psycopg2==2.5.3
+requests==2.3.0
+stripe==1.9.2

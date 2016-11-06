@@ -1,0 +1,19 @@
+{% load static %}
+			<footer>
+				<p class="pull-right"><a href="/#">Back to top</a></p>
+				<p class="pull-left">&copy; 2014 <a href="http://realpython.com">The Jedi Council</a></p> <p class="text-center"> &middot;  Powered by about 37 AT-AT Walkers, Python 3 and Django 1.9 &middot; </p>
+			</footer>
+
+		</div>
+		<script src="https://js.stripe.com/v2/" type="text/javascript"></script>
+		<script type="text/javascript">
+//<![CDATA[
+Stripe.publishableKey = '{{ publishable }}';
+//]]>
+		</script>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src='{% static "js/jquery-1.12.4.min.js" %}'></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src='{% static "js/bootstrap.min.js" %}'></script>
+		<script src='{% static "js/application.js" %}'></script>
