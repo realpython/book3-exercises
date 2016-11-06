@@ -1,10 +1,15 @@
 {% extends "__base.html" %}
+{% load staticfiles %}
 {% block content %}
-  <div class="row">
-    <div class="span6 columns">
+  <div class="row member-page">
+    <div class="col-sm-8">
+      <div class="row">
+      </div>
+    </div>
+    <div class="col-sm-4">
+     <div class="row">
+       {% include "main/_jedibadge.html" %}
+     </div>
     </div>
   </div>
-  <h1>Member's Only Page</h1><br/>
-  <h3>Welcome {{ user.name }}.</h3>
-  <p>Click <a href="{% url 'edit' %}">here</a> to make changes to your credit card.</p>
 {% endblock %}
