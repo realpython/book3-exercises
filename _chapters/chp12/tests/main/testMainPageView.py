@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import resolve
 from main.views import index
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from payments.models import User
 from django.test import RequestFactory
 import mock
@@ -42,7 +42,8 @@ class MainPageTests(TestCase):
         resp = index(self.request)
         self.assertEqual(
             resp.content,
-            render_to_response(
+            render(
+                self.request,
                 "main/index.html",
                 {"marketing_items": market_items}
             ).content
@@ -63,10 +64,12 @@ class MainPageTests(TestCase):
             # Run the test
             resp = index(self.request)
 
+            expected_html = render(
+                self.request,
+                'main/user.html', {'user': user_mock.get_by_id(1)}
+            )
+
             # Ensure we return the state of the session back to normal
             self.request.session = {}
 
-            expected_html = render_to_response(
-                'main/user.html', {'user': user_mock.get_by_id(1)}
-            )
             self.assertEqual(resp.content, expected_html.content)

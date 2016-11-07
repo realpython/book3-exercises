@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from payments.models import User
 from main.models import MarketingItem, StatusReport
 
@@ -44,17 +44,22 @@ market_items = [
 
 def index(request):
     uid = request.session.get('user')
-    market_items = MarketingItem.objects.all()
     if uid is None:
-        return render_to_response(
+        # main landing page
+        market_items = MarketingItem.objects.all()
+        return render(
+            request,
             'main/index.html',
             {'marketing_items': market_items}
         )
     else:
-        return render_to_response(
+        # membership page
+        status = StatusReport.objects.latest()
+        return render(
+            request,
             'main/user.html',
-            {'marketing_items': market_items,
-            'user': User.get_by_id(uid)}
+            {'user': User.get_by_id(uid),
+             'reports': status},
         )
 
 def report(request):
