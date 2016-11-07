@@ -21,3 +21,10 @@ class StatusReport(models.Model):
     # custom queryset
     objects = StatusReportQuerySet.as_manager()
 
+
+class Announcement(models.Model):
+    when = models.DateTimeField(auto_now=True)
+    img = models.CharField(max_length=255, null=True)
+    vid = models.URLField(null=True)
+    info = models.TextField()
+
