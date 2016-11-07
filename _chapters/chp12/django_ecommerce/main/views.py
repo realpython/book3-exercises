@@ -1,7 +1,6 @@
 from django.shortcuts import render_to_response
 from payments.models import User
-from main.models import MarketingItem
-
+from main.models import MarketingItem, StatusReport
 
 
 class market_item(object):
@@ -57,3 +56,15 @@ def index(request):
             {'marketing_items': market_items,
             'user': User.get_by_id(uid)}
         )
+
+def report(request):
+    if request.method == "POST":
+        status = request.POST.get("status", "")
+        #update the database with the status
+        if status:
+            uid = request.session.get('user')
+            user = User.get_by_id(uid)
+            StatusReport(user=user, status=status).save()
+
+        #always return something
+        return index(request)

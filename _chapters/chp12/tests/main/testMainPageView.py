@@ -55,7 +55,9 @@ class MainPageTests(TestCase):
         with mock.patch('main.views.User') as user_mock:
 
             # Tell the mock what to do when called
-            config = {'get_by_id.return_value': mock.Mock()}
+            usr = mock.Mock()
+            usr.email = "test@test.com"
+            config = {'get_by_id.return_value': usr}
             user_mock.configure_mock(**config)
 
             # Run the test

@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 from payments import views
 from django.contrib import admin
 from main.views import index as main_index
+from main.views import report as main_report
 from contact.views import contact
 from about.views import about
 
@@ -18,4 +19,5 @@ urlpatterns = [
     url(r'^sign_out$', views.sign_out, name='sign_out'),
     url(r'^register$', views.register, name='register'),
     url(r'^edit$', views.edit, name='edit'),
+    url(r'^report$', main_report, name="report"),
 ]
