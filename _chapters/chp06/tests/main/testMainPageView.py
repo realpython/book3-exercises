@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.core.urlresolvers import resolve
 from main.views import index
 from django.shortcuts import render_to_response
+from payments.models import User
 from django.test import RequestFactory
 import mock
 
@@ -29,7 +30,7 @@ class MainPageTests(TestCase):
 
     def test_returns_appropriate_html_response_code(self):
         resp = index(self.request)
-        self.assertEqual(resp.status_code, 200)
+        self.assertEquals(resp.status_code, 200)
 
     #####################################
     #### Testing templates and views ####
@@ -37,7 +38,7 @@ class MainPageTests(TestCase):
 
     def test_returns_exact_html(self):
         resp = index(self.request)
-        self.assertEqual(
+        self.assertEquals(
             resp.content,
             render_to_response("index.html").content
         )
@@ -61,4 +62,4 @@ class MainPageTests(TestCase):
             expected_html = render_to_response(
                 'user.html', {'user': user_mock.get_by_id(1)}
             )
-            self.assertEqual(resp.content, expected_html.content)
+            self.assertEquals(resp.content, expected_html.content)

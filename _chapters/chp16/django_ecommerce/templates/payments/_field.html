@@ -3,10 +3,4 @@
   <div class="input">
     {{ field }}
   </div>
-  <div class="custom-error"
-    ng-show="{{form.form_name}}.{{field.name}}.$dirty && {{form.form_name}}.{{field.name}}.$invalid">
-    {{field.label}} is invalid:
-    <span ng-show="{{form.form_name}}.{{field.name}}.$error.required">value is required.</span>
-    <span ng-show="{{form.form_name}}.{{field.name}}.$error.email">Input a valid email address.</span>
-  </div>
 </div>

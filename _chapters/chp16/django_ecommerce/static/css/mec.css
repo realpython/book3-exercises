@@ -76,20 +76,3 @@ h1, .nav li, .navbar-brand {
   min-width: 100%;
   min-height: 100px;
 }
-
-input.ng-dirty.ng-valid {
-  border:1px solid Green;
-}
-input.ng-dirty.ng-invalid {
-  border:1px solid Red;
-}
-
-.custom-error {
-  color: #FF0000;
-  font-family: sans-serif;
-}
-
-.angular-google-map-container {
-  height: 400px;
-}
-

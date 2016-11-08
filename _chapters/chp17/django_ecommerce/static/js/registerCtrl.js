@@ -25,12 +25,6 @@ mecApp.factory("UserFactory", function($http) {
         return response.data;
       });
   }
-  factory.saveUserLoc = function(coords) {
-    return $http.post("/api/v1/user_locations", coords).then(function(response)
-      {
-        return response.data;
-      });
-  }
   return factory;
 });
 
@@ -65,29 +59,10 @@ mecApp.controller('RegisterCtrl',function($scope, $http, StripeFactory, UserFact
 
     StripeFactory.createToken($scope.card)
                 .then(setToken, logStripeErrors)
-                .then(saveUsrLoc)
                 .then(UserFactory.register)
                 .then(redirect_to_user_page)
                 .then(null,logRegisterErrors);
 
-   }
-
-  $scope.geoloc = "";
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position){
-      $scope.$apply(function(){
-        $scope.geoloc = position;
-      });
-    });
-  }
-
-  saveUsrLoc = function() {
-    data = {'name' : $scope.userform.name,
-            'email' :    $scope.userform.email,
-            'location' : [$scope.geoloc.coords.longitude,
-                          $scope.geoloc.coords.latitude]};
-    UserFactory.saveUserLoc(data);
-    return $scope.userform;
-  }
+   };
 
 });

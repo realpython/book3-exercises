@@ -65,7 +65,7 @@ def register(request):
 
         data = json.loads(request.body.decode())
         form = UserForm(data)
-
+        
         if form.is_valid():
             try:
                 customer = Customer.create(

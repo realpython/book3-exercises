@@ -16,22 +16,15 @@ $(function() {
           $("#credit-card-errors").hide();
           $("#last_4_digits").val(response.card.last4);
           $("#stripe_token").val(response.id);
-          form.submit();
-        } else {
-          // submit anyway
-          form.submit();
-          // $("#stripe-error-message").text(response.error.message);
-          // $("#credit-card-errors").show();
-          // $("#user_submit").attr("disabled", false);
-        }
+        } 
+        form.submit();
       });
-
       return false;
-
-    }
-
-    return true
-
+      
+    } 
+    
+    return true;
+    
   });
 
   $("#change-card a").click(function() {
@@ -41,9 +34,9 @@ $(function() {
     return false;
   });
 
+
   //show status
   $("#show-achieve").click(function() {
-    console.log("test")
     a = $("#achievements");
     l = $("#show-achieve");
     if (a.hasClass("hide")) {
@@ -55,5 +48,4 @@ $(function() {
     }
     return false;
   });
-
 });

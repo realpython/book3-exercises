@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-from datetime import datetime
+from django.utils import timezone
 
+class UnpaidUsers(models.Model):
+    email = models.CharField(max_length=255, unique=True)
+    last_notification = models.DateTimeField(default=timezone.now())
 
 class User(AbstractBaseUser):
     name = models.CharField(max_length=255)
@@ -22,15 +25,10 @@ class User(AbstractBaseUser):
         return User.objects.get(pk=uid)
 
     @classmethod
-    def create(cls, name, email, password, last_4_digits, stripe_id=''):
+    def create(cls, name, email, password, last_4_digits, stripe_id):
         new_user = cls(name=name, email=email,
                        last_4_digits=last_4_digits, stripe_id=stripe_id)
         new_user.set_password(password)
 
         new_user.save()
         return new_user
-
-
-class UnpaidUsers(models.Model):
-    email = models.CharField(max_length=255, unique=True)
-    last_notification = models.DateTimeField(default=datetime.now())
