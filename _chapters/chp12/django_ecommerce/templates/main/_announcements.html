@@ -1,12 +1,17 @@
 <!-- system announcements -->
 {% load staticfiles %}
+{% load embed_video_tags %}
 <section class="info-box" id="announcements">
   <h1>orders from the Council</h1>
-  <div class="full-image">
-     <img src="{% static 'img/beat_jarjar.jpg' %}"/>
-  </div>
-  <div >
-     <h3>April 1: Join us for our annual Smash Jar Jar bash</h2>
-     <p>Bring the whole family to MEC for a fun-filled day of smashing Jar Jar Binks!</p>
-  </div>
+  {% for a in announce %}
+    <div class="full-image">
+      {% if a.vid %}
+        {% video a.vid "medium" %}
+      {% else %}
+        <img src="{% static 'img/'|add:a.img %}"/>
+      {% endif %}
+    </div>
+    <div > {{ a.info | safe }}</div>
+    <br>
+  {% endfor %}
 </section>

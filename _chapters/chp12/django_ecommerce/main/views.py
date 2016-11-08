@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from payments.models import User
-from main.models import MarketingItem, StatusReport
-
+from main.models import MarketingItem, StatusReport, Announcement
+from datetime import date, timedelta
 
 class market_item(object):
 
@@ -55,11 +55,22 @@ def index(request):
     else:
         # membership page
         status = StatusReport.objects.latest()
+        announce_date = date.today() - timedelta(days=30)
+        announce = (Announcement.objects.filter(
+            when__gt=announce_date).order_by('-when')
+        )
+        usr = User.get_by_id(uid)
+        badges = usr.badges.all()
+
         return render(
             request,
             'main/user.html',
-            {'user': User.get_by_id(uid),
-             'reports': status},
+            {
+             'user': usr,
+             'badges' : badges,
+             'reports': status,
+             'announce': announce
+            }
         )
 
 def report(request):

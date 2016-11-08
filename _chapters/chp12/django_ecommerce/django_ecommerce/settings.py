@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'contact',
     'payments',
     'about',
+    'embed_video',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

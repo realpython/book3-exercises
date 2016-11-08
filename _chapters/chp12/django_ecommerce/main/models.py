@@ -28,3 +28,11 @@ class Announcement(models.Model):
     vid = models.URLField(null=True)
     info = models.TextField()
 
+
+class Badge(models.Model):
+    img = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
+    desc = models.TextField()
+
+    class Meta:
+        ordering = ('name',)

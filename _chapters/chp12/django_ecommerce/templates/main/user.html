@@ -1,6 +1,9 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
 {% block content %}
+<div id="achievements" class="row member-page hide">
+  {% include "main/_badges.html" %}
+</div>
   <div class="row member-page">
     <div class="col-sm-8">
       <div class="row">

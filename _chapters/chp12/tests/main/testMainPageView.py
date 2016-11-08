@@ -53,11 +53,14 @@ class MainPageTests(TestCase):
         # Create a session that appears to have a logged in user
         self.request.session = {"user": "1"}
 
+        # setup dummy user
+        # we need to save user so user -> badges relationship is created
+        usr = User(email="test@testing.com")
+        usr.save()
+
         with mock.patch('main.views.User') as user_mock:
 
             # Tell the mock what to do when called
-            usr = mock.Mock()
-            usr.email = "test@test.com"
             config = {'get_by_id.return_value': usr}
             user_mock.configure_mock(**config)
 
@@ -69,7 +72,9 @@ class MainPageTests(TestCase):
                 'main/user.html', {'user': user_mock.get_by_id(1)}
             )
 
+            self.assertEqual(resp.content, expected_html.content)
+
             # Ensure we return the state of the session back to normal
             self.request.session = {}
+            usr.delete()
 
-            self.assertEqual(resp.content, expected_html.content)
