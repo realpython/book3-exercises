@@ -1,6 +1,6 @@
 Django==1.9.9
 django-embed-video==1.1.0
-djangorestframework==3.4.7
+djangorestframework==3.5.3
 Jinja2==2.8
 MarkupSafe==0.23
 mock==1.0.1
