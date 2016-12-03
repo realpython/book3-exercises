@@ -1,7 +1,8 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext, loader
+from django.http import HttpResponseRedirect
 from .forms import ContactView
 from django.contrib import messages
+from django.shortcuts import render
+from payments.models import User
 
 
 def contact(request):
@@ -16,6 +17,13 @@ def contact(request):
             return HttpResponseRedirect('/')
     else:
         form = ContactView()
-    t = loader.get_template('contact/contact.html')
-    c = RequestContext(request, {'form': form, })
-    return HttpResponse(t.render(c))
+
+    context = {'form': form}
+
+    return render(
+        request,
+        'contact/contact.html',
+        context,
+    )
+
+

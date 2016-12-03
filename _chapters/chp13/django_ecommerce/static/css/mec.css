@@ -17,7 +17,7 @@ body {
   background-color: #eee;
 }
 
-h1, .nav li, .navbar-brand {
+h1 {
   font-family: 'starjedi', sans-serif;
 }
 
@@ -27,6 +27,10 @@ h1, .nav li, .navbar-brand {
 
 .featurette-divider {
   margin: 80px 0;
+}
+
+h1, .nav li, .navbar-brand {
+  font-family: 'starjedi', sans-serif;
 }
 
 .navbar-brand {
@@ -66,6 +70,7 @@ h1, .nav li, .navbar-brand {
   margin-top: -20px;
 }
 
+/* css for announcements */
 .full-image {
   overflow: hidden;
 }

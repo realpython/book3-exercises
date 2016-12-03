@@ -1,7 +1,10 @@
-Django==1.7
-django-embed-video==0.11
-djangorestframework==2.4.2
+Django==1.9.9
+django-embed-video==1.1.0
+djangorestframework==3.4.7
+Jinja2==2.8
+MarkupSafe==0.23
 mock==1.0.1
-psycopg2==2.5.3
+psycopg2==2.6.2
 requests==2.3.0
 stripe==1.9.2
+wheel==0.24.0
