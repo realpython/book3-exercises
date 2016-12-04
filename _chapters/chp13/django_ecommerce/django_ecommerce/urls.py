@@ -3,6 +3,7 @@ from payments import views
 from django.contrib import admin
 from main.views import index as main_index
 from main.views import report as main_report
+from main.urls import urlpatterns as main_urls
 from contact.views import contact
 from about.views import about
 
@@ -20,4 +21,5 @@ urlpatterns = [
     url(r'^register$', views.register, name='register'),
     url(r'^edit$', views.edit, name='edit'),
     url(r'^report$', main_report, name="report"),
+    url(r'^api/v1/', include(main_urls)),
 ]
