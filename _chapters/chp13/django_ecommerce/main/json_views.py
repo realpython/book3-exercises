@@ -13,8 +13,8 @@ class StatusCollection(mixins.ListModelMixin,
     serializer_class = StatusReportSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+    def get(self, request):
+        return self.list(request)
 
     def post(self, request):
         return self.create(request)
