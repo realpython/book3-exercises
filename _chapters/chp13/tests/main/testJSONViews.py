@@ -16,6 +16,7 @@ class JsonViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.test_user = User(id=2222, email="test@user.com")
+        cls.test_user.save()
 
     def get_request(self, method='GET', authed=True):
         request_method = getattr(self.factory, method.lower())
@@ -49,5 +50,16 @@ class JsonViewTests(TestCase):
         response = StatusMember.as_view()(self.get_request(), pk=stat.id)
 
         self.assertEqual(expected_json, response.data)
+
+        stat.delete()
+
+    def test_delete_member(self):
+        stat = StatusReport(user=self.test_user, status="testing")
+        stat.save()
+
+        response = StatusMember.as_view()(
+            self.get_request(method='DELETE'), pk=stat.pk)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         stat.delete()
