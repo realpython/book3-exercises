@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from main.models import StatusReport
+from payments.models import User
 from payments.models import User, Badge
-
 
 class RelatedUserField(serializers.RelatedField):
 
@@ -12,6 +12,7 @@ class RelatedUserField(serializers.RelatedField):
 
     def to_internal_value(self, data):
         return User.objects.get(email=data)
+
 
 class StatusReportSerializer(serializers.ModelSerializer):
     user = RelatedUserField(queryset=User.objects.all())
