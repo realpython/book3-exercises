@@ -1,20 +1,18 @@
 from django.test import TestCase
 from payments.forms import SigninForm, CardForm, UserForm
-
+import unittest
 
 class FormTesterMixin():
 
-    def should_have_form_error(
-        self, form_cls, expected_error_name,
-        expected_error_msg, data
-    ):
+    def assertFormError(self, form_cls, expected_error_name,
+                        expected_error_msg, data):
 
         from pprint import pformat
         test_form = form_cls(data=data)
         #if we get an error then the form should not be valid
         self.assertFalse(test_form.is_valid())
 
-        self.assertEquals(
+        self.assertEqual(
             test_form.errors[expected_error_name],
             expected_error_msg,
             msg="Expected {} : Actual {} : using data {}".format(
@@ -24,7 +22,7 @@ class FormTesterMixin():
         )
 
 
-class FormTests(TestCase, FormTesterMixin):
+class FormTests(unittest.TestCase, FormTesterMixin):
 
     def test_signin_form_data_validation_for_invalid_data(self):
         invalid_data_list = [
@@ -35,12 +33,10 @@ class FormTests(TestCase, FormTesterMixin):
         ]
 
         for invalid_data in invalid_data_list:
-            self.should_have_form_error(
-                SigninForm,
-                invalid_data['error'][0],
-                invalid_data['error'][1],
-                invalid_data["data"]
-            )
+            self.assertFormError(SigninForm,
+                                 invalid_data['error'][0],
+                                 invalid_data['error'][1],
+                                 invalid_data["data"])
 
     def test_user_form_passwords_match(self):
         form = UserForm(
@@ -70,7 +66,7 @@ class FormTests(TestCase, FormTesterMixin):
         )
 
         # Is the data valid?
-        self.assertFalse(form.is_valid(), form.errors)
+        self.assertFalse(form.is_valid())
 
     def test_card_form_data_validation_for_invalid_data(self):
         invalid_data_list = [
@@ -91,9 +87,11 @@ class FormTests(TestCase, FormTesterMixin):
         ]
 
         for invalid_data in invalid_data_list:
-            self.should_have_form_error(
+            self.assertFormError(
                 CardForm,
                 invalid_data['error'][0],
                 invalid_data['error'][1],
                 invalid_data["data"]
             )
+
+

@@ -15,13 +15,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='StatusReport',
             fields=[
-                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
-                ('when', models.DateTimeField(blank=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('when', models.DateTimeField(auto_now_add=True)),
                 ('status', models.CharField(max_length=200)),
                 ('user', models.ForeignKey(to='payments.User')),
             ],
-            options={
-            },
-            bases=(models.Model,),
         ),
     ]
+

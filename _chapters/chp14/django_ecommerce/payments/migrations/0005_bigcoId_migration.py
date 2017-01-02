@@ -10,10 +10,9 @@ def migrate_bigcoid(apps, schema_editor):
 
     for u in User.objects.all():
         bid = ("%s%s%s" % (u.name[:2],
-                            u.rank[:1],
-                            u.created_at.strftime("%Y%m%d%H%M%S%f"),
-                          ))
-
+                             u.rank[:1],
+                             u.created_at.strftime("%Y%m%d%H%M%S%f"),
+                        ))
         u.bigCoID = bid
         u.save()
 
@@ -21,7 +20,7 @@ def migrate_bigcoid(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('payments', '0004_auto_20141001_0546'),
+        ('payments', '0004_user_bigcoid'),
     ]
 
     operations = [

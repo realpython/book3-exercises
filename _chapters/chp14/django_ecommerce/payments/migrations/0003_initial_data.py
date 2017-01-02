@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.db import migrations
+from payments.models import User
 from django.contrib.auth.hashers import make_password
 
 
@@ -14,7 +16,7 @@ def create_default_user(apps, schema_editor):
 
     u = new_user(
         name='vader', email="darth@mec.com",
-        last_4_digits="1234", password= make_password("darkside")
+        last_4_digits="1234", password=make_password("darkside")
     ).save()
 
 

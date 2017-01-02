@@ -1,11 +1,10 @@
 from django.test import TestCase
-from main.json_views import StatusCollection, StatusMember
-from main.models import StatusReport
-from main.serializers import StatusReportSerializer
 from rest_framework.test import APIRequestFactory, force_authenticate
-from rest_framework import status
 from payments.models import User
-
+from main.serializers import StatusReportSerializer
+from main.models import StatusReport
+from main.json_views import StatusCollection, StatusMember
+from rest_framework import status
 
 class JsonViewTests(TestCase):
 
@@ -13,7 +12,7 @@ class JsonViewTests(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.factory = APIRequestFactory()
-    
+
     @classmethod
     def setUpTestData(cls):
         cls.test_user = User(id=2222, email="test@user.com")
@@ -34,8 +33,8 @@ class JsonViewTests(TestCase):
         response = StatusCollection.as_view()(self.get_request())
         self.assertEqual(expected_json, response.data)
 
-    def test_get_collection_requires_logged_in_user(self):
 
+    def test_get_collection_requires_logged_in_user(self):
         anon_request = self.get_request(method='GET', authed=False)
         response = StatusCollection.as_view()(anon_request)
 
