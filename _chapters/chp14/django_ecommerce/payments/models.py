@@ -17,6 +17,7 @@ class User(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
     rank = models.CharField(max_length=50, default="Padwan")
     badges = models.ManyToManyField(Badge)
+    bigCoID = models.CharField(max_length=50, unique=True)
 
     USERNAME_FIELD = 'email'
 
@@ -33,5 +34,10 @@ class User(AbstractBaseUser):
                        last_4_digits=last_4_digits, stripe_id=stripe_id)
         new_user.set_password(password)
 
+        # set bigCoID
+        new_user.bigCoID = ("%s%s%s" % (new_user.name[:2],
+                            new_user.rank[:1],
+                            timezone.now().strftime("%Y%m%d%H%M%S%f"),
+                            ))
         new_user.save()
         return new_user
