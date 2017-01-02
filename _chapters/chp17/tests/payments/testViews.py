@@ -80,7 +80,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass() 
+        super().setUpClass()
         html = render_to_response(
             'payments/register.html',
             {

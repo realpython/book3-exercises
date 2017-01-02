@@ -13,7 +13,7 @@ class JsonViewTests(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.factory = APIRequestFactory()
-
+    
     @classmethod
     def setUpTestData(cls):
         cls.test_user = User(id=2222, email="test@user.com")

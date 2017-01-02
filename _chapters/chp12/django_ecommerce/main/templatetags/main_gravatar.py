@@ -1,6 +1,7 @@
 from django import template
 from urllib.parse import urlencode
 import hashlib
+from django.utils.html import mark_safe, escape
 
 register = template.Library()
 
@@ -8,8 +9,11 @@ register = template.Library()
 @register.simple_tag
 def gravatar_img(email, size=140):
     url = gravatar_url(email, size)
-    return '''<img class="img-circle" src="%s" height="%s" width="%s"
-            alt="user.avatar" />''' % (url, size, size)
+    return mark_safe('''<img class="img-circle"
+                         src="%s" height="%s" width="%s"
+                         alt="user.avatar" />''' %
+                     (url, escape(size), escape(size))
+                    )
 
 
 @register.simple_tag
@@ -17,13 +21,9 @@ def gravatar_url(email, size=140):
     default = ('http://upload.wikimedia.org/wikipedia/en/9/9b/'
                'Yoda_Empire_Strikes_Back.png')
 
-    #mainly for unit testing with a mock object
-    if not(isinstance(email, str)):
-        return default
-
     query_params = urlencode([('s', str(size)),
                               ('d', default)])
+    email = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
 
-    return ('http://www.gravatar.com/avatar/' +
-            hashlib.md5(email.lower().encode('utf-8')).hexdigest() +
-            '?' + query_params)
+    return escape('http://www.gravatar.com/avatar/%s?%s' %
+            (email,query_params))
