@@ -5,11 +5,13 @@ from django.shortcuts import render
 from payments.models import User
 from django.test import RequestFactory
 import mock
-from main.views import index, market_items
+from main.views import index
+from main.models import MarketingItem
+
+from main.migrations.data_load_marketing_items_0003 import init_marketing_data
 
 
 class MainPageTests(TestCase):
-    fixtures = ['initial_data.json', ]
 
     ###############
     #### Setup ####
@@ -39,13 +41,14 @@ class MainPageTests(TestCase):
     #####################################
 
     def test_returns_exact_html(self):
+        data = [MarketingItem(**d) for d in init_marketing_data]
         resp = index(self.request)
         self.assertEqual(
             resp.content,
             render(
                 self.request,
                 "main/index.html",
-                {"marketing_items": market_items}
+                {"marketing_items": data}
             ).content
         )
 
